@@ -1,0 +1,7 @@
+[ 2011-10-26T15:28:35+08:00 ] NOTIC: [2] session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at D:\XAMPP\htdocs\oj\Examples\config.php:1) App.class.php 第 64 行.
+[ 2011-10-26T15:28:35+08:00 ] SQL: SHOW COLUMNS FROM `think_form` [ RunTime:0.003455s ]
+[ 2011-10-26T15:28:35+08:00 ] SQL: SHOW COLUMNS FROM `think_user` [ RunTime:0.026801s ]
+[ 2011-10-26T15:28:35+08:00 ] SQL: SELECT Form.id AS id,Form.title AS title,Form.content AS content,Form.create_time AS create_time,User.account AS username FROM think_form Form  JOIN think_user User ON Form.user_id=User.id LIMIT 6  [ RunTime:0.010687s ]
+[ 2011-10-26T15:28:35+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at D:\XAMPP\htdocs\oj\Examples\config.php:1) View.class.php 第 184 行.
+[ 2011-10-26T15:28:35+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at D:\XAMPP\htdocs\oj\Examples\config.php:1) View.class.php 第 185 行.
+[ 2011-10-26T15:28:35+08:00 ] NOTIC: [2] Cannot modify header information - headers already sent by (output started at D:\XAMPP\htdocs\oj\Examples\config.php:1) View.class.php 第 186 行.
