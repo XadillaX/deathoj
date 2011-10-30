@@ -42,4 +42,3 @@ return array(
     /** 加密解密配置 */
     ENCRYPTION_KEY          => "XADILLAX"
 );
-?>
