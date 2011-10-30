@@ -6,7 +6,7 @@
  * Time: 下午5:25
  * To change this template use File | Settings | File Templates.
  */
- 
+
 class UserModel extends Model {
     private $Encryption;
     private $MaxLoginTime = 1800;
@@ -23,6 +23,12 @@ class UserModel extends Model {
         $this->Encryption = new XHaffman();
     }
 
+    /**
+     * 用户登录
+     * @param $username 用户名
+     * @param $password 密码
+     * @return null|string 是否登录成功。若为null则登录成功，否则返回错误信息。
+     */
     public function login($username, $password)
     {
         if($username == "" || $password == "")
@@ -61,7 +67,7 @@ class UserModel extends Model {
 
     /**
      * 检测是否用户已登录
-     * @return array|null
+     * @return array|null 返回登录用户数据数组，若未登录则返回null
      */
     public function check_online()
     {

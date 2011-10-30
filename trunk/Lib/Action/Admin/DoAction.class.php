@@ -17,26 +17,29 @@ class DoAction extends Action
 
     }
 
+    /**
+     * @brief 检查是否登录
+     * @return bool
+     */
     private function check_online()
     {
         $this->admin_data = $this->MUser->check_online();
-
         return null != $this->admin_data;
     }
 
     public function __construct()
     {
+        /** 基类构造函数 */
         parent::__construct();
 
+        /** 初始化模型 */
         $this->MUser = new UserModel("user");
 
-        if(ACTION_NAME != "login" && ACTION_NAME != "chklogin")
+        /** 若木有登录则跳转到登录界面 */
+        if(!$this->check_online())
         {
-            if(!$this->check_online())
-            {
-                redirect(U("security/login"));
-                die();
-            }
+            redirect(U("security/login"));
+            die();
         }
     }
 
@@ -46,6 +49,6 @@ class DoAction extends Action
      */
     public function index()
     {
-        dump($this->admin_data);
+        //dump($this->admin_data);
     }
 }
