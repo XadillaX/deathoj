@@ -5,8 +5,8 @@
  * Date: 11-10-26
  * Time: 下午5:02
  * Do Action of Administrator
+ * 后台管理主控制器。
  */
-
 class DoAction extends Action
 {
     private $MUser;
@@ -36,8 +36,7 @@ class DoAction extends Action
         $this->MUser = new UserModel("user");
 
         /** 若木有登录则跳转到登录界面 */
-        if(!$this->check_online())
-        {
+        if (!$this->check_online()) {
             redirect(U("security/login"));
             die();
         }
