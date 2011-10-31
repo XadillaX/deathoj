@@ -1,12 +1,12 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午4:18
- * Index File of Online Judge System
+ * NBUT Online Judge System
+ *
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:39
  */
- 
+
 /** 定义ThinkPHP框架路径 */
 define("THINK_PATH", "ThinkPHP");
 
