@@ -1,13 +1,18 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午5:25
- * To change this template use File | Settings | File Templates.
+ * NBUT Online Judge System
+ *
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:34
  */
 
-class UserModel extends Model {
+/**
+ * @brief UserModel
+ * 用户模型
+ */
+class UserModel extends Model
+{
     private $Encryption;
     private $MaxLoginTime = 1800;
     private $PREFIX;
@@ -31,12 +36,10 @@ class UserModel extends Model {
      */
     public function login($username, $password)
     {
-        if($username == "" || $password == "")
-        {
+        if ($username == "" || $password == "") {
             return "Username or password can't be blank.";
         }
-        if(strlen($username) > 32 || strlen($password) > 16)
-        {
+        if (strlen($username) > 32 || strlen($password) > 16) {
             return "Username or password is too long.";
         }
         $password = md5($password);
@@ -46,8 +49,7 @@ class UserModel extends Model {
         $result = $this->join("{$this->PREFIX}role ON {$this->PREFIX}user.roleid = {$this->PREFIX}role.roleid")->where($condition)->select();
 
         /** 若信息错误 */
-        if(0 == count($result))
-        {
+        if (0 == count($result)) {
             return "Username or password is wrong.";
         }
 
@@ -75,7 +77,7 @@ class UserModel extends Model {
         $user_data = Session::get("userdata");
 
         /** 未登录 */
-        if(null == $user_data || "" == $user_data) return null;
+        if (null == $user_data || "" == $user_data) return null;
 
         /** 获取SESSION的真实数据 */
         $user_data_array = explode("|", $this->Encryption->Decode($user_data, C("ENCRYPTION_KEY")));
@@ -88,8 +90,7 @@ class UserModel extends Model {
         $result["logintime"] = $user_data_array[4];
 
         /** 超时 */
-        if(time() - $result["logintime"] > $this->MaxLoginTime)
-        {
+        if (time() - $result["logintime"] > $this->MaxLoginTime) {
             Session::clear();
             return null;
         }
@@ -98,3 +99,4 @@ class UserModel extends Model {
         return $result;
     }
 }
+

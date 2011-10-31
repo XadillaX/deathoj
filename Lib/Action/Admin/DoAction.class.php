@@ -1,11 +1,15 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午5:02
- * Do Action of Administrator
- * 后台管理主控制器。
+ * NBUT Online Judge System
+ *
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:35
+ */
+
+/**
+ * @brief DoAction
+ * 后台主控制器，包括基本上的后台操作。
  */
 class DoAction extends Action
 {

@@ -1,10 +1,15 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午6:09
- * 后台安全相关控制器：登录登出等。
+ * NBUT Online Judge System
+ *
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:38
+ */
+
+/**
+ * @brief SecurityAction
+ * 安全相关控制器：登录或者登出等。
  */
 class SecurityAction extends Action
 {
@@ -21,6 +26,10 @@ class SecurityAction extends Action
         $this->display();
     }
 
+    /**
+     * 检验登录是否成功
+     * @return void
+     */
     public function chklogin()
     {
         $MUser = new UserModel("user");

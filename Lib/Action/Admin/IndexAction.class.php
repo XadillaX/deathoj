@@ -1,15 +1,18 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午6:07
- * Index Action of Administrator
- * 后台管理导向控制器：登录界面或者后台首页界面。
+ * NBUT Online Judge System
+ *
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:37
+ */
+
+/**
+ * @brief IndexAction
+ * 后台导向控制器，导向登录页面或者后台主控制器。
  */
 class IndexAction extends Action
 {
-
     /**
      * @brief 跳转到登陆页面或者操作页面
      * @return void
