@@ -1,11 +1,12 @@
 <?php
 /**
- * 后台管理导向控制器：登录界面或者后台首页界面。
- * User: 死月
- * Date: 11-10-26
- * Time: 下午6:07
- * Index Action of Administrator
- * Version $Id$
+ * NBUT Online Judge System
+ *
+ * 后台导向控制器（导向Do/index）
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:35
+ * @package Index
  */
 class IndexAction extends CommonAction
 {
@@ -16,5 +17,6 @@ class IndexAction extends CommonAction
      */
     public function index()
     {
+        redirect(U("Do/index"));
     }
 }

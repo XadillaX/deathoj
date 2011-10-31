@@ -1,15 +1,26 @@
 <?php
 /**
- * 后台安全相关控制器：登录登出等。
- * User: 死月
- * Date: 11-10-26
- * Time: 下午6:09
- * Version: $Id$
+ * NBUT Online Judge System
+ *
+ * 后台相关控制器
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:35
+ * @package Security
  */
-class SecurityAction extends Action{
+class SecurityAction extends CommonAction{
 
     //避免空请求报错
-    public function _empty(){}
+    public function _empty()
+    {
+        /** ! - - ! */
+    }
+
+    /** 构造函数：调用父类构造函数 */
+    public function __construct()
+    {
+        parent::__construct();
+    }
     
     /**
      * 登录操作
@@ -17,6 +28,7 @@ class SecurityAction extends Action{
      */
     public function login()
     {
+        $this->assign("HC", $this->web_config);
         $this->display();
     }
 
