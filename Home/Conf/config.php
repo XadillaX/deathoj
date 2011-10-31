@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 return array(
     /** 是否开启应用调试模式 */
     APP_DEBUG               => true,
@@ -22,12 +22,12 @@ return array(
     DB_HOST                 => "localhost",
     DB_NAME                 => "onlinejudge",
     DB_USER                 => "root",
-    DB_PWD                  => "cits", //deathmoon 这份文件如果只是修改数据库连接密码，就不要提交了……2个人的都不一样～
+    DB_PWD                  => "deathmoon", //deathmoon 这份文件如果只是修改数据库连接密码，就不要提交了……2个人的都不一样～
     DB_PORT                 => 3306,
     DB_PREFIX               => "oj_",
 
     /** 运行时配置 */
-    SHOW_RUN_TIME           => true,
+    SHOW_RUN_TIME           => false,
     SHOW_ADV_TIME           => true,
     SHOW_DB_TIMES           => true,
     SHOW_PAGE_TRACE         => true,
