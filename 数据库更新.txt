@@ -1,0 +1,6 @@
+$Id$
+config表中：
+增加ojname为NBUTOJ。
+
+contestuser表中：
+添加一个字段teamname VARCHAR(32) DEFAULT("") unique key

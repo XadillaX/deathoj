@@ -29,9 +29,19 @@ class DoAction extends CommonAction
     /**
      * 后台首页
      * @return void
+     * @version $Id$
      */
     public function index()
     {
-        dump($this->admin_infomation);
+        $this->web_config["title"] .= "Index";
+
+        /** 以下的action_class和sub_action用于测试：action_class和sub_action用于侧边栏的“当前页面”效果 */
+        $this->web_config["action_class"] = "problem";
+        $this->web_config["sub_action"] = "list";
+
+        $this->assign("HC", $this->web_config);
+        $this->assign("admin_information", $this->admin_information);
+
+        $this->display();
     }
 }

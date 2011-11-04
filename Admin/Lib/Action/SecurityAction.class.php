@@ -32,6 +32,10 @@ class SecurityAction extends CommonAction{
         $this->display();
     }
 
+    /**
+     * 检验登录操作
+     * @return void
+     */
     public function chklogin()
     {
         $MUser = new UserModel("user");
@@ -50,5 +54,12 @@ class SecurityAction extends CommonAction{
         {
             die($result);
         }
+    }
+
+    public function logout()
+    {
+        Session::set("userdata", null);
+
+        redirect(U("Security/login"));
     }
 }

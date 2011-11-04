@@ -13,15 +13,19 @@
             var password = $("input[name=password]").val();
             var token = $("input[name={:C('TOKEN_NAME')}]").val();
 
+            /**
+             * @version $Id$
+             * TODO: 出BUG了！！！明明得到的结果是“1”，但是偏偏不到第一个if去，反而到第二个if了！HELP！！！SOS！！！
+             */
             $.post("{:U('chklogin')}", { "username": username, "password": password, "{:C('TOKEN_NAME')}": token }, function(html){
-                if("1" != html)
-                {
-                    $("#tip-panel span").html(html);
-                }
-                else
+                if(html == "1")
                 {
                     $("#tip-panel span").html('<img src="../Public/images/loading.gif" alt="Loading"> Successfully! Now redirecting...');
                     window.location.href = "{:U('Do/index')}";
+                }
+                else
+                {
+                    $("#tip-panel span").html(html);
                 }
             });
         }
