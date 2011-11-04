@@ -40,6 +40,9 @@ return array(
     DEFAULT_GROUP           => "Home",
 
     /** 加密解密配置 */
-    ENCRYPTION_KEY          => "XADILLAX"
+    ENCRYPTION_KEY          => "XADILLAX",
+
+    /** WEB_DIR */
+    WEB_ROOT_DIR            => "/oj"
 );
 ?>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>{$HC.title}</title>
+
+    <!-- 亲爱的CSS们 -->
+    <link rel="stylesheet" type="text/css" href="{$HC.adminroot}/resources/css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{$HC.adminroot}/resources/css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{$HC.adminroot}/resources/css/invalid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{$HC.adminroot}/resources/css/xadillax.css" media="screen" />
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="{$HC.webroot}/resources/css/ie.css" media="screen" />
+    <![endif]-->
+
+    <!-- 亲爱的JS们 -->
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/facebox.js"></script>
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.wysiwyg.js"></script>
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.datePicker.js"></script>
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.date.js"></script>
+    <!--[if IE]><script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.bgiframe.js"></script><![endif]-->
+
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/simpla.jquery.configuration.js"></script>
+
+    <!-- 万恶的IE6的PNG透明 .png-fix -->
+    <!--[if IE 6]>
+        <script type="text/javascript" src="resources/scripts/DD_belatedPNG_0.0.7a.js"></script>
+        <script type="text/javascript">
+            DD_belatedPNG.fix('.png_bg, img, li');
+        </script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        function set_current_page()
+        {
+            /** 当前页面 */
+            var action_class = "{$HC.action_class}";
+            var sub_action = "{$HC.sub_action}";
+
+            $("#main-nav li").each(function(){
+                if($(this).children().first().attr("action_class") == action_class)
+                {
+                    var node = $(this).children().first();
+                    node.addClass("current");
+
+                    var ch = node.next();
+                    ch.children().each(function(){
+                        if($(this).children().first().attr("sub_action") == sub_action)
+                        {
+                            ch.slideDown();
+                            $(this).children().first().addClass("current");
+                        }
+                    });
+                }
+            });
+        }
+
+        $(function(){
+            /** 设置NAV的当前页面 */
+            set_current_page();
+        });
+    </script>
+</head>
+<body>
+    <div id="body-wrapper">
+        <!-- 侧边栏 -->
+        <div id="sidebar">
+            <div id="sidebar-wrapper">
+                <!-- OJ NAME -->
+                <h1 id="sidebar-title">{$HC.ojname}</h1>
+                <a title="{$HC.webname}" href="{$HC.adminroot}"><img id="logo" src="{$HC.adminroot}/resources/images/logo.png" alt="{$HC.webname}" /></a>
+
+                <!-- 用户信息栏 -->
+                <div id="profile-links">
+                    欢迎 <span style="color: #ff7800;">{$admin_information.username}</span>({$admin_information.role}) 回来。<br />
+                    <a href="{$HC.webroot}">返回首页</a> | <a href="{:U('Security/logout')}">注销</a>
+                </div>
+
+                <!-- 菜单按钮们 -->
+                <ul id="main-nav">
+                    <!-- 首页相关 -->
+                    <li>
+                        <a action_class="index" href="{:U('Do/index')}" class="nav-top-item no-submenu">OJ禁書目錄 - INDEX</a>
+                    </li>
+
+                    <!-- 题目相关 -->
+                    <li>
+                        <a action_class="problem" href="#" class="nav-top-item">題目相關 - PROBLEM</a>
+                        <ul>
+                            <li><a sub_action="list" href="#">題目列表 - Problem List</a></li>
+                            <li><a sub_action="new" href="#">添加題目 - New Problem</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 运行状态 -->
+                    <li>
+                        <a action_class="status" href="#" class="nav-top-item no-submenu">运行状态 - PROBLEM</a>
+                    </li>
+
+                    <!-- 比赛相关（包括练习题库） -->
+                    <li>
+                        <a action_class="contest" href="#" class="nav-top-item">賽/習相關 - CONTEST</a>
+                        <ul>
+                            <li><a sub_action="practice" href="#">練習題庫 - Practice List</a></li>
+                            <li><a sub_action="contest" href="#">比賽列表 - Contest List</a></li>
+                            <li><a sub_action="new" href="#">添加比賽 - New Contest</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 用户相关 -->
+                    <li>
+                        <a action_class="user" href="#" class="nav-top-item">用戶相關 - USER</a>
+                        <ul>
+                            <li><a sub_action="list" href="#">用戶列表 - User List</a></li>
+                            <li><a sub_action="batch" href="#">批量生成 - Batch</a></li>
+                            <li><a sub_action="admin" href="#">管理員列表 - Administrator</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="main-content">
+        
