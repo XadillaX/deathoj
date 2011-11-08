@@ -57,6 +57,7 @@ class UserModel extends CommonModel {
         $session_data .= "|{$result[0]["rolename"]}";
         $session_data .= "|{$result[0]["userid"]}";
         $session_data .= "|{$result[0]["username"]}";
+        $session_data .= "|{$result[0]["email"]}";
         $session_data .= ("|" . time());
 
         /** Session */
@@ -68,6 +69,7 @@ class UserModel extends CommonModel {
 
     /**
      * 检测是否用户已登录
+     * @version $Id$
      * @return array|null 返回登录用户数据数组，若未登录则返回null
      */
     public function check_online()
@@ -81,12 +83,8 @@ class UserModel extends CommonModel {
         /** 获取SESSION的真实数据 */
         $user_data_array = explode("|", $this->Encryption->Decode($user_data, C("ENCRYPTION_KEY")));
 
-        /** 分配 */
-        $result["roleid"] = $user_data_array[0];
-        $result["rolename"] = $user_data_array[1];
-        $result["userid"] = $user_data_array[2];
-        $result["username"] = $user_data_array[3];
-        $result["logintime"] = $user_data_array[4];
+        /** 获取时间 */
+        $result["logintime"] = $user_data_array[5];
 
         /** 超时 */
         if(time() - $result["logintime"] > $this->MaxLoginTime)
@@ -95,7 +93,50 @@ class UserModel extends CommonModel {
             return null;
         }
 
+        /** 获取用户信息 */
+        $result = $this->get_user_info("userid", $user_data_array[2]);
+        if(false == $result)
+        {
+            Session::clear();
+            return null;
+        }
+
+        /** 额外信息 */
+        $result = $result[0];
+        $result["rolename"] = $user_data_array[1];
+        $result["avatar"] = $this->get_avatar_url($result["email"], "");
+        $result["logintime"] = $user_data_array[5];
+        $result["logintime_formatted"] = date("Y-m-d H:i:s", $result["logintime"]);
+
+        /** 更新时间 */
+        $user_data_array[5] = time();
+        $session_data = implode("|", $user_data_array);
+        Session::set("userdata", $this->Encryption->Encode($session_data, C("ENCRYPTION_KEY")));
+
         /** 返回结果 */
         return $result;
+    }
+
+    /**
+     * 根据键值对获取用户信息
+     * @param $key
+     * @param $value
+     * @return array
+     */
+    public function get_user_info($key, $value)
+    {
+        $condition[$key] = $value;
+        return $this->where($condition)->select();
+    }
+
+    /**
+     * 获取Gravatar的头像链接地址
+     * @param $email
+     * @param int $size
+     * @return string 链接地址
+     */
+    public function get_avatar_url($email, $size = 64)
+    {
+        return "http://1.gravatar.com/avatar/" . md5(strtolower($email)) . ".jpg?d=mm&size=" . $size;
     }
 }

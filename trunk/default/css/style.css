@@ -50,6 +50,10 @@ a:hover { text-decoration: underline; }
     text-shadow: 1px 1px 0px #aaa;
 }
 
+#current_user_avatar {
+    cursor: pointer;
+}
+
 /** 身体信息 */
 #body {
     background: #8ee1ff;

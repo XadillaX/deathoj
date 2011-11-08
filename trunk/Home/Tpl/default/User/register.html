@@ -1,0 +1,45 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/register.css" media="screen" />
+
+<div id="register-wrapper">
+    <h1>新用户注册</h1>
+    <table id="register-table">
+        <tr>
+            <td class="reg-title"><span class="reg-tip">*</span> 用户名</td>
+            <td class="reg-input-td"><input type="text" name="username" /></td>
+        </tr>
+        <tr>
+            <td class="reg-title"><span class="reg-tip">*</span> 密　码</td>
+            <td class="reg-input-td"><input type="text" name="password" /></td>
+        </tr>
+        <tr>
+            <td class="reg-title"><span class="reg-tip">*</span> 重　复</td>
+            <td class="reg-input-td"><input type="text" name="repwd" /></td>
+        </tr>
+        <tr>
+            <td class="reg-title"><span class="reg-tip">*</span> 昵　称</td>
+            <td class="reg-input-td"><input type="text" name="nickname" /></td>
+        </tr>
+        <tr>
+            <td class="reg-title"><span class="reg-tip">*</span> 邮　箱</td>
+            <td class="reg-input-td"><input type="text" name="email" /></td>
+        </tr>
+        <tr>
+            <td class="reg-title">学　校</td>
+            <td class="reg-input-td"><input type="text" name="school" /></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;" class="reg-title">格　言</td>
+            <td class="reg-input-td">
+                <textarea rows="10" name="motto" cols="30"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="reg-title">注　册</td>
+            <td class="reg-input-td"><input id="reg-submit" type="submit" value=">>>>" /></td>
+        </tr>
+    </table>
+    {__TOKEN__}
+</div>
+
+<include file="Public:footer" />
