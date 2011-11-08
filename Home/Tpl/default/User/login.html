@@ -1,11 +1,70 @@
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/login.css" media="screen" />
 <script type="text/javascript">
+function ajax_login()
+{
+    /** 信息窗 */
+    $("#error-tip #error-loading").css("display", "block");
+    $("#error-tip #error-message").html("不明物体祈祷中...");
+    $("#error-tip").slideDown("normal");
+
+    /** 获取数据 */
+    var username = $("#username").val();
+    var password = $("#password").val();
+    var token = $("input[name={:C('TOKEN_NAME')}]").val();
+
+    /** 提交数据 */
+    $.post("{:U('User/chklogin')}", { "username": username, "password": password, "{:C('TOKEN_NAME')}": token }, function(html){
+        $("#error-tip #error-loading").css("display", "none");
+
+        if("1" == html)
+        {
+            $("#error-tip #error-message").html("着陆成功，正在转向...");
+            window.location.href = "__ROOT__";
+        }
+        else
+        {
+            $("#error-tip #error-message").html(html);
+        }
+    });
+}
+
 $(function(){
-    $("#username").blur();
+    $("#mylogin").fadeIn("normal");
+
+    /** 用户名输入框失焦改变头像 */
+    $("#username").blur(function(){
+        $("#login-left-avatar img").fadeIn("normal");
+        $.get("{:U('User/get_user_avatar_url')}", { "username": $(this).val(), "size": "64" }, function(url){
+            var img = new Image();
+            img.src = url;
+            img.onload = function() {
+                /** 闪一下 */
+                if(!$("#login-left-avatar").is(":animated"))
+                {
+                    $("#login-left-avatar").animate({ opacity: "0" }, 0).animate({ opacity : "1" }, 180);
+                }
+
+                /** 换图片 */
+                $("#login-left-avatar").css("background", "#fff url('" + url + "') center no-repeat");
+
+                /** Loading走开 - - */
+                $("#login-left-avatar img").fadeOut("normal");
+            };
+        });
+    });
+
+    $("#login-btn").click(function(){
+        ajax_login();
+    });
+
+    $(".ipt-div input").keypress(function(e){
+        if(e.keyCode == 13) ajax_login();
+    });
 });
 </script>
 
+<div id="mylogin">
 <div id="login-left">
     <div id="login-left-avatar" class="fl">
         <img src="__ROOT__/default/images/loading.gif" />
@@ -18,8 +77,15 @@ $(function(){
         <div class="ipt-div" style="margin-top: 8px;">
             <span>密码</span>
             <input id="password" type="password" />
+            {__TOKEN__}
         </div>
     </div>
+    <div class="cl"></div>
+</div>
+<div id="error-tip">
+    <div class="fl">　</div>
+    <div class="fl" id="error-loading"><img src="__ROOT__/default/images/loading.gif" /></div>
+    <div class="fl" id="error-message">不明物体祈祷中...</div>
     <div class="cl"></div>
 </div>
 <div id="login-btn">
@@ -29,6 +95,7 @@ $(function(){
 <div id="lets-join">
     还木有账号？<br />
     <a href="{:U('User/register')}">点我注册(☆ﾟ∀ﾟ)！</a>
+</div>
 </div>
 
 <include file="Public:footer" />

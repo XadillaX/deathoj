@@ -39,6 +39,7 @@ class CommonAction extends Action
 
         /** 获取系统标记 */
         $this->get_system_tag_info();
+        $this->assign("current_user", $this->get_current_user());
     }
 
     /**

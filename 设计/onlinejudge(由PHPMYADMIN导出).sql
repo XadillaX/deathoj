@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 10 月 28 日 04:25
+-- 生成日期: 2011 年 11 月 08 日 11:10
 -- 服务器版本: 5.1.41
 -- PHP 版本: 5.3.1
 
@@ -48,14 +48,15 @@ CREATE TABLE IF NOT EXISTS `oj_config` (
   `value` text NOT NULL,
   PRIMARY KEY (`configid`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `oj_config`
 --
 
 INSERT INTO `oj_config` (`configid`, `key`, `value`) VALUES
-(1, 'webname', 'Ningbo University of Technology Online Judge');
+(1, 'webname', 'Ningbo University of Technology Online Judge'),
+(2, 'ojname', 'NBUTOJ');
 
 -- --------------------------------------------------------
 
@@ -116,8 +117,10 @@ CREATE TABLE IF NOT EXISTS `oj_contestuser` (
   `contestuserid` int(11) NOT NULL AUTO_INCREMENT,
   `contestid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
+  `teamname` varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (`contestuserid`),
   UNIQUE KEY `INDEX` (`contestid`,`userid`),
+  UNIQUE KEY `teamname` (`teamname`),
   KEY `userid` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

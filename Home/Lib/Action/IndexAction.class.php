@@ -23,7 +23,6 @@ class IndexAction extends CommonAction
     {
         $this->web_config["title"] .= "Index";
         $this->assign("HC", $this->web_config);
-        $this->assign("current_user", $this->get_current_user());
         
         $this->display();
     }

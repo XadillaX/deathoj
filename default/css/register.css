@@ -1,0 +1,61 @@
+#body-wrapper {
+    background: url("../images/cloud-inner-1.jpg") no-repeat left top;
+    margin: 0 0 0 0;
+}
+
+#register-wrapper {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    font-size: 14px;
+}
+
+#register-wrapper h1 {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#register-wrapper table {
+
+}
+
+.reg-title {
+    padding-right: 10px;
+    line-height: 30px;
+    height: 35px;
+    text-align: right;
+}
+
+.reg-input-td input {
+    width: 300px;
+    height: 25px;
+    border: 1px solid #44ccff;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+    color: #23b1ff;
+    background: #fff;
+}
+
+.reg-input-td textarea {
+    width: 296px;
+    height: 100px;
+    border: 1px solid #44ccff;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+}
+
+.reg-tip {
+    color: #ff0000;
+}
+
+#reg-submit {
+    cursor: pointer;
+}
