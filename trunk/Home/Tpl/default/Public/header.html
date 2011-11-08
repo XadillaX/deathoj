@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>{$HC.title}</title>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/style.css" media="screen" />
+
+    <script type="text/javascript" src="__ROOT__/default/js/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="__ROOT__/default/js/common.js"></script>
+</head>
+<body>
+
+<div class="wrapper">
+    <div id="top">
+        <div id="logo" class="fl">
+            <a href="{$HC.root}" title="宁波工程学院在线评测系统"><img src="__ROOT__/default/images/logo.jpg" alt="宁波工程学院在线评测系统" /></a>
+        </div>
+
+        <div id="top-right" class="fr">
+            <a href="{:U('User/register')}" title="Register">注册</a>　<a href="{:U('User/login')}" title="Register">登录</a>　帮助
+        </div>
+
+        <div class="cl">
+            
+        </div>
+    </div>
+
+    <div id="body">
+        <div id="nav">
+            <div id="nav-left" class="fl">
+                <ul>
+                    <li><a href="#" title="首页">首页</a></li>
+                    <li><a href="#" title="题库">题库</a></li>
+                    <li><a href="#" title="运行状态">运行状态</a></li>
+                    <li><a href="#" title="比赛">比赛</a></li>
+                    <li><a href="#" title="用户">用户</a></li>
+                </ul>
+                <div class="cl"></div>
+            </div>
+
+            <div id="nav-right" class="fr">
+                <form action="{:U('index/gotoproblem')}" method="post">
+                    <div class="fl"><input class="input-bar" type="text" id="goprob-id" name="problemid" value="题目编号" /></div>
+                    <div class="fl"><input class="input-submit" type="submit" id="goprob-submit" name="submit" value="" /></div>
+                    <div class="cl"></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="body-wrapper">

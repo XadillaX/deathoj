@@ -1,0 +1,81 @@
+#login-left {
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    margin-top: 80px;
+    background: #b6ecff;
+}
+
+#login-left-avatar {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    height: 72px;
+    width: 72px;
+    background: #fff url("../../User/get_user_avatar.xhtml?email=none&size=64") center no-repeat;
+    border: 1px solid #8ee1ff;
+    text-align: center;
+}
+
+#login-left-avatar img {
+    margin-top: 30px;
+    display: none;
+}
+
+#login-left-form {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+#login-left-form .ipt-div {
+    background: #fff;
+    border: 1px solid #8ee1ff;
+    padding: 3px 3px 3px 3px;
+    color: #8ee1ff;
+}
+
+#login-left-form .ipt-div span {
+    margin-right: 5px;
+}
+
+#login-left-form .ipt-div input {
+    background: none;
+    border: none;
+    color: #000;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+    width: 150px;
+}
+
+#login-btn {
+    width: 300px;
+    background: #fff;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+
+    border-radius: 0px 0px 15px 15px;
+    -ms-border-radius: 0px 0px 15px 15px;
+    -moz-border-radius: 0px 0px 15px 15px;
+    -webkit-border-radius: 0px 0px 15px 15px;
+    -khtml-border-radius: 0px 0px 15px 15px;
+}
+
+#login-btn span {
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    color: #8ee1ff;
+    font-weight: bold;
+}
+
+#lets-join {
+    font-size: 36px;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 20px;
+}

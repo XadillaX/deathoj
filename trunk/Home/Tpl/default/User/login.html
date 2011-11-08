@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/login.css" media="screen" />
+<script type="text/javascript">
+$(function(){
+    $("#username").blur();
+});
+</script>
+
+<div id="login-left">
+    <div id="login-left-avatar" class="fl">
+        <img src="__ROOT__/default/images/loading.gif" />
+    </div>
+    <div id="login-left-form" class="fl">
+        <div class="ipt-div">
+            <span>账号</span>
+            <input id="username" type="text" />
+        </div>
+        <div class="ipt-div" style="margin-top: 8px;">
+            <span>密码</span>
+            <input id="password" type="password" />
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>
+<div id="login-btn">
+    <span>登　录</span>
+</div>
+
+<div id="lets-join">
+    还木有账号？<br />
+    <a href="{:U('User/register')}">点我注册(☆ﾟ∀ﾟ)！</a>
+</div>
+
+<include file="Public:footer" />
