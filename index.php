@@ -19,3 +19,8 @@ require(THINK_PATH . "/ThinkPHP.php");
 
 /** 实例化网站应用实例 */
 App::run();
+
+/** @version $Id$ */
+import("@.Plugin.Remove");
+$rmdir = new removeDir();
+$rmdir->deleteDir("Home/Runtime");

@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: 死月
- * Date: 11-10-26
- * Time: 下午5:25
- * To change this template use File | Settings | File Templates.
+ * NBUT Online Judge System
+ *
+ * 用户模型
+ * @author XadillaX(admin@xcoder.in)
+ * @version $Id$
+ * @copyright XadillaX 11-10-31 下午1:35
+ * @package User
  */
-
-class UserModel extends Model {
+class UserModel extends CommonModel {
     private $Encryption;
     private $MaxLoginTime = 1800;
     private $PREFIX;

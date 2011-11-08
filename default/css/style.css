@@ -1,0 +1,155 @@
+#think_page_trace {
+    display: none;
+}
+
+body {
+    background: #44ccff url("../images/bottom-cloud.jpg") right bottom no-repeat fixed;
+
+    color: #fff;
+    font-size: 12px;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+    text-shadow: 1px 1px 0px white;
+}
+
+.fl { float: left; }
+.fr { float: right; }
+.cl { clear: both; }
+
+a { color: #fff; }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrapper {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
+
+/** 头部信息 */
+#top {
+    height: 70px;
+}
+
+#top-right {
+    margin-top: 27px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    background: #8ee1ff;
+
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: bold;
+
+    /** 阴影 */
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+    text-shadow: 1px 1px 0px #aaa;
+}
+
+/** 身体信息 */
+#body {
+    background: #8ee1ff;
+
+    /** 阴影 */
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+
+    min-height: 495px;
+
+    border-radius: 0px 0px 15px 15px;
+    -ms-border-radius: 0px 0px 15px 15px;
+    -moz-border-radius: 0px 0px 15px 15px;
+    -webkit-border-radius: 0px 0px 15px 15px;
+    -khtml-border-radius: 0px 0px 15px 15px;
+}
+
+#body-wrapper {
+    margin: 5px 5px 5px 5px;
+    text-shadow: 1px 1px 0px #23b1ff;
+}
+
+#nav {
+    background: #fff;
+    height: 32px;
+
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px #8ee1ff;
+}
+
+#nav-left {
+    height: 32px;
+    line-height: 32px;
+}
+
+#nav-left ul {
+    list-style: none;
+}
+
+#nav-left ul li {
+    float: left;
+    color: #44ccff;
+    margin-left: 20px;
+}
+
+#nav-left ul li a {
+    color: #44ccff;
+}
+
+#nav-right {
+    height: 32px;
+}
+
+#nav-right form {
+    height: 32px;
+}
+
+#nav-right .input-bar {
+    padding-top: 0px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 0px;
+    height: 32px;
+    width: 210px;
+    background: #fffaa5;
+    border: none;
+
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+    color: #44ccff;
+}
+
+#nav-right .input-submit {
+    padding: 0 0 0 0;
+    height: 32px;
+    width: 32px;
+    margin:  0 0 0 0;
+    border: none;
+    background: #8ee1ff url("../images/search.png") center no-repeat;
+    cursor: pointer;
+}
+
+/** 底部信息 */
+#footer {
+    text-align: right;
+    color: #444;
+    line-height: 16px;
+
+    background: url("../images/balloon.jpg") left top no-repeat;
+    height: 100px;
+}
+
+#footer-infor {
+    margin-top: 10px;
+}
+
+#footer a { color: #444; }
+
+#query-infor {
+    color: #aaa;
+}

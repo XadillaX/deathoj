@@ -6,11 +6,25 @@
  * Time: 下午1:58
  * $Id$
  */
- 
-class IndexAction extends Action{
 
+class IndexAction extends CommonAction
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-    public function index(){
-        echo 'double kill!';
+    /**
+     * 首页
+     * $Id$
+     * @return void
+     */
+    public function index()
+    {
+        $this->web_config["title"] .= "Index";
+        $this->assign("HC", $this->web_config);
+        $this->assign("current_user", $this->get_current_user());
+        
+        $this->display();
     }
 }

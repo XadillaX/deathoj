@@ -110,7 +110,7 @@ class CommonAction extends Action
         {
             case 2: $this->admin_information["role"] = "完全体"; break;
             case 3: $this->admin_information["role"] = "究极体"; break;
-            default: $this->admin_information["role"] = "丧失进化"; break;
+            default: $this->admin_information["role"] = "丧尸进化"; break;
         }
 
         return $this->admin_information;
