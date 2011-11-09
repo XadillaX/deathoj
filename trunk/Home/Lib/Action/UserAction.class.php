@@ -56,6 +56,10 @@ class UserAction extends CommonAction
         $this->display();
     }
 
+    /**
+     * 验证注册资料
+     * @return void
+     */
     public function chkreg()
     {
         $username = $_POST["username"];
@@ -73,20 +77,87 @@ class UserAction extends CommonAction
         }
 
         /** 数据验证 */
-        if(strlen($username) < 4 || strlen($username) > 16)
+        if(!$this->common_str_validate($username, 4, 32))
         {
-            die("用户名长度必须介于4~16之间。");
+            die("用户名长度必须介于4~32之间，且只能是字母、数字和下划线。");
         }
-        if(strlen($password) < 6 || strlen($password) > 16)
+        if(!$this->common_str_validate($password, 6, 32, false))
         {
-            die("密码长度必须结余6~16之间。");
+            die("密码长度必须介于6~16之间。");
+        }
+        if($password != $repwd)
+        {
+            die("两次密码输入不一致。");
+        }
+        /** TODO: 让昵称可以是中文。 -- 小熊,谢谢 */
+        if(!$this->common_str_validate($nickname, 1, 32))
+        {
+            die("昵称长度必须介于1~32之间，且只能是字母、数字和下划线。");
+        }
+        if(!ereg("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+", $email) || !$this->common_str_validate($email, 5, 255, false))
+        {
+            die("邮箱地址有误！");
+        }
+        if(!$this->common_str_validate($school, 0, 255, true, true, false))
+        {
+            die("学校输入有误。");
+        }
+        if(!$this->common_str_validate($motto, 0, 255, false, true, false))
+        {
+            die("格言输入过长。");
         }
 
-        /** TODO: 继续验证吖验证 */
+        /** 是否唯一 */
+        $condition["username"] = $username;
+        $condition["email"] = $email;
+        $condition["nickname"] = $nickname;
+        $condition["_logic"] = "or";
+        $temp = $this->user_model->where($condition)->select();
+        if(false != $temp)
+        {
+            die("用户名或者邮箱或者昵称已存在。");
+        }
+
+        /** 注册成功 */
+        $userid = $this->user_model->create_user($username, md5($password), $nickname, $email, $school, $motto);
+        if(false == $userid)
+        {
+            die("系统错误，注册失败。\n" . $this->user_model->getLastSql());
+        }
+        else
+        {
+            /** 登录 */
+            /** 蛋疼的加密类 */
+            import("@.Plugin.XHaffmanSec");
+            $encrypt = new XHaffman();
+
+            /** 信息数组（用于implode） */
+            $result = $this->user_model->check_username_and_password($username, $password);
+            $session_array = array(
+                $result["roleid"],
+                $result["rolename"],
+                $result["userid"],
+                $result["username"],
+                $result["email"],
+                time()
+            );
+
+            /** 将信息数组转化为字符串 */
+            $session_data = implode("|", $session_array);
+            $session_data = $encrypt->Encode($session_data, C("ENCRYPTION_KEY"));
+
+            /** 写入Session */
+            Session::set("user_data", $session_data);
+
+            die("1");
+        }
     }
 
     /**
      * 确认登录信息操作
+     * @version $Id$
+     * ↑将Session搞到这里了- -|||
+     * 
      * @return void
      */
     public function chklogin()
@@ -97,21 +168,56 @@ class UserAction extends CommonAction
             die("非法提交。");
         }
 
-        /** 验证用户名密码并登录 */
-        $result = $this->user_model->login($_POST["username"], $_POST["password"]);
-        if (null == $result)
+        /** 初判断用户名密码 */
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        if(!$this->common_str_validate($username, 4, 32))
         {
-            die("1");
+            die("用户名太长或者太短。");
+        }
+        if(!$this->common_str_validate($password, 6, 16, false))
+        {
+            die("密码太长或者太短。");
+        }
+
+        /** 验证用户名密码并登录 */
+        $result = $this->user_model->check_username_and_password($_POST["username"], $_POST["password"]);
+
+        /** 用户名或者密码错误 */
+        if (false == $result)
+        {
+            die("用户名或者密码错误。");
         }
         else
         {
-            die($result);
+            /** 蛋疼的加密类 */
+            import("@.Plugin.XHaffmanSec");
+            $encrypt = new XHaffman();
+
+            /** 信息数组（用于implode） */
+            $session_array = array(
+                $result["roleid"],
+                $result["rolename"],
+                $result["userid"],
+                $result["username"],
+                $result["email"],
+                time()
+            );
+
+            /** 将信息数组转化为字符串 */
+            $session_data = implode("|", $session_array);
+            $session_data = $encrypt->Encode($session_data, C("ENCRYPTION_KEY"));
+
+            /** 写入Session */
+            Session::set("user_data", $session_data);
+
+            die("1");
         }
     }
 
     public function logout()
     {
-        Session::set("userdata", null);
+        Session::set("user_data", null);
 
         redirect(__ROOT__);
     }

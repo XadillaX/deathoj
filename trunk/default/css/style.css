@@ -1,6 +1,11 @@
 #think_page_trace {
-    display: none;
+    /*display: none;*/
+    color: #000;
+    line-height: 18px;
+    width: 960px;
 }
+
+#think_page_trace a { color: #999; }
 
 body {
     background: #44ccff url("../images/bottom-cloud.jpg") right bottom no-repeat fixed;
