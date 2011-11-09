@@ -58,4 +58,22 @@
 
 #reg-submit {
     cursor: pointer;
+    width: 302px;
+}
+
+#error-tip {
+    background: #fffaa5;
+    border: 1px solid #44ccff;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 16px;
+
+    display: none;
+    color: #44ccff;
+    text-shadow: 1px 1px 0px #fff;
 }

@@ -1,6 +1,58 @@
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/register.css" media="screen" />
 
+<script type="text/javascript">
+function ajax_register()
+{
+    /** 信息窗 */
+    $("#error-tip #error-loading").css("display", "block");
+    $("#error-tip #error-message").html("不明物体祈祷中...");
+    $("#error-tip").slideDown("normal");
+
+    var username = $("input[name=username]").val();
+    var password = $("input[name=password]").val();
+    var repwd = $("input[name=repwd]").val();
+    var nickname = $("input[name=nickname]").val();
+    var email = $("input[name=email]").val();
+    var school = $("input[name=school]").val();
+    var motto = $("textarea[name=motto]").val();
+    var token = $("input[name={:C('TOKEN_NAME')}]").val();
+
+    $.post("{:U('User/chkreg')}", {
+        "username": username,
+        "password": password,
+        "repwd": repwd,
+        "nickname": nickname,
+        "email": email,
+        "school": school,
+        "motto": motto,
+        "{:C('TOKEN_NAME')}": token
+    }, function(html){
+        $("#error-tip #error-loading").css("display", "none");
+        
+        if(html != "1")
+        {
+            $("#error-tip #error-message").html(html);
+        }
+        else
+        {
+            $("#error-tip #error-message").html("抱团成功，正在转向...");
+            window.location.href = "__ROOT__";
+        }
+    });
+}
+
+$(function(){
+    $("#reg-submit").click(function(){
+        ajax_register();
+    });
+
+    $("#register-table input").keypress(function(e){
+        if(e.keyCode == 13) ajax_register();
+    });
+});
+</script>
+
 <div id="register-wrapper">
     <h1>新用户注册</h1>
     <table id="register-table">
@@ -10,11 +62,11 @@
         </tr>
         <tr>
             <td class="reg-title"><span class="reg-tip">*</span> 密　码</td>
-            <td class="reg-input-td"><input type="text" name="password" /></td>
+            <td class="reg-input-td"><input type="password" name="password" /></td>
         </tr>
         <tr>
             <td class="reg-title"><span class="reg-tip">*</span> 重　复</td>
-            <td class="reg-input-td"><input type="text" name="repwd" /></td>
+            <td class="reg-input-td"><input type="password" name="repwd" /></td>
         </tr>
         <tr>
             <td class="reg-title"><span class="reg-tip">*</span> 昵　称</td>
@@ -36,7 +88,16 @@
         </tr>
         <tr>
             <td class="reg-title">注　册</td>
-            <td class="reg-input-td"><input id="reg-submit" type="submit" value=">>>>" /></td>
+            <td class="reg-input-td">
+                <div id="error-tip">
+                    <div class="fl">　</div>
+                    <div class="fl" id="error-loading"><img src="__ROOT__/default/images/loading.gif" /></div>
+                    <div class="fl" id="error-message">不明物体祈祷中...</div>
+                    <div class="cl"></div>
+                </div>
+
+                <input id="reg-submit" type="submit" value=">>>>" />
+            </td>
         </tr>
     </table>
     {__TOKEN__}

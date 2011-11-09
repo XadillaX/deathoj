@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 return array(
     /** 是否开启应用调试模式 */
     APP_DEBUG               => true,
