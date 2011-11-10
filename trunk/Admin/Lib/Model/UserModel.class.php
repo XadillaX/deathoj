@@ -26,94 +26,40 @@ class UserModel extends CommonModel {
 
     /**
      * 用户登录
-     * @param $username 用户名
-     * @param $password 密码
-     * @return null|string 是否登录成功。若为null则登录成功，否则返回错误信息。
+     * @version $Id$
+     * 被删掉了果 - -|||
      */
-    public function login($username, $password)
-    {
-        if($username == "" || $password == "")
-        {
-            return "Username or password can't be blank.";
-        }
-        if(strlen($username) > 32 || strlen($password) > 16)
-        {
-            return "Username or password is too long.";
-        }
-        $password = md5($password);
-
-        /** 从数据库验证数据 */
-        $condition = array("username" => $username, "password" => $password);
-        $result = $this->join("{$this->PREFIX}role ON {$this->PREFIX}user.roleid = {$this->PREFIX}role.roleid")->where($condition)->select();
-
-        /** 若信息错误 */
-        if(0 == count($result))
-        {
-            return "Username or password is wrong.";
-        }
-
-        /** 设置登录信息 */
-        $session_data = $result[0]["roleid"];
-        $session_data .= "|{$result[0]["rolename"]}";
-        $session_data .= "|{$result[0]["userid"]}";
-        $session_data .= "|{$result[0]["username"]}";
-        $session_data .= "|{$result[0]["email"]}";
-        $session_data .= ("|" . time());
-
-        /** Session */
-        Session::set("userdata", $this->Encryption->Encode($session_data, C("ENCRYPTION_KEY")));
-
-        /** 返回 */
-        return null;
-    }
 
     /**
      * 检测是否用户已登录
      * @version $Id$
+     * @version $Id$
+     * ↑这货被删掉了 - -|||
      * @return array|null 返回登录用户数据数组，若未登录则返回null
      */
-    public function check_online()
+
+    /**
+     * 新建用户
+     * @param $username
+     * @param $password
+     * @param $nickname
+     * @param $email
+     * @param $school
+     * @param $motto
+     * @return bool|int false或者用户id
+     */
+    public function create_user($username, $password, $nickname, $email, $school, $motto)
     {
-        /** 获取用户数据 */
-        $user_data = Session::get("userdata");
+        $condition = array(
+            "username" => $username,
+            "password" => $password,
+            "nickname" => $nickname,
+            "email" => $email,
+            "school" => $school,
+            "motto" => $motto
+        );
 
-        /** 未登录 */
-        if(null == $user_data || "" == $user_data) return null;
-
-        /** 获取SESSION的真实数据 */
-        $user_data_array = explode("|", $this->Encryption->Decode($user_data, C("ENCRYPTION_KEY")));
-
-        /** 获取时间 */
-        $result["logintime"] = $user_data_array[5];
-
-        /** 超时 */
-        if(time() - $result["logintime"] > $this->MaxLoginTime)
-        {
-            Session::clear();
-            return null;
-        }
-
-        /** 获取用户信息 */
-        $result = $this->get_user_info("userid", $user_data_array[2]);
-        if(false == $result)
-        {
-            Session::clear();
-            return null;
-        }
-
-        /** 额外信息 */
-        $result = $result[0];
-        $result["rolename"] = $user_data_array[1];
-        $result["avatar"] = $this->get_avatar_url($result["email"], "");
-        $result["logintime"] = $user_data_array[5];
-        $result["logintime_formatted"] = date("Y-m-d H:i:s", $result["logintime"]);
-
-        /** 更新时间 */
-        $user_data_array[5] = time();
-        $session_data = implode("|", $user_data_array);
-        Session::set("userdata", $this->Encryption->Encode($session_data, C("ENCRYPTION_KEY")));
-
-        /** 返回结果 */
+        $result = $this->add($condition);
         return $result;
     }
 
@@ -127,6 +73,28 @@ class UserModel extends CommonModel {
     {
         $condition[$key] = $value;
         return $this->where($condition)->select();
+    }
+
+    /**
+     * 根据用户名密码搜索用户
+     * @version $Id$
+     * @param $username
+     * @param $password
+     * @param bool $already_md5
+     * @return bool|array 若条件匹配，则返回用户信息，否则返回false
+     */
+    public function check_username_and_password($username, $password, $already_md5 = false)
+    {
+        /** 条件数组 */
+        $condition["username"] = $username;
+        $condition["password"] = ($already_md5) ? $password : md5($password);
+
+        /** 搜索数据库 */
+        $result = $this->join("{$this->PREFIX}role ON {$this->PREFIX}user.roleid = {$this->PREFIX}role.roleid")->where($condition)->select();
+
+        /** 返回结果 */
+        if(false != $result) return $result[0];
+        else return false;
     }
 
     /**

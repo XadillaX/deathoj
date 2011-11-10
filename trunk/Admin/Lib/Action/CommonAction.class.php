@@ -10,6 +10,8 @@
  **/
 class CommonAction extends Action
 {
+    private $MaxLoginTime = 1800;
+
     protected $page_record_start;
     protected $page_per_num;
     protected $page_current;
@@ -79,12 +81,13 @@ class CommonAction extends Action
      *
      * @author konakona
      * @version $Id$
+     * @version $Id$
      * @copyright konakona, 31 十月, 2011
      * @package common
      **/
     protected function getAdminId()
     {
-        return $this->admin_infomation['admin_id'];
+        return $this->admin_infomation['userid'];
     }
 
     /**
@@ -96,23 +99,123 @@ class CommonAction extends Action
      */
     protected function getAdminInformation()
     {
-        $MUser = new UserModel("user");
-        $this->admin_information = $MUser->check_online();
+        if(count($this->admin_information) != 0) return $this->admin_information;
 
-        /** roleid为1的时候为普通用户，则这时也不算管理员登录 */
-        if ($this->admin_information == null || $this->admin_information["roleid"] == 1)
+        /** 获取Session信息 */
+        $session_data = Session::get("user_data");
+
+        /** 未登录 */
+        if("" == $session_data || null == $session_data)
         {
             $this->admin_information = null;
-            return null;
+            return;
+        }
+
+        /** 有信息 */
+        {
+            /** 自己写的蛋疼的加密类 */
+            import("@.Plugin.XHaffmanSec");
+            $encrypt = new XHaffman();
+
+            /** 解密Session */
+            $session_data = $encrypt->Decode($session_data, C("ENCRYPTION_KEY"));
+
+            /** 信息数组 */
+            $session_array = explode("|", $session_data);
+
+            /** 若超时 */
+            if(time() - $session_array["5"] > $this->MaxLoginTime)
+            {
+                Session::set("user_data", "");
+                $this->admin_information = null;
+                return null;
+            }
+
+            /** 得到信息 */
+            $temp = $this->MUser->get_user_info("userid", $session_array[2]);
+
+            /** 若无此用户 */
+            if(false == $temp)
+            {
+                Session::set("user_data", "");
+                $this->admin_information = null;
+                return null;
+            }
+
+            /** 额外用户信息 */
+            $temp = $temp[0];
+            $temp["rolename"] = $session_array[1];                                               ///< 角色名
+            $temp["avatar"] = $this->MUser->get_avatar_url($temp["email"], "");            ///< 头像地址
+            $temp["logintime"] = $session_array[5];                                              ///< 活动时间戳
+            $temp["logintime_formatted"] = date("Y-m-d H:i:s", $temp["logintime"]);         ///< 格式化活动时间
+
+            /** 更新Session */
+            $session_array[5] = time();
+            $session_data = implode("|", $session_array);
+            $session_data = $encrypt->Encode($session_data, C("ENCRYPTION_KEY"));
+            Session::set("userdata", $session_data);
+
+            /** 赋值 */
+            $this->admin_information = $temp;
         }
 
         switch($this->admin_information["roleid"])
         {
+            case 1: $this->admin_information = array(); return null; break;
             case 2: $this->admin_information["role"] = "完全体"; break;
             case 3: $this->admin_information["role"] = "究极体"; break;
             default: $this->admin_information["role"] = "丧尸进化"; break;
         }
 
         return $this->admin_information;
+    }
+
+    /**
+     * 通用字符串验证正确性
+     * @version $Id$
+     *
+     * @param string $string
+     * @param string $min_length
+     * @param string $max_length
+     * @param bool $shied
+     * @param bool $space
+     * @param bool $required
+     * @return bool
+     */
+    public function common_str_validate($string, $min_length, $max_length, $shied = true, $space = false, $required = true)
+    {
+        if(($string == "" || $string == null) && $required)
+        {
+            return false;
+        }
+
+        /** 只能是字母、下划线、数字 */
+        if($shied)
+        {
+            $ok = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789";
+            if($space) $ok .= " ";
+
+            $ok_len = strlen($ok);
+            for($i = 0; $i < strlen($string); $i++)
+            {
+                $flag = false;
+                for($j = 0; $j < $ok_len; $j++)
+                {
+                    if($ok[$j] == $string[$i])
+                    {
+                        $flag = true;
+                        break;
+                    }
+                }
+                if(!$flag) return false;
+            }
+        }
+
+        if(strlen($string) < $min_length || strlen($string) > $max_length)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
