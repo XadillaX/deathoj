@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>渲染到文本域</title>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/ueditor.css"/>
+</head>
+<body>
+    <input type="button" value="渲染编辑器到文本域" onclick="editorrender()">
+    <textarea id="txtarea" style="width:200px;height:200px;">文本域的内容</textarea>
+    <script type="text/javascript" charset="utf-8">
+        function editorrender(){
+            var editor = new baidu.editor.ui.Editor({
+                minFrameHeight: 180,
+                iframeCssUrl :'../../themes/default/iframe.css',
+                UEDITOR_HOME_URL:'../../',
+                autoClearinitialContent:false,
+                toolbars:[
+                    ['Bold','Italic','Underline','StrikeThrough','Superscript','Subscript']
+                ]
+            });
+            editor.render('txtarea');
+        }
+
+    </script>
+</body>
+</html>

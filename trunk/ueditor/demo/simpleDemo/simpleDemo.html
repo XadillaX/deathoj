@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_config.js"></script>
+    <script type="text/javascript" src="../../editor_ui_all.js"></script>
+    <style type="text/css">
+        #editor {
+            border: 1px solid #CCC;
+        }
+        #editor_toolbar_box {
+            background: #F0F0EE;
+            padding: 2px;
+        }
+        #editor_iframe_holder {
+            border-top: 1px solid #CCC;
+            border-bottom: 1px solid #CCC;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor">
+        <div id="editor_toolbar_box">
+            <div id="editor_toolbar">
+                <input id="addBold" type="button" value="加粗" onclick="myeditor.execCommand('bold')"/>
+                <input type="button" value="获得编辑器内容" onclick="alert(myeditor.getContent())"/>
+            </div>
+        </div>
+        <div id="editor_iframe_holder"></div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        var opt = {
+			UEDITOR_HOME_URL:"../../",
+            initialContent: '欢迎使用<a href="http://ueditor.baidu.com/">UEditor</a>!',
+            initialStyle :'.selectTdClass{background-color:#3399FF !important}',
+            minFrameHeight: 200,
+            iframeCssUrl :'../../themes/default/iframe.css',
+			autoFloatEnabled:false
+        };
+        var myeditor = new baidu.editor.Editor(opt);
+        myeditor.render('editor_iframe_holder');
+		myeditor.addListener('selectionchange', function (){
+			var state = myeditor.queryCommandState("bold");
+			var btn = document.getElementById("addBold");
+			if(state == 1){
+				//当前选中的为加粗
+				btn.style.color = "blue";
+			}else{
+				//当前选中的不为加粗
+			    btn.style.color = "";
+			}
+		});
+    </script>
+</body>
+</html>
