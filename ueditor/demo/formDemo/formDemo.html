@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" src="../../editor_ui_all.js"></script>
+    <style type="text/css">
+        #editor {
+            border: 1px solid #CCC;
+            height:auto;
+        }
+        #editor_toolbar_box {
+            background: #F0F0EE;
+            padding: 2px;
+        }
+        #editor_iframe_holder {
+            border-top: 1px solid #CCC;
+            border-bottom: 1px solid #CCC;
+        }
+        input {
+            height:24px;
+            min-height:20px;
+        }
+    </style>
+</head>
+<body>
+<form id="frm" action="server.php" method="post">
+    <div id="editor">
+        
+        <div id="editor_toolbar_box">
+            <div id="editor_toolbar">
+                <input id="bold" type="button" value="加粗" onclick="myeditor.execCommand('bold')"/>
+                <input id="subBtn" type="submit" value="提交表单"/>
+            </div>
+        </div>
+        <div id="editor_iframe_holder"></div>
+
+    </div>
+    </form>
+    <script type="text/javascript" charset="utf-8">
+        //editor的属性
+        var option = {
+            initialContent: 'hello world',//初始化编辑器的内容
+            minFrameHeight: 200,
+            textarea: 'editorcontent',
+            iframeCssUrl :'../../themes/default/iframe.css' 
+        };
+        //实例化编辑器
+        var myeditor = new baidu.editor.Editor(option);
+        //渲染编辑器
+        myeditor.render('editor_iframe_holder');
+    </script>
+</body>
+</html>

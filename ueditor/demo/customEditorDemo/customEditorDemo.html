@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>自定义编辑器</title>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/ueditor.css"/>
+    <link rel="stylesheet" type="text/css" href="customEditorDemo.css"/>
+</head>
+<body>
+<div id="editor"></div>
+    <script type="text/javascript" charset="utf-8">
+        var editor = new baidu.editor.ui.Editor({
+            id: 'editor',
+            UEDITOR_HOME_URL:'../../',
+            iframeCssUrl :'../../themes/default/iframe.css' ,
+            minFrameHeight:200,
+            toolbars: [
+                ['FontFamily','FontSize'],
+                ['Bold','Italic','Underline','ForeColor','BackColor'],
+                ['JustifyLeft','JustifyCenter','JustifyRight'],
+                ['InsertOrderedList','InsertUnorderedList'],
+                ['Emoticon','PlaceName','Link','Unlink','|','Undo','Redo'],
+                ['FullScreen']
+            ],
+            // 重写ui.Editor的renderToolbarBoxHtml方法
+            renderToolbarBoxHtml: function (){
+                return '<div class="%%-toolbarinner-left"><table>' +
+                        '<tr><td><div class="%%-toolbarinner-lefttop">' + this.toolbars[0].renderHtml() + '</div></td><td rowspan="2"><span class="%%-toolbarinner-separate"></span></td></tr>' +
+                        '<tr><td><div class="%%-toolbarinner-leftbottom">' + this.toolbars[1].renderHtml() + '</div></td></tr>' +
+
+                    '</table></div>' +
+                    '<div class="%%-toolbarinner-center"><table>' +
+                        '<tr><td><div class="%%-toolbarinner-centertop">' + this.toolbars[2].renderHtml() + '</div></td><td rowspan="2"><span class="%%-toolbarinner-separate"></span></td></tr>' +
+
+                        '<tr><td><div class="%%-toolbarinner-centerbottom">' + this.toolbars[3].renderHtml() + '</div></td></tr>' +
+
+                    '</table></div>' +
+                    '<div class="%%-toolbarinner-right">' + this.toolbars[4].renderHtml() + '</div>' +
+                    '<div class="%%-toolbarinner-fullscreen">' + this.toolbars[5].renderHtml() + '</div>' +
+                    '<div style="clear: both;overflow: hidden;height: 0;"></div>';
+            }
+        });
+        editor.render();
+    </script>
+</body>
+</html>

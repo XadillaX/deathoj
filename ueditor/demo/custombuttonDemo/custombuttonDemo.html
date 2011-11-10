@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>config toolbar</title>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8"  src="../../editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../themes/default/ueditor.css"/>
+    <style type="text/css">
+        .edui-for-mybutton .edui-icon{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<div id="editor"></div>
+    <script type="text/javascript" charset="utf-8">
+        var editor = new baidu.editor.ui.Editor({
+            id: 'editor',
+            UEDITOR_HOME_URL:'../../',
+            iframeCssUrl :'../../themes/default/iframe.css' ,
+            minFrameHeight:200,
+            toolbars: [
+                // 第一行
+                ['Bold', 'Italic', 'Underline'],
+                // 可以配置第二行, 工具条上的item也可以直接配置成ui对象
+                [new baidu.editor.ui.Button({
+                    className: 'edui-for-mybutton',
+                    onclick: function (){
+                        alert('自定义的按钮哈!');
+                    }
+                })]
+            ]
+        });
+        editor.render();
+    </script>
+</body>
+</html>
