@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 11 月 08 日 11:10
+-- 生成日期: 2011 年 11 月 10 日 13:00
 -- 服务器版本: 5.1.41
 -- PHP 版本: 5.3.1
 
@@ -160,6 +160,8 @@ CREATE TABLE IF NOT EXISTS `oj_problem` (
   `problemid` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
+  `input` text NOT NULL,
+  `output` text NOT NULL,
   `sampleinput` text NOT NULL,
   `sampleoutput` text NOT NULL,
   `hint` text NOT NULL,
@@ -167,6 +169,8 @@ CREATE TABLE IF NOT EXISTS `oj_problem` (
   `addtime` int(11) NOT NULL DEFAULT '0',
   `timelimit` int(11) NOT NULL DEFAULT '1000',
   `memorylimit` int(11) NOT NULL DEFAULT '65535',
+  `inputmd5` varchar(32) NOT NULL DEFAULT '',
+  `outputmd5` varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (`problemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -285,14 +289,19 @@ CREATE TABLE IF NOT EXISTS `oj_user` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `nickname` (`nickname`),
   KEY `roleid` (`roleid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `oj_user`
 --
 
 INSERT INTO `oj_user` (`userid`, `username`, `password`, `roleid`, `nickname`, `regtime`, `solved`, `submit`, `school`, `email`, `motto`) VALUES
-(1, 'XadillaX', '045f382f08038084d9ef8d74a8402363', 3, '死月', 0, 0, 0, 'Ningbo University of Technology', 'admin@xcoder.in', '');
+(1, 'XadillaX', '045f382f08038084d9ef8d74a8402363', 3, '死月', 0, 0, 0, 'Ningbo University of Technology', 'admin@xcoder.in', ''),
+(2, 'test', 'e10adc3949ba59abbe56e057f20f883e', 1, 'a', 0, 0, 0, '', 'a@b.c', ''),
+(3, 'again', 'e10adc3949ba59abbe56e057f20f883e', 1, 'again', 0, 0, 0, 'SBUT', 'again@again.again', 'SB AGAIN.'),
+(4, 'deathmoon', '045f382f08038084d9ef8d74a8402363', 1, 'canyouhelpme', 0, 0, 0, '', 'zukaidi@163.com', ''),
+(5, 'mamama', '2a7d94e6d20ed9be4edca6f5ebe5e0ab', 1, 'adslfkj', 0, 0, 0, '', 'j@k.c', ''),
+(6, 'konakona', '171f9f26441decbb9a1dac3e5b60f783', 1, 'konakona', 0, 0, 0, '', 'admin@crazyphper.com', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

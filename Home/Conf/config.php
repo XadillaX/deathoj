@@ -43,6 +43,10 @@ return array(
     ENCRYPTION_KEY          => "XADILLAX",
 
     /** WEB_DIR */
-    WEB_ROOT_DIR            => "/oj"
+    WEB_ROOT_DIR            => "/oj",
+
+    /** 输入、输出数据地址 */
+    IO_DATA_DIR             => "/oj/__data#",
+    IO_DATA_PATH             => str_replace("\\", "/", substr(__FILE__, 0, -39)) . "__data#/",
 );
 ?>

@@ -38,27 +38,62 @@ class SecurityAction extends CommonAction{
      */
     public function chklogin()
     {
-        $MUser = new UserModel("user");
-
         /** 令牌验证失败 */
-        if (!$MUser->autoCheckToken($_POST)) {
-            die("Illegal submission.");
+        if (!$this->MUser->autoCheckToken($_POST))
+        {
+            die("非法提交。");
+        }
+
+        /** 初判断用户名密码 */
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        if(!$this->common_str_validate($username, 4, 32))
+        {
+            die("用户名太长或者太短。");
+        }
+        if(!$this->common_str_validate($password, 6, 16, false))
+        {
+            die("密码太长或者太短。");
         }
 
         /** 验证用户名密码并登录 */
-        $result = $MUser->login($_POST["username"], $_POST["password"]);
-        if (null == $result) {
-            die("1");
+        $result = $this->MUser->check_username_and_password($_POST["username"], $_POST["password"]);
+
+        /** 用户名或者密码错误 */
+        if (false == $result)
+        {
+            die("用户名或者密码错误。");
         }
         else
         {
-            die($result);
+            /** 蛋疼的加密类 */
+            import("@.Plugin.XHaffmanSec");
+            $encrypt = new XHaffman();
+
+            /** 信息数组（用于implode） */
+            $session_array = array(
+                $result["roleid"],
+                $result["rolename"],
+                $result["userid"],
+                $result["username"],
+                $result["email"],
+                time()
+            );
+
+            /** 将信息数组转化为字符串 */
+            $session_data = implode("|", $session_array);
+            $session_data = $encrypt->Encode($session_data, C("ENCRYPTION_KEY"));
+
+            /** 写入Session */
+            Session::set("user_data", $session_data);
+
+            die("1");
         }
     }
 
     public function logout()
     {
-        Session::set("userdata", null);
+        Session::set("user_data", null);
 
         redirect(U("Security/login"));
     }

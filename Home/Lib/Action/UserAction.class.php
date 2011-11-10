@@ -260,4 +260,35 @@ class UserAction extends CommonAction
 
         echo $url;
     }
+
+    public function avatar()
+    {
+        /** 获取用户名 */
+        $username = strtolower($_GET["username"]);
+        $size = $_GET["size"];
+
+        /** 去后缀 */
+        $pos = strpos($username, ".jpg");
+        if(false != $pos)
+        {
+            $username = substr($username, 0, $pos);
+        }
+
+        $url = "";
+        $array = $this->user_model->get_user_info("username", $username);
+        if(false == $array)
+        {
+            $url = $this->user_model->get_avatar_url("", $size);
+        }
+        else
+        {
+            $url = $this->user_model->get_avatar_url($array[0]["email"], $size);
+        }
+
+        $bin = file_get_contents($url);
+
+        ob_clean();
+        header("Content-type: image/jpeg");
+        echo $bin;
+    }
 }

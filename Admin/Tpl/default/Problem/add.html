@@ -1,0 +1,81 @@
+<include file="Public:header" />
+    <!-- 这货是度娘的UEditor -->
+    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_config.js"></script>
+    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$HC.webroot}/ueditor/themes/default/ueditor.css" media="screen" />
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>添加新题</h3>
+        </div>
+
+        <div class="content-box-content">
+            <form action="{:U('Problem/chkadd')}" method="POST">
+                <fieldset>
+                    <p>
+                        <label>题目标题</label>
+                        <input class="text-input small-input" type="text" id="title" name="title" /><br />
+                    </p>
+
+                    <p>
+                        <label>时间限制</label>
+                        <input class="text-input small-input" value="1000" type="text" id="timelimit" name="timelimit" /> 毫秒<br />
+                    </p>
+
+                    <p>
+                        <label>内存限制</label>
+                        <input class="text-input small-input" value="65535" type="text" id="memorylimit" name="memorylimit" /> kb<br />
+                    </p>
+
+                    <p>
+                        <label>题目描述</label>
+                        <textarea name="description" id="description"> </textarea><br />
+
+                        <script type="text/javascript">
+                        var editor = new baidu.editor.ui.Editor({
+                            UEDITOR_HOME_URL: '{$HC.webroot}/ueditor/',
+                            iframeCssUrl :'{$HC.webroot}/ueditor/themes/default/iframe.css'
+                        });
+                        editor.render('description');
+                        </script>
+                    </p>
+
+                    <p>
+                        <label>输入格式</label>
+                        <textarea name="input" id="input" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <label>输出格式</label>
+                        <textarea name="output" id="output" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <label>样例输入</label>
+                        <textarea name="sampleinput" id="sampleinput" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <label>样例输出</label>
+                        <textarea name="sampleoutput" id="sampleoutput" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <label>提示</label>
+                        <textarea name="hint" id="hint" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <label>来源</label>
+                        <textarea name="source" id="source" rows="10" cols="10"></textarea><br />
+                    </p>
+
+                    <p>
+                        <input class="button" type="submit" value="嘛，上传 - -|||" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+<include file="Public:footer" />
+
