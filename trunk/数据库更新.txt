@@ -8,3 +8,7 @@ contestuser表中：
 $Id$
 problem表中
 增加字段inputmd5(VARCHAR(32)) outputmd5(VARCHAR(32)) input(TEXT) output(TEXT)
+
+$Id$
+problem表中
+problemid的AUTO_INCREMENT改为1000

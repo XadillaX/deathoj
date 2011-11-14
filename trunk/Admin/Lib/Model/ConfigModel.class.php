@@ -8,19 +8,5 @@
  * @copyright XadillaX 11-10-31 下午1:35
  * @package Config
  */
-class ConfigModel extends CommonModel
-{
-    /**
-     * @param $key
-     * @return string 返回相应配置值
-     */
-    public function get_value($key)
-    {
-        if ($key == "") return false;
-
-        $result = $this->where(array("key" => $key))->find();
-
-        if (!is_null($result)) return $result["value"];
-        else return "";
-    }
-}
+if (!defined('THINK_PATH')) exit();
+$config_array = require_once '../Home/Lib/Model/ConfigModel.class.php';

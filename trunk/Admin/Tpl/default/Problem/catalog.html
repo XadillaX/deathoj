@@ -1,0 +1,53 @@
+<include file="Public:header" />
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>题目列表 :: 第 {$_GET["page"]} 页</h3>
+        </div>
+
+        <div class="content-box-content">
+            <if condition="$cat_data eq false">
+            <div class="notification attention png_bg">
+                <a href="#" class="close"><img src="{$HC.adminroot}/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <div>
+                    咕~木有数据撒~ ╮(～▽～")╭。
+                </div>
+            </div>
+            <else />
+            <table>
+                <thead>
+                    <tr>
+                        <th width="100">题目编号</th>
+                        <th>题目标题</th>
+                        <th width="150">修改时间</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <div class="fl">{$page_str}</div>
+                            <div class="fr">
+                                第 <input id="goto-page" type="text" /> 页
+                                <input id="goto-page-submit" type="button" class="button" value="遁走" />
+                                <input onclick="javascript:window.location='{:U('Problem/add')}'" type="button" class="button" value="添加" />
+                            </div>
+                            <div class="cl"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                    <foreach name="cat_data" item="list">
+                    <tr>
+                        <td>{$list.problemid}</td>
+                        <td>{$list.title}</td>
+                        <td>{:date("Y-m-d H:i:s", $list["addtime"])}</td>
+                        <td><a href="{:U('Problem/edit')}?problemid={$list.problemid}" title="编辑">编辑</a> / <a href="{:U('Problem/std_data')}?problemid={$list.problemid}" title="数据">数据</a></td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            </if>
+        </div>
+    </div>
+<include file="Public:footer" />

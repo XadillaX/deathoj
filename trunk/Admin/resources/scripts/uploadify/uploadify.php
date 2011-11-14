@@ -37,7 +37,7 @@ if (!empty($_FILES)) {
 		// Uncomment the following line if you want to make the directory if it doesn't exist
 		// mkdir(str_replace('//','/',$targetPath), 0755, true);
 		
-		move_uploaded_file($tempFile,$targetFile . "fads");
+		move_uploaded_file($tempFile,$targetFile);
 		echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
 	// } else {
 	// 	echo 'Invalid file type.';

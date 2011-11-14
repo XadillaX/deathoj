@@ -1,0 +1,75 @@
+<include file="Public:header" />
+<h2>{$prob_data.title}</h2>
+<p id="page-intro"><a href='{:U("Problem/catalog")}?page={:Session::get("prob_page_when_back")}'><< 返回</a> | Time limit: {$prob_data.timelimit} ms | Memory limit: {$prob_data.memorylimit} kb</p>
+
+<link href="{$HC.adminroot}/resources/scripts/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{$HC.adminroot}/resources/scripts/uploadify/swfobject.js"></script>
+<script type="text/javascript" src="{$HC.adminroot}/resources/scripts/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    /** 上传物~ */
+    $('#file_upload').uploadify({
+        'uploader'          : '{$HC.adminroot}/resources/scripts/uploadify/uploadify.swf',
+        'script'            : '{$HC.adminroot}/Problem/upload_std_data.xhtml?problemid={$prob_data.problemid}',
+        'cancelImg'         : '{$HC.adminroot}/resources/scripts/uploadify/cancel.png',
+        'fileExt'           : '*.in;*.out',
+        'fileDesc'          : 'Std Data File(*.in;*.out)',
+        'multi'             : true,
+        'auto'              : false,
+        'removeCompleted'  : false,
+        'sizeLimit'         : 1024 * {:C("MAX_DATA_SIZE")},
+        'onComplete'  : function(event, ID, fileObj, response, data) {
+            var data = JSON.parse(response);
+            if(data.status == 0)
+            {
+                alert("上传失败：" + data.info);
+            }
+            else
+            {
+                alert("上传成功：" + data.info);
+            }
+        }
+    });
+});
+</script>
+
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>题目数据</h3>
+    </div>
+
+    <div class="content-box-content">
+        <ul class="shortcut-buttons-set">
+            <if condition="$prob_data['has_input'] eq true">
+            <li>
+                <a class="shortcut-button" target="_blank" href="{:U('Problem/get_data')}?problemid={$prob_data.problemid}&type=in">
+                    <span>
+                        <img src="{$HC.adminroot}/resources/images/icons/paper_content_pencil_48.png" alt="input" /><br />
+                        输入数据: data.in
+                    </span>
+                </a>
+            </li>
+            </if>
+
+            <if condition="$prob_data['has_output'] eq true">
+            <li>
+                <a class="shortcut-button" target="_blank" href="{:U('Problem/get_data')}?problemid={$prob_data.problemid}&type=out">
+                    <span>
+                        <img src="{$HC.adminroot}/resources/images/icons/paper_content_pencil_48.png" alt="output" /><br />
+                        输出数据: data.out
+                    </span>
+                </a>
+            </li>
+            </if>
+        </ul>
+        <div class="cl"></div>
+        <div style="border-top: 1px solid #ccc; padding-top: 5px;">
+            <input id="file_upload" name="file_upload" type="file" />
+            <a style="margin-top: 5px;" class="button" href="javascript:$('#file_upload').uploadifyUpload();">嘛~ 上传我吧~</a>
+        </div>
+    </div>
+</div>
+
+
+<include file="Public:footer" />

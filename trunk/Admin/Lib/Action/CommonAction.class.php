@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * NBUT Online Judge System
  *
@@ -44,7 +44,7 @@ class CommonAction extends Action
         $this->MConfig = D("Config", "ConfigModel");
 
         /** 初始化管理员信息,如果没有登录则滚去登录 */
-        if ($this->getAdminInformation() === null && $this->getActionName() != 'Security') {
+        if ($this->getAdminInformation() === null && $this->getActionName() != 'Security' && strtolower(ACTION_NAME) != "upload_std_data") {
             redirect(U("Security/login"));
             die(0);
         }

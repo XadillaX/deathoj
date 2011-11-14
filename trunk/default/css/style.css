@@ -1,5 +1,5 @@
 #think_page_trace {
-    /*display: none;*/
+    display: none;
     color: #000;
     line-height: 18px;
     width: 960px;
@@ -78,6 +78,7 @@ a:hover { text-decoration: underline; }
 
 #body-wrapper {
     margin: 5px 5px 5px 5px;
+    padding-bottom: 20px;
     text-shadow: 1px 1px 0px #23b1ff;
 }
 

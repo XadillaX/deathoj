@@ -46,7 +46,12 @@ return array(
     WEB_ROOT_DIR            => "/oj",
 
     /** 输入、输出数据地址 */
+    MAX_DATA_SIZE           => 10240,
     IO_DATA_DIR             => "/oj/__data#",
-    IO_DATA_PATH             => str_replace("\\", "/", substr(__FILE__, 0, -39)) . "__data#/",
+    IO_DATA_PATH             => dirname(dirname(dirname(__FILE__))) . "\\__data#",
+
+    /** 分页设置 */
+    PROBLEM_NUM_PER_PAGE    => 20,
+    PROBLEM_SET_PER_PAGE    => 100
 );
 ?>

@@ -1,0 +1,54 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>[{$info["index"]}] {$info["title"]}</h3></li>
+        <li id="limit">
+            时间限制: {$info["timelimit"]} ms　内存限制: {$info["memorylimit"]} K
+        </li>
+
+        <!-- 正文内容 -->
+        <li class="titles" id="description-title">问题描述</li>
+        <li class="contents" id="description">
+            <div>
+                {$info["description"]}
+            </div>
+        </li>
+
+        <li class="titles" id="input-title">输入</li>
+        <li class="contents" id="input">
+            <div>
+                {$info["input"]}
+            </div>
+        </li>
+
+        <li class="titles" id="output-title">输出</li>
+        <li class="contents" id="output">
+            <div>
+                {$info["output"]}
+            </div>
+        </li>
+
+        <li class="titles" id="sampleinput-title">样例输入</li>
+        <li class="contents" id="sampleinput">
+            <pre>{$info["sampleinput"]}</pre>
+        </li>
+
+        <li class="titles" id="sampleoutput-title">样例输出</li>
+        <li class="contents" id="sampleoutput">
+            <pre>{$info["sampleoutput"]}</pre>
+        </li>
+
+        <li class="titles" id="hint-title">提示</li>
+        <li class="contents" id="hint">
+            <pre><if condition="$info['hint'] neq ''">{$info["hint"]}<else />无</if></pre>
+        </li>
+
+        <li class="titles" id="source-title">来源</li>
+        <li class="contents" id="source">
+            <pre><if condition="$info['source'] neq ''">{$info["source"]}<else />本站或者转载</if></pre>
+        </li>
+    </ul>
+</div>
+<include file="Public:footer" />
