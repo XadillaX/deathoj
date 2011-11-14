@@ -1,0 +1,45 @@
+<php>
+function get_percent($ac, $sub)
+{
+    if($ac == 0) return "0.00%";
+    else
+    {
+        $result;
+        $result = sprintf("%.2f%%", ($ac / $sub) * 100);
+        return $result;
+    }
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center;" width="50">编号</th>
+                <th style="text-align: center;">标题</th>
+                <th style="text-align: center;" width="200">AC / 提交 (通过率)</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    {$page_str}
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+        <foreach name="prob_list" item="list">
+            <tr>
+                <td style="text-align: center;" class="br">{$list.index}</td>
+                <td class="br"><a href="{:U('Problem/view')}?id={$list.index}">{$list.title}</a></td>
+                <td style="text-align: center;">{$list.solved} / {$list.submit} ({:get_percent($list["solved"], $list["submit"])})</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<include file="Public:footer" />

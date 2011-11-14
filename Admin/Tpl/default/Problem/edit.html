@@ -6,7 +6,7 @@
 
     <div class="content-box">
         <div class="content-box-header">
-            <h3>添加新题</h3>
+            <h3>修改题目</h3>
         </div>
 
         <div class="content-box-content">
@@ -14,22 +14,22 @@
                 <fieldset>
                     <p>
                         <label>题目标题</label>
-                        <input class="text-input small-input" type="text" id="title" name="title" /><br />
+                        <input class="text-input small-input" type="text" id="title" name="title" value="{$data['title']}" /><br />
                     </p>
 
                     <p>
                         <label>时间限制</label>
-                        <input class="text-input small-input" value="1000" type="text" id="timelimit" name="timelimit" /> 毫秒<br />
+                        <input class="text-input small-input" value="1000" type="text" id="timelimit" name="timelimit" value="{$data['timelimit']}" /> 毫秒<br />
                     </p>
 
                     <p>
                         <label>内存限制</label>
-                        <input class="text-input small-input" value="65535" type="text" id="memorylimit" name="memorylimit" /> kb<br />
+                        <input class="text-input small-input" value="65535" type="text" id="memorylimit" name="memorylimit" value="{$data['memorylimit']}" /> kb<br />
                     </p>
 
                     <p>
                         <label>题目描述</label>
-                        <textarea id="description"> </textarea><br />
+                        <textarea id="description">{$data["description"]}</textarea><br />
 
                         <script type="text/javascript">
                         var editor = new baidu.editor.ui.Editor({
@@ -43,32 +43,32 @@
 
                     <p>
                         <label>输入格式</label>
-                        <textarea name="input" id="input" rows="10" cols="10"></textarea><br />
+                        <textarea name="input" id="input" rows="10" cols="10">{$data["input"]}</textarea><br />
                     </p>
 
                     <p>
                         <label>输出格式</label>
-                        <textarea name="output" id="output" rows="10" cols="10"></textarea><br />
+                        <textarea name="output" id="output" rows="10" cols="10">{$data["output"]}</textarea><br />
                     </p>
 
                     <p>
                         <label>样例输入</label>
-                        <textarea name="sampleinput" id="sampleinput" rows="10" cols="10"></textarea><br />
+                        <textarea name="sampleinput" id="sampleinput" rows="10" cols="10">{$data["sampleinput"]}</textarea><br />
                     </p>
 
                     <p>
                         <label>样例输出</label>
-                        <textarea name="sampleoutput" id="sampleoutput" rows="10" cols="10"></textarea><br />
+                        <textarea name="sampleoutput" id="sampleoutput" rows="10" cols="10">{$data["sampleoutput"]}</textarea><br />
                     </p>
 
                     <p>
                         <label>提示</label>
-                        <textarea name="hint" id="hint" rows="10" cols="10"></textarea><br />
+                        <textarea name="hint" id="hint" rows="10" cols="10">{$data["hint"]}</textarea><br />
                     </p>
 
                     <p>
                         <label>来源</label>
-                        <textarea name="source" id="source" rows="10" cols="10"></textarea><br />
+                        <textarea name="source" id="source" rows="10" cols="10">{$data["source"]}</textarea><br />
                     </p>
 
                     <p>
@@ -78,7 +78,7 @@
                             <div class="fl" id="error-message">不明物体祈祷中...</div>
                             <div class="cl"></div>
                         </div>
-                        <input class="button" type="button" id="submit" value="嘛，添加 - -|||" />
+                        <input class="button" type="button" id="submit" value="嘛，修改 - -|||" />
                     </p>
                 </fieldset>
             </form>
@@ -86,7 +86,6 @@
     </div>
 
     <script type="text/javascript">
-    /** AJAX 提交的货~ */
     function ajax_submit()
     {
         /** 信息窗 */
@@ -110,7 +109,7 @@
 
         var json_text = JSON.stringify(json_array);
 
-        $.post("{:U('Problem/chkadd')}", { "data" : json_text }, function(html){
+        $.post("{:U('Problem/chkedit')}?problemid={$data['problemid']}", { "data" : json_text }, function(html){
             var data = JSON.parse(html);
 
             $("#error-tip #error-loading").css("display", "none");
@@ -126,7 +125,6 @@
         });
     }
 
-    /** 函数绑定以及其它东西们 */
     $(function(){
         $("#submit").click(function(){
             ajax_submit();

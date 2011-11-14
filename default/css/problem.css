@@ -1,0 +1,119 @@
+#prob-list-wrapper {
+    background-color: #b6ecff;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    border-radius: 15px 15px 15px 15px;
+    -ms-border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    -khtml-border-radius: 15px 15px 15px 15px;
+
+    /** 阴影 */
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+
+    white-space: normal;
+}
+
+#prob-list-wrapper table {
+    padding: 5px 5px 5px 5px;
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+#prob-list-wrapper table thead {
+    line-height: 30px;
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 0px white;
+}
+
+#prob-list-wrapper table tbody {
+    line-height: 30px;
+    color: #444;
+    text-shadow: 1px 1px 0px white;
+}
+
+#prob-list-wrapper table th {
+    border-bottom: 1px solid #fff;
+}
+
+#prob-list-wrapper table td {
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #fff;
+}
+
+#prob-list-wrapper table .br {
+    border-right: 1px solid #fff;
+}
+
+#prob-list-wrapper table tfoot {
+    color: #444;
+    text-shadow: 1px 1px 0px white;
+}
+
+.xpage {
+    text-align: center;
+    line-height: 20px;
+}
+
+#prob-list-wrapper a { display: block; color: #666; }
+
+/** 题目内页 */
+#prob-info-ul {
+    padding: 10px 10px 10px 10px;
+    color: #444;
+    text-shadow: 1px 1px 0px white;
+    line-height: 18px;
+}
+
+#title h3 {
+    color: #ff0060;
+    font-size: 18px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+#limit {
+    text-align: center;
+    border-bottom: 1px solid #ff7800;
+}
+
+#prob-info-ul .titles {
+    list-style-type: circle;
+    list-style-position: inside;
+    line-height: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#prob-info-ul .contents {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 14px;
+    color: #000;
+    line-height: 25px;
+
+    margin-bottom: 20px;
+}
+
+#prob-info-ul p {
+    word-break: break-all;
+}
+
+.contents pre {
+    border: 1px solid #44ccff;
+    padding: 5px;
+    background: #e0f7ff;
+
+    font-family: "consolas", "微软雅黑", "黑体", "宋体";
+    line-height: 16px;
+}

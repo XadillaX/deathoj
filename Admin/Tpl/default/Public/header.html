@@ -20,6 +20,7 @@
     <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.datePicker.js"></script>
     <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.date.js"></script>
     <!--[if IE]><script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.bgiframe.js"></script><![endif]-->
+    <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/json2.js"></script>
 
     <script type="text/javascript" src="{$HC.adminroot}/resources/scripts/simpla.jquery.configuration.js"></script>
 
@@ -88,7 +89,7 @@
                     <li>
                         <a action_class="problem" href="#" class="nav-top-item">題目相關 - PROBLEM</a>
                         <ul>
-                            <li><a sub_action="list" href="#">題目列表 - Problem List</a></li>
+                            <li><a sub_action="list" href="{:U('Problem/catalog')}">題目列表 - Problem List</a></li>
                             <li><a sub_action="new" href="{:U('Problem/add')}">添加題目 - New Problem</a></li>
                         </ul>
                     </li>
@@ -102,7 +103,7 @@
                     <li>
                         <a action_class="contest" href="#" class="nav-top-item">賽/習相關 - CONTEST</a>
                         <ul>
-                            <li><a sub_action="practice" href="#">練習題庫 - Practice List</a></li>
+                            <li><a sub_action="practice" href="{:U('Practice/index')}">練習題庫 - Practice List</a></li>
                             <li><a sub_action="contest" href="#">比賽列表 - Contest List</a></li>
                             <li><a sub_action="new" href="#">添加比賽 - New Contest</a></li>
                         </ul>

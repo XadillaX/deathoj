@@ -1,0 +1,187 @@
+<include file="Public:header" />
+
+<script type="text/javascript">
+function old_show_edit(obj)
+{
+    $(obj).find("span").css("display", "none");
+    $(obj).find("input").css("display", "inline-block");
+    $(obj).find(".prob-edit").css("display", "none");
+}
+
+function ajax_edit(obj)
+{
+    var index = obj.find(".index").val();
+    var problemid = obj.find(".problemid").val();
+    var contestproblemid = obj.attr("id").substr(5);
+
+    /** AJAX提交么 */
+    $.post("{:U('Practice/edit_prob')}", { "index" : index, "problemid" : problemid , "contestproblemid" : contestproblemid }, function(reply){
+        /** 解析为JSON对象么~ */
+        var data = JSON.parse(reply);
+
+        if(data.status == 0)
+        {
+            alert(data.info);
+        }
+        else
+        {
+            /** HTML元素显示以及隐藏的操作 */
+            obj.find("input").css("display", "none");
+            obj.children().first().find("span").html(index).slideDown("fast");
+            obj.children().first().next().find("span").html(problemid).slideDown("fast");
+            obj.find(".prob-edit").css("display", "inline-block");
+
+            alert("题目编辑成功。");
+        }
+    });
+}
+
+function ajax_add(obj)
+{
+    var index = obj.find(".index").val();
+    var problemid = obj.find(".problemid").val();
+
+    /** AJAX提交么~ */
+    $.post("{:U('Practice/add_prob')}", { "index" : index, "problemid" : problemid }, function(reply){
+        /** 解析为JSON对象么~ */
+        var data = JSON.parse(reply);
+
+        if(data.status == 0)
+        {
+            alert(data.info);
+        }
+        else
+        {
+            /** HTML元素显示以及隐藏的操作 */
+            obj.removeClass("new-prob");
+            obj.attr("id", "prob-" + data.data);
+            obj.find("input").css("display", "none");
+            obj.children().first().append("<span>" + index + "</span>");
+            obj.children().first().next().append("<span>" + problemid + "</span>");
+            obj.children().last().append("<input type='button' class='button prob-edit' value='编辑' />");
+            obj.find(".index").val(index);
+            obj.find(".problemid").val(problemid);
+            obj.find(".new-add").remove();
+            obj.find(".new-cancel").remove();
+            obj.children().last().append("<input style='display: none;' type='button' class='edit-ok button' value='确定'> <input style='display: none;' type='button' class='edit-cancel button' value='取消'>");
+
+            /** 绑定"编辑"函数 */
+            obj.find(".prob-edit").click(function(){
+                old_show_edit(obj);
+            });
+            obj.find(".edit-ok").click(function(){
+                ajax_edit(obj);
+            });
+
+            alert("题目添加成功！");
+        }
+    });
+}
+
+/** 新题目表单——函数重绑定 */
+function new_prob_form_rebind(obj)
+{
+    /** 取消按钮——删除这一列 */
+    obj.find(".new-cancel").click(function(){
+        $(this).parent().parent().remove();
+        $("#prob-list-body tr:even").each(function(){
+            $(this).addClass("altRow alt-row");
+        });
+        $("#prob-list-body tr:odd").each(function(){
+            $(this).removeClass("altRow alt-row");
+        });
+    });
+
+    /** 确认添加 */
+    obj.find(".new-add").click(function(){
+        ajax_add($(this).parent().parent());
+        $("#prob-list-body tr:even").each(function(){
+            $(this).addClass("altRow alt-row");
+        });
+        $("#prob-list-body tr:odd").each(function(){
+            $(this).removeClass("altRow alt-row");
+        });
+    });
+}
+
+$(function(){
+    /** TODO: 编辑框的取消按钮。 */
+
+    /** 初始化函数绑定 */
+    $(".prob-edit").click(function(){
+        old_show_edit($(this).parent().parent());
+    });
+    $(".edit-ok").click(function(){
+        ajax_edit($(this).parent().parent());
+    });
+
+    /** 添加题目 */
+    $("#add-prob").click(function(){
+        $("#prob-list-body").append("<tr class='new-prob'><td></td><td></td><td></td></tr>");
+        var obj = $("#prob-list-body").children().last();
+
+        $("#prob-list-body tr:even").each(function(){
+            $(this).addClass("altRow alt-row");
+        });
+        $("#prob-list-body tr:odd").each(function(){
+            $(this).removeClass("altRow alt-row");
+        });
+        obj.children().first().append("<input class='index text-input' type='text' />");
+        obj.children().first().next().append("<input class='problemid text-input' type='text' />");
+        obj.children().last().append("<input type='button' class='new-add button' value='确定'> <input type='button' class='new-cancel button' value='取消'>");
+
+        /** 重绑定函数 */
+        new_prob_form_rebind(obj);
+    });
+});
+</script>
+
+<!-- ~~ 不割了 ~~ -->
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>{:$contest_info["title"]}</h3>
+    </div>
+
+    <div class="content-box-content">
+        <form>
+        <table>
+            <thead>
+                <tr>
+                    <th>索引编号</th>
+                    <th>题目编号</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <input type="button" class="button" id="add-prob" value="添加" />
+                    </td>
+                </tr>
+            </tfoot>
+
+            <tbody id="prob-list-body">
+            <foreach name="prob_list" item="list">
+                <tr id="prob-{$list.contestproblemid}">
+                    <td>
+                        <input value="{$list.index}" style="display: none;" class='index text-input' type='text' />
+                        <span>{$list.index}</span>
+                    </td>
+                    <td>
+                        <input value="{$list.problemid}" style="display: none;" class='problemid text-input' type='text' />
+                        <span>{$list.problemid}</span>
+                    </td>
+                    <td>
+                        <input style="display: none;" type='button' class='edit-ok button' value='确定'> <input style="display: none;" type='button' class='edit-cancel button' value='取消'>
+                        <input type="button" class="button prob-edit" value="编辑" />
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+<include file="Public:footer" />
+        

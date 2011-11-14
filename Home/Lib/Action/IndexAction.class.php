@@ -26,4 +26,18 @@ class IndexAction extends CommonAction
         
         $this->display();
     }
+
+    /**
+     * 跑到某个题目里去
+     * $Id$
+     * @return void
+     */
+    public function gotoproblem()
+    {
+        $contest_problem_model = new ContestProblemModel("contestproblem");
+        $info = $contest_problem_model->get_problem_by_index(1, $_POST["problemid"]);
+
+        if(false == $info) redirect(__ROOT__);
+        else redirect(U("Problem/view") . "?id={$_POST['problemid']}");
+    }
 }

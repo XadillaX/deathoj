@@ -1,7 +1,30 @@
+.fl { float: left; }
+.fr { float: right; }
+.cl { clear: both; }
+
 #think_page_trace {
     display: none;
 }
 
 #sidebar #main-nav li {
     font-family: "微软雅黑", "黑体", "Arial";
+}
+
+#error-tip {
+    background: #fffaa5;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 16px;
+    display: none;
+
+    color: #44ccff;
+    text-shadow: 1px 1px 0px #fff;
+}
+
+#goto-page {
+    width: 20px;
 }
