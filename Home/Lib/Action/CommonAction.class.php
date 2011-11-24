@@ -107,6 +107,10 @@ class CommonAction extends Action
 
             /** 赋值 */
             $this->user_information = $temp;
+            if($this->user_information["language"] == 0)
+            {
+                $this->user_information["language"] = 1;
+            }
         }
     }
 

@@ -1,6 +1,14 @@
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
 
+<script type="text/javascript">
+$(function(){
+    $(".titles").click(function(){
+        $(this).next().slideToggle("normal");
+    });
+});
+</script>
+
 <div id="prob-list-wrapper">
     <ul id="prob-info-ul">
         <li id="title"><h3>[{$info["index"]}] {$info["title"]}</h3></li>
@@ -49,6 +57,29 @@
         <li class="contents" id="source">
             <pre><if condition="$info['source'] neq ''">{$info["source"]}<else />本站或者转载</if></pre>
         </li>
+
+        <li class="titles" id="operation-title">操作</li>
+        <li class="contents" id="source">
+            <div>
+                <input class="block-btn" type="button" id="submit" value="提交" />
+                <input class="block-btn" type="button" id="statistic" value="统计" />
+                <input class="block-btn" type="button" id="back" value="返回" />
+            </div>
+        </li>
     </ul>
 </div>
+
+<script type="text/javascript">
+$(function(){
+    $("#submit").click(function(){
+        window.location = "{:U('Problem/submit')}?id={$info['index']}";
+    });
+    $("#statistic").click(function(){
+        window.location = "{:U('Problem/statistic')}?id={$info['index']}";
+    });
+    $("#back").click(function(){
+        window.history.go(-1);
+    });
+});
+</script>
 <include file="Public:footer" />

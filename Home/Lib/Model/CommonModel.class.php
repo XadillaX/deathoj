@@ -7,14 +7,15 @@
  * $Id: CommonModel.class.php 16 2011-10-31 06:31:11Z konakona.xiong@gmail.com $
  */
  
-class CommonModel extends Model{
+class CommonModel extends Model
+{
     protected function HtmlEncode($fString)
     {
         if($fString!="")
         {
              $fString = str_replace( '>', '&gt;',$fString);
              $fString = str_replace( '<', '&lt;',$fString);
-             $fString = str_replace( chr(32), '&nbsp;',$fString);
+             //$fString = str_replace( chr(32), '&nbsp;',$fString);
              $fString = str_replace( chr(13), ' ',$fString);
              $fString = str_replace( chr(10) & chr(10), '<br>',$fString);
              $fString = str_replace( chr(10), '<BR>',$fString);

@@ -77,6 +77,8 @@ class ContestProblemModel extends CommonModel
         {
             $result[0]["input"] = $this->HtmlEncode($result[0]["input"]);
             $result[0]["output"] = $this->HtmlEncode($result[0]["output"]);
+            $result[0]["description"] = str_replace('&nbsp;', chr(32), $result[0]["description"]);
+
             return $result[0];
         }
     }
@@ -118,6 +120,21 @@ class ContestProblemModel extends CommonModel
             "index" => $index,
             "problemid" => $problemid
         );
+        return $this->where($condition)->save($data);
+    }
+
+    /**
+     * 新增一个submit
+     * @param $contestid
+     * @param $index
+     * @return bool
+     */
+    public function add_submit($contestid, $index)
+    {
+        $condition["contestid"] = $contestid;
+        $condition["index"] = $index;
+        $data["submit"] = array("exp", "`submit` + 1");
+
         return $this->where($condition)->save($data);
     }
 }

@@ -20,7 +20,12 @@ function ajax_login()
         if("1" == html)
         {
             $("#error-tip #error-message").html("着陆成功，正在转向...");
-            window.location.href = "__ROOT__";
+            window.location.href =
+            <if condition="$_GET['url'] eq ''">
+                "__ROOT__"
+            <else />
+                '{:urldecode($_GET["url"])}'
+            </if>;
         }
         else
         {

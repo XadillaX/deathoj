@@ -26,4 +26,27 @@ class ContestModel extends CommonModel
         if(false == $result) return false;
         else return $result[0];
     }
+
+    /**
+     * 获取下一个submitid
+     * @param $contestid
+     * @return bool|int
+     */
+    public function get_next_submitid($contestid)
+    {
+        $condition = array("contestid" => $contestid);
+        $result = $this->where($condition)->select();
+
+        if(false == $result)
+        {
+            return false;
+        }
+        else
+        {
+            $data["submit"] = array("exp", "`submit` + 1");
+            $this->where($condition)->save($data);
+            
+            return $result[0]["submit"];
+        }
+    }
 }
