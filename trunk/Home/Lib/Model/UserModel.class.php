@@ -107,4 +107,32 @@ class UserModel extends CommonModel {
     {
         return "http://1.gravatar.com/avatar/" . md5(strtolower($email)) . ".jpg?d=mm&size=" . $size;
     }
+
+    /**
+     * 新增submit
+     * @param $userid
+     * @return bool
+     */
+    public function add_submit($userid)
+    {
+        $condition = array("userid" => $userid);
+        $data["submit"] = array("exp", "submit + 1");
+
+        return $this->where($condition)->save($data);
+    }
+
+    /**
+     * 修改用户默认语言
+     * @version $Id$
+     * @param $userid
+     * @param $languageid
+     * @return bool
+     */
+    public function change_default_language($userid, $languageid)
+    {
+        $condition = array("userid" => $userid);
+        $data["language"] = $languageid;
+
+        return $this->where($condition)->save($data);
+    }
 }

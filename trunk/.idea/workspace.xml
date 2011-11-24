@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/Home/Lib/Model/SubmitModel.class.php" line="71" mnemonic="9" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b098f845-2070-42d1-b9b3-fb3eb9a98ce9" name="Default" comment="" />
     <ignored path="oj.iws" />
@@ -23,55 +26,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="ContestProblemModel.class.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ContestProblemModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="5" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.7279279">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProblemModel.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ProblemModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="12" selection-start="1407" selection-end="1493" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ProblemAction.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Home/Lib/Action/ProblemAction.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="37" selection-start="2125" selection-end="2125" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContestProblemModel.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ContestProblemModel.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="71" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommonModel.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/CommonModel.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="8" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/view.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="45" selection-start="1626" selection-end="1626" vertical-scroll-proportion="0.6863469">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="problem.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/default/css/problem.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="22" selection-start="2228" selection-end="2228" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IndexAction.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/Lib/Action/IndexAction.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
+            <state line="174" column="100" selection-start="5176" selection-end="5176" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,16 +56,34 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/default/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="17" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
+            <state line="59" column="1" selection-start="1075" selection-end="1075" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/index.html">
+      <file leaf-file-name="problem.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/css/problem.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="332" selection-end="360" vertical-scroll-proportion="-9.807693">
+            <state line="110" column="0" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubmitModel.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/SubmitModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="14" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserModel.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Home/Lib/Model/UserModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="128" column="19" selection-start="3310" selection-end="3310" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,22 +103,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Home/Lib/Model/ContestModel.class.php" />
-        <option value="$PROJECT_DIR$/Admin/Tpl/default/Public/header.html" />
-        <option value="$PROJECT_DIR$/Admin/Lib/Action/PracticeAction.class.php" />
-        <option value="$PROJECT_DIR$/Home/Conf/config.php" />
-        <option value="$PROJECT_DIR$/Home/Tpl/default/Public/header.html" />
-        <option value="$PROJECT_DIR$/Home/Runtime/Cache/afb8dd53e644121d104dd01c6cd7e8ec.php" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/Home/Tpl/default/Problem/index.html" />
-        <option value="$PROJECT_DIR$/Admin/Tpl/default/Practice/index.html" />
-        <option value="$PROJECT_DIR$/Home/Lib/Action/ProblemAction.class.php" />
         <option value="$PROJECT_DIR$/default/css/style.css" />
-        <option value="$PROJECT_DIR$/Home/Lib/Action/IndexAction.class.php" />
+        <option value="$PROJECT_DIR$/Home/Tpl/default/Problem/view.html" />
+        <option value="$PROJECT_DIR$/Home/Tpl/default/User/login.html" />
+        <option value="$PROJECT_DIR$/Home/Lib/Action/CommonAction.class.php" />
+        <option value="$PROJECT_DIR$/Home/Conf/config.php" />
+        <option value="$PROJECT_DIR$/Home/Tpl/default/Problem/status.html" />
+        <option value="$PROJECT_DIR$/Home/Tpl/default/Problem/submit.html" />
+        <option value="$PROJECT_DIR$/Home/Lib/Model/ContestModel.class.php" />
+        <option value="$PROJECT_DIR$/Home/Lib/Model/SubmitModel.class.php" />
+        <option value="$PROJECT_DIR$/Home/Tpl/default/Public/header.html" />
+        <option value="$PROJECT_DIR$/Home/Lib/Model/UserModel.class.php" />
+        <option value="$PROJECT_DIR$/Home/Lib/Action/ProblemAction.class.php" />
         <option value="$PROJECT_DIR$/default/css/problem.css" />
         <option value="$PROJECT_DIR$/Home/Lib/Model/CommonModel.class.php" />
+        <option value="$PROJECT_DIR$/Home/Lib/Model/ProblemModel.class.php" />
         <option value="$PROJECT_DIR$/Home/Lib/Model/ContestProblemModel.class.php" />
-        <option value="$PROJECT_DIR$/Home/Tpl/default/Problem/view.html" />
       </list>
     </option>
   </component>
@@ -154,6 +148,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -183,14 +178,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tpl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -244,29 +231,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Action" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oj" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oj" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Home" />
+              <option name="myItemId" value="default" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -283,10 +248,13 @@
               <option name="myItemId" value="default" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -301,6 +269,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\XAMPP\htdocs\oj\Home\Tpl\default\Problem" />
       <recent name="D:\XAMPP\htdocs\oj\Home\Lib\Plugin" />
       <recent name="D:\XAMPP\htdocs\oj\Admin\Lib\Model" />
       <recent name="D:\XAMPP\htdocs\oj\Admin\Tpl\default\Problem" />
@@ -430,22 +399,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32953683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23310554" sideWeight="0.40813008" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20501138" sideWeight="0.42276424" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23310554" sideWeight="0.5788618" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20501138" sideWeight="0.56422764" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -494,114 +463,96 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Admin/Lib/Action/PracticeAction.class.php">
+    <entry file="file://$PROJECT_DIR$/Admin/Lib/Model/ContestModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="44" selection-start="2282" selection-end="2282" vertical-scroll-proportion="1.7059859">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin/Lib/Action/ProblemAction.class.php">
+    <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/submit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="8" selection-start="1301" selection-end="1714" vertical-scroll-proportion="0.059859157">
-          <folding />
-        </state>
+        <state line="19" column="12" selection-start="667" selection-end="667" vertical-scroll-proportion="0.40328467" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/default/css/login.css">
+    <entry file="file://$PROJECT_DIR$/Admin/Tpl/default/Problem/add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="23" selection-start="172" selection-end="178" vertical-scroll-proportion="0.28960818">
-          <folding />
-        </state>
+        <state line="113" column="40" selection-start="4748" selection-end="4748" vertical-scroll-proportion="0.43430656" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/default/css/register.css">
+    <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/status.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="23" selection-start="195" selection-end="195" vertical-scroll-proportion="-0.11584327">
-          <folding />
-        </state>
+        <state line="43" column="73" selection-start="1401" selection-end="1401" vertical-scroll-proportion="-7.923077" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/Home/Conf/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.55025554">
-          <folding />
-        </state>
+        <state line="55" column="23" selection-start="1518" selection-end="1537" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ContestModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="40" selection-start="1063" selection-end="1063" vertical-scroll-proportion="1.0834754" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="131" selection-end="279" vertical-scroll-proportion="-1.9615384" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Public/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="103" selection-start="2654" selection-end="2663" vertical-scroll-proportion="-15.038462">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Admin/Tpl/default/Practice/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="13" selection-start="3430" selection-end="3430" vertical-scroll-proportion="0.310219">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="332" selection-end="360" vertical-scroll-proportion="-9.807693">
-          <folding />
-        </state>
+        <state line="58" column="32" selection-start="2384" selection-end="2384" vertical-scroll-proportion="0.52737224" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/default/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="17" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
+        <state line="59" column="1" selection-start="1075" selection-end="1075" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Home/Lib/Model/SubmitModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="14" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Home/Lib/Action/CommonAction.class.php">
+    <entry file="file://$PROJECT_DIR$/Home/Lib/Model/UserModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/Lib/Action/IndexAction.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0">
+        <state line="128" column="19" selection-start="3310" selection-end="3310" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/default/css/problem.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="22" selection-start="2228" selection-end="2228" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/Lib/Action/ProblemAction.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="37" selection-start="2125" selection-end="2125" vertical-scroll-proportion="0.0">
+        <state line="110" column="0" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Home/Lib/Model/CommonModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="8" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0">
+        <state line="10" column="0" selection-start="190" selection-end="190" vertical-scroll-proportion="0.11971831">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Home/Lib/Action/ProblemAction.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="100" selection-start="5176" selection-end="5176" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ProblemModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="12" selection-start="1407" selection-end="1493" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Home/Lib/Model/ContestProblemModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="71" selection-start="2269" selection-end="2269" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/Tpl/default/Problem/view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="45" selection-start="1626" selection-end="1626" vertical-scroll-proportion="0.6863469">
+        <state line="83" column="5" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.7279279">
           <folding />
         </state>
       </provider>

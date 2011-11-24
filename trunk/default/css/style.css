@@ -163,3 +163,14 @@ a:hover { text-decoration: underline; }
 #query-infor {
     color: #aaa;
 }
+
+.block-btn {
+    background: #fff;
+    color: #44ccff;
+    text-shadow: 1px 1px 0px #eee;
+    width: 100px;
+    height: 25px;
+    font-weight: bold;
+    border: 1px solid #44ccff;
+    cursor: pointer;
+}

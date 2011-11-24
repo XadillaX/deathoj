@@ -58,6 +58,10 @@ class ProblemModel extends CommonModel
         $condition = array("problemid" => $problemid);
         $result = $this->where($condition)->select();
         if(false == $result) return false;
-        else return $result[0];
+        else
+        {
+            $result[0]["description"] = str_replace(chr(32), '&nbsp;', $result[0]["description"]);
+            return $result[0];
+        }
     }
 }

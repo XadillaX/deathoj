@@ -1,0 +1,56 @@
+<php>
+function get_result_color($result)
+{
+    switch($result)
+    {
+    case "QUEUING": return "#ff7800";
+    case "ACCEPTED": return "red";
+    default: return "green";
+    }
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center;">RUNID</th>
+                <th style="text-align: center;">用户</th>
+                <th style="text-align: center;">题号</th>
+                <th style="text-align: center;">状态</th>
+                <th style="text-align: center;">运行时间(MS)</th>
+                <th style="text-align: center;">运行内存(K)</th>
+                <th style="text-align: center;">代码长度</th>
+                <th style="text-align: center;">语言</th>
+                <th style="text-align: center;">提交时间</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="10">
+                    {$page_str}
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+        <foreach name="submit_list" item="list">
+            <tr>
+                <th style="text-align: center;">{$list.submitid}</th>
+                <th style="text-align: center;">{$list.username}</th>
+                <th style="text-align: center;"><a style="color: #0072ff;" href="{:U('Problem/view')}?id={$list.index}">{$list.index}</a></th>
+                <th style="text-align: center;"><span style="color: {:get_result_color($list["result"])}">{$list.result}</span></th>
+                <th style="text-align: center;">{$list.time}</th>
+                <th style="text-align: center;">{$list.memory}</th>
+                <th style="text-align: center;">{$list.length}</th>
+                <th style="text-align: center;">{$list.language}</th>
+                <th style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</th>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<include file="Public:footer" />

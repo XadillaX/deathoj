@@ -93,6 +93,8 @@
 
     padding-left: 10px;
     padding-right: 10px;
+
+    cursor: pointer;
 }
 
 #prob-info-ul .contents {
@@ -106,7 +108,7 @@
 }
 
 #prob-info-ul p {
-    word-break: break-all;
+
 }
 
 .contents pre {
@@ -116,4 +118,59 @@
 
     font-family: "consolas", "微软雅黑", "黑体", "宋体";
     line-height: 16px;
+}
+
+.ipt-div {
+    background: #fff;
+    border: 1px solid #8ee1ff;
+    padding: 3px 3px 3px 3px;
+    color: #8ee1ff;
+}
+.ipt-div span {
+    margin-right: 5px;
+}
+.ipt-div input, .ipt-div select {
+    background: none;
+    border: none;
+    color: #000;
+    font-family: "微软雅黑", "黑体", "宋体", "Arial";
+    width: 150px;
+}
+
+#code-wrapper {
+    height: 270px;
+    color: #00ff0c;
+    border: 2px solid #fff;
+    padding: 15px 15px 15px 15px;
+
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+    text-shadow: none;
+    font-weight: normal;
+    font-size: 12px;
+
+    border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    font-family: "consolas", "微软雅黑", "黑体", "宋体", "Arial";
+
+    background: #000;
+}
+
+#code-textarea {
+    padding: 0 0 0 0;
+    width: 830px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+
+    background: #000;
+    border: none;
+
+    font-family: "consolas", "微软雅黑", "黑体", "宋体", "Arial";
+    color: #00ff0c;
+
+    overflow-y: auto;
 }

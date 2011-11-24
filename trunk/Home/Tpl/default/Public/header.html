@@ -31,7 +31,7 @@ $(function(){
         <if condition="null eq $current_user">
         <!-- 木有登录的时候 -->
         <div id="top-right" class="fr">
-            <a href="{:U('User/register')}" title="Register">注册</a>　<a href="{:U('User/login')}" title="Register">登录</a>　帮助
+            <a href="{:U('User/register')}" title="Register">注册</a>　<a href="{:U('User/login')}?url={:urlencode(__SELF__)}" title="Register">登录</a>　帮助
         </div>
         <else />
         <!-- 登录了的时候 -->
@@ -54,7 +54,7 @@ $(function(){
                 <ul>
                     <li><a href="__ROOT__" title="首页">首页</a></li>
                     <li><a href="{:U('OnlineJudge://Problem@')}" title="题库">题库</a></li>
-                    <li><a href="#" title="运行状态">运行状态</a></li>
+                    <li><a href="{:U('Problem/status')}" title="运行状态">运行状态</a></li>
                     <li><a href="#" title="比赛">比赛</a></li>
                     <li><a href="#" title="用户">用户</a></li>
                 </ul>
