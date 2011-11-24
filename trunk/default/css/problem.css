@@ -174,3 +174,7 @@
 
     overflow-y: auto;
 }
+
+#xpage a {
+    display: inline;
+}

@@ -55,6 +55,30 @@ class SubmitModel extends CommonModel
     }
 
     /**
+     * 获取提交信息
+     * @version $Id$
+     * @param $contestid
+     * @param $submitid
+     * @param $userid
+     * @return bool|array
+     */
+    public function get_submit_info($contestid, $submitid)
+    {
+        $PREFIX = C("DB_PREFIX");
+        $condition = array("contestid" => $contestid, "submitid" => $submitid);
+
+        $data = $this->where($condition)
+                ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
+                ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+                ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+                ->select();
+        
+        if(false == $data) return false;
+        else return $data[0];
+    }
+
+    /**
      * 根据分页信息获取运行结果
      * @param $contestid
      * @param $page
@@ -70,6 +94,7 @@ class SubmitModel extends CommonModel
                 ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
                 ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
                 ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
                 ->limit((($page - 1) * $per_page) . ", " . $per_page)
                 ->order("`submitid` desc")
                 ->select();
