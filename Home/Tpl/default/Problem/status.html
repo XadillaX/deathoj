@@ -30,7 +30,7 @@ function get_result_color($result)
 
         <tfoot>
             <tr>
-                <td colspan="10">
+                <td colspan="9" id="page_td">
                     {$page_str}
                 </td>
             </tr>
@@ -39,15 +39,36 @@ function get_result_color($result)
         <tbody>
         <foreach name="submit_list" item="list">
             <tr>
-                <th style="text-align: center;">{$list.submitid}</th>
-                <th style="text-align: center;">{$list.username}</th>
-                <th style="text-align: center;"><a style="color: #0072ff;" href="{:U('Problem/view')}?id={$list.index}">{$list.index}</a></th>
-                <th style="text-align: center;"><span style="color: {:get_result_color($list["result"])}">{$list.result}</span></th>
-                <th style="text-align: center;">{$list.time}</th>
-                <th style="text-align: center;">{$list.memory}</th>
-                <th style="text-align: center;">{$list.length}</th>
-                <th style="text-align: center;">{$list.language}</th>
-                <th style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</th>
+                <td style="text-align: center;">{$list.submitid}</td>
+                <td style="text-align: center;">{$list.username}</td>
+                <td style="text-align: center;"><a style="color: #0072ff;" href="{:U('Problem/view')}?id={$list.index}">{$list.index}</a></td>
+                <td style="text-align: center;">
+                    <php>
+                        $result_ad = false;
+                        if($list["message"] != "" && $list["result"] == "COMPILATION_ERROR" && $current_user != NULL && $current_user["userid"] == $list["userid"])
+                        {
+                            $result_ad = true;
+                        }
+                    </php>
+
+                    <if condition="$result_ad eq true">
+                        <a href="{:U('Problem/viewce')}?submitid={$list['submitid']}" target="_blank">
+                            <span style="color: {:get_result_color($list["result"])}">{$list.result}</span>
+                        </a>
+                    <else />
+                        <span style="color: {:get_result_color($list["result"])}">{$list.result}</span>
+                    </if>
+
+                    <php>
+                        if($list["message"] != "" && $list["result"] == "RUNTIME_ERROR")
+                            echo "<br />[" . $list["message"] . "]<br />";
+                    </php>
+                </td>
+                <td style="text-align: center;">{$list.time}</td>
+                <td style="text-align: center;">{$list.memory}</td>
+                <td style="text-align: center;">{$list.length}</td>
+                <td style="text-align: center;">{$list.language}</td>
+                <td style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</td>
             </tr>
         </foreach>
         </tbody>

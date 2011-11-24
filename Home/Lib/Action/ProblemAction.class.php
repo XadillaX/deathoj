@@ -190,7 +190,7 @@ class ProblemAction extends CommonAction
         $page = $_GET["page"];
         if(!is_numeric($page)) $page = 1;
         $prob_count = $this->submit_model->get_count($this->contestid);
-        $page_count = (int)((int)$prob_count / (int)$this->status_per_page) + ($prob_count % $this->status_per_page == 0) ? 0 : 1;
+        $page_count = (int)((int)$prob_count / (int)$this->status_per_page) + (($prob_count % $this->status_per_page == 0) ? 0 : 1);
         if($page > $page_count) $page = $page_count;
 
         /** 分页对象 */
@@ -200,16 +200,49 @@ class ProblemAction extends CommonAction
         $page_obj->per_page = $this->status_per_page;              ///< 每页数量
         $page_obj->item_count = $prob_count;                ///< 记录数
         $page_obj->cur_page = $page;                        ///< 当前页码
+        $page_obj->id = "xpage";
         $page_str = $page_obj->create_links();
         $this->assign("page_str", $page_str);
 
         $this->web_config["title"] .= "运行状态 :: 第 {$page} 页";
         $this->assign("HC", $this->web_config);
 
-        /** 题目列表 */
-        $list = $this->submit_model->get_submit_by_page($this->contestid, $page, $this->per_page);
+        /** 提交列表 */
+        $list = $this->submit_model->get_submit_by_page($this->contestid, $page, $this->status_per_page);
         $this->assign("submit_list", $list);
 
         $this->display();
+    }
+
+    /**
+     * 浏览编译错误信息
+     * @return void
+     */
+    public function viewce()
+    {
+        $contestid = $_GET["contestid"];
+        $submitid = $_GET["submitid"];
+
+        if(!is_numeric($contestid)) $contestid = 1;
+        if(!is_numeric($submitid)) $submitid = 1;
+
+        $data = $this->submit_model->get_submit_info($contestid, $submitid);
+
+        /** 木有数据 */
+        if(false == $data) exit(0);
+
+        /** 木有登录 */
+        if($this->user_information == null)
+        {
+            exit(0);
+        }
+
+        /** 用户对不上号 */
+        if($this->user_information["userid"] != $data["userid"])
+        {
+            exit(0);
+        }
+
+        echo "<pre>" . $data["message"] . "</pre>";
     }
 }
