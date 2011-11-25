@@ -72,6 +72,7 @@ class SubmitModel extends CommonModel
                 ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
                 ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
                 ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+                ->join("{$PREFIX}code ON {$PREFIX}code.totsubmitid = {$PREFIX}submit.totsubmitid")
                 ->select();
         
         if(false == $data) return false;

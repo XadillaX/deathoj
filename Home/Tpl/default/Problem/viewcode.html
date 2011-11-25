@@ -1,0 +1,91 @@
+<php>
+function get_result_color($result)
+{
+    switch($result)
+    {
+    case "QUEUING": return "#ff7800";
+    case "ACCEPTED": return "red";
+    default: return "green";
+    }
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/js/sh/sh_style.css" media="screen" />
+
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_main.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_c.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_cpp.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_java.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    $(".titles").click(function(){
+        $(this).next().slideToggle("normal");
+    });
+
+    sh_highlightDocument();
+});
+</script>
+
+<php>
+    $code_class = "sh_c";
+    if($submit["language"] == "GCC") $code_class = "sh_c";
+    else
+    if($submit["language"] == "G++") $code_class = "sh_cpp";
+</php>
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>#{$submit["submitid"]} 的提交状态</h3></li>
+        <li id="limit">
+            当前状态: <span style="color:{:get_result_color($submit['result'])};">{$submit["result"]}</span>　运行时间: {$submit["time"]} ms　运行内存: {$submit["memory"]} K
+        </li>
+
+        <li class="contents">
+            <div class="fl" id="view-code-wrapper">
+                <h4>查看代码</h4>
+
+                <if condition="$submit['can_view'] eq false">
+                    <pre>对不起，您无权查看此代码。</pre>
+                <else />
+                    <pre class="{$code_class}">{$submit["code"]}</pre>
+                </if>
+            </div>
+
+            <div class="fr" id="view-code-baseinfo">
+                <h4>基本信息</h4>
+                <table width="100%">
+                    <tr>
+                        <td style="text-align: right; width: 30%">#: </td>
+                        <td><a href="{:U('Problem/viewcode')}?submitid={$submit['submitid']}">{$submit["submitid"]}</a></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: right; width: 30%">题目: </td>
+                        <td><a href="{:U('problem/view')}?id={$submit['index']}">{$submit["index"]}</a></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: right; width: 30%">提交人: </td>
+                        <td>{$submit["nickname"]}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: right; width: 30%">语言: </td>
+                        <td>{$submit["language"]}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: right; width: 30%">提交时间 </td>
+                        <td>{:date("Y-m-d H:i:s", $submit["submittime"])}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="cl"></div>
+        </li>
+    </ul>
+</div>
+
+<include file="Public:footer" />

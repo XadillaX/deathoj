@@ -186,6 +186,7 @@ void CCoreProcess::EnterMainLoop()
         /** 编译错误 */
         if(!compile_result)
         {
+            remove(tmp_code_filename.c_str());
             delete(judger);
             UpdateState(pSJI, &code_state);
             delete pSJI;
@@ -218,6 +219,7 @@ void CCoreProcess::EnterMainLoop()
         /** 更新结果 */
         UpdateState(pSJI, &code_state);
 
+        remove(tmp_code_filename.c_str());
         delete judger;
         delete pSJI;
         delete pJP;

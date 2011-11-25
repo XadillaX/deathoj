@@ -135,4 +135,30 @@ class UserModel extends CommonModel {
 
         return $this->where($condition)->save($data);
     }
+
+    /**
+     * 获取提交列表
+     * @param $userid
+     * @return string
+     */
+    public function get_submit_list($userid)
+    {
+        $condition = array("userid" => $userid);
+
+        return $this->where($condition)->getField("submitlist");
+    }
+
+    /**
+     * 修改提交列表
+     * @param $userid
+     * @param $list
+     * @return bool
+     */
+    public function modify_submit_list($userid, $list)
+    {
+        $condition = array("userid" => $userid);
+        $data["submitlist"] = $list;
+
+        return $this->where($condition)->save($data);
+    }
 }

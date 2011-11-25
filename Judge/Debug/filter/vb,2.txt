@@ -1,0 +1,8 @@
+\s*My\s*\.
+([A-Z]:[\\|\/][^:\*\?<>\|]+[\.\w]*)|(\\{2}[^/:\*\?<>\|]+[\.\w]*)
+Microsoft|Process£üCrystal|Environment£üEvent|Globalization|SystemInformation
+Diagnostics|Assembly|SendKeys|Thread|Memory|DirectoryServices
+System\s*\.\s*IO
+System\s*\.\s*Windows
+System\s*\.\s*Messaging
+System\s*\.\s*Net
