@@ -173,6 +173,16 @@ class ProblemAction extends CommonAction
                 $this->user_model->add_submit($userinfo["userid"]);
                 $this->contestproblem_model->add_submit($this->contestid, $_POST["id"]);
                 $this->user_model->change_default_language($userinfo["userid"], $_POST["language"]);
+                
+                /** 对于用户的submitlist增加 */
+                $list_str = $this->user_model->get_submit_list($userinfo["userid"]);
+                $list = explode("|", $list_str);
+                if(!in_array($_POST["id"], $list))
+                {
+                    $list_str .= ($_POST["id"] . "|");
+                    $this->user_model->modify_submit_list($userinfo["userid"], $list_str);
+                }
+
                 $this->success("提交成功。", true);
                 die(0);
             }
@@ -244,5 +254,41 @@ class ProblemAction extends CommonAction
         }
 
         echo "<pre>" . $data["message"] . "</pre>";
+    }
+
+    /**
+     * 查看自己的代码
+     * @return void
+     */
+    public function viewcode()
+    {
+        $contestid = $_GET["contestid"];
+        $submitid = $_GET["submitid"];
+
+        if(!is_numeric($contestid)) $contestid = 1;
+        if(!is_numeric($submitid)) $submitid = 1;
+
+        $data = $this->submit_model->get_submit_info($contestid, $submitid);
+
+        /** 木有数据 */
+        if(false == $data)
+        {
+            redirect(__ROOT__);
+            die(0);
+        }
+
+        /** 木有权限 */
+        $data["can_view"] = true;
+        if($this->user_information == null || ($this->user_information["roleid"] != 3 && $this->user_information["userid"] != $data["userid"]))
+        {
+            $data["can_view"] = false;
+        }
+        else $data["code"] = $this->submit_model->CodeEncode($data["code"]);
+
+        $this->web_config["title"] .= ("查看源代码 #" . $data["submitid"]);
+        $this->assign("HC", $this->web_config);
+        $this->assign("submit", $data);
+
+        $this->display();
     }
 }

@@ -178,3 +178,15 @@
 #xpage a {
     display: inline;
 }
+
+#view-code-wrapper {
+    width: 620px;
+}
+
+#view-code-wrapper pre {
+    overflow-x: auto;
+}
+
+#view-code-baseinfo {
+    width: 235px;
+}
