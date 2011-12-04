@@ -90,7 +90,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)\Bin\NBUTOJCore\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"

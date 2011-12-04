@@ -112,6 +112,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="mysql++/"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -128,6 +129,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="lib/release/mysqlpp.lib lib/release/NBUTOJCore.lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
