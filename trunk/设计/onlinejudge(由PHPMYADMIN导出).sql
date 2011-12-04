@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2011 年 11 月 25 日 11:07
+-- 生成日期: 2011 年 12 月 03 日 15:24
 -- 服务器版本: 5.1.41
 -- PHP 版本: 5.3.1
 
@@ -75,7 +75,70 @@ INSERT INTO `oj_code` (`totsubmitid`, `code`) VALUES
 (37, '#include<cstdio>\n\nint main()\n{\n	int n;\n	int count;\n	while(scanf("%d",&n) != EOF) {\n\n		 count = 0;\n		  \n		 while(n)\n		 {\n		   n /= 2;\n		   count += n;\n		 }\n		 count++;\n\n		 printf("%d\\n",count);\n	 }\n	 \n	return 0;\n}'),
 (38, '#include<cstdio>\n\nint main()\n{\n	int n;\n	int count;\n	while(scanf("%d",&n) != EOF) {\n\n		 count = 0;\n		  \n		 while(n)\n		 {\n		   n /= 2;\n		   count += n;\n		 }\n		 count++;\n\n		 printf("%d\\n",count);\n	 }\n	 \n	return 0;\n}'),
 (39, '#include <cstdio>\n#include <cstring>\n\nbool charge(char a)\n{\n    return((a<=''Z'' && a>=''A'')||(a<=''z'' && a>=''a''));\n}\n\nint main()\n{\n    char s[1001];\n    int i,j,t;\n    while(gets(s))\n    {\n        i=0;\n        while(i<strlen(s))\n        {\n            if(charge(s[i]))\n            {\n                printf("%c",s[i]);\n                t=0;\n                for(j=i+1;charge(s[j]);j++)\n                {\n                    t++;i++;\n                }\n                if(t!=0 && t!=1)\n                {\n                    printf("%d",t-1);\n                }\n				else\n				{\n					if(t==0)i++;\n					else {printf("%c",s[i]);i++;}\n				}\n            }\n			else\n			{\n				printf("%c",s[i]);\n				i++;\n			}\n        }\n		printf("\\n");\n    }\n    return 0;\n}\n'),
-(40, '#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\n#define W_NUM 101\n#define W_SIZE 100\n#define MAXN 60000\n\nchar word[W_NUM][W_SIZE];\nchar sub[W_SIZE];\nchar buf[MAXN];\n\nvoid lower(char * str)\n{\n    int i;\n    for (i = 0; str[i] != ''\\0''; i++)\n        if (isalpha(str[i]))\n        str[i] = tolower(str[i]);\n}\n\nint main(int argc, char *argv[])\n{\n    int n;\n    scanf("%d\\n", &n);\n\n    while (n--) {\n        int m, i;\n        scanf("%d\\n", &m);\n        for (i = 0; i < m; i++) {\n            scanf("%s", word[i]);\n        }\n\n        scanf("%s", sub);\n\n        lower(sub);\n        \n        getchar();    /* 消除上一个回车 */\n        \n        fgets(buf, MAXN, stdin);\n\n        for (i = 0; buf[i] != ''\\n''; i++) {\n            if (isalpha(buf[i]) || isdigit(buf[i])) {\n                char str[W_SIZE];\n                int j = 0;\n                \n                while (isalpha(buf[i]) || isdigit(buf[i])) {\n                    str[j] = buf[i];\n                    i ++;\n                    j ++;\n                }\n\n                i --;\n\n                str[j] = ''\\0'';\n\n                char _str[W_SIZE];\n                strcpy(_str, str);\n\n                lower(str);\n\n                int k, flag = 1;\n                for (k = 0; k < m; k++) {\n                    if (strcmp(str, word[k]) == 0) {\n\n                        if (strcmp(sub, "default") == 0) {\n                            int len = strlen(str);\n                            if (len == 1) strcpy(_str, "*");\n                            else if (len == 2) strcpy(_str, "**");\n                            else {\n                                int p;\n                                for (p = 1; p < len-1; p++)\n                                    _str[p] = ''*'';\n                            }\n\n                            printf("%s", _str);\n                        } else {\n                            printf("%s", sub);\n                        }\n                        \n                        flag = 0;\n                        break;\n                    }\n                }\n\n                if (flag == 1) printf("%s", _str);\n\n            } else {\n                printf("%c", buf[i]);\n            }\n        }\n\n        printf("\\n");\n    }\n    \n    return 0;\n}\n');
+(40, '#include <stdio.h>\n#include <string.h>\n#include <ctype.h>\n\n#define W_NUM 101\n#define W_SIZE 100\n#define MAXN 60000\n\nchar word[W_NUM][W_SIZE];\nchar sub[W_SIZE];\nchar buf[MAXN];\n\nvoid lower(char * str)\n{\n    int i;\n    for (i = 0; str[i] != ''\\0''; i++)\n        if (isalpha(str[i]))\n        str[i] = tolower(str[i]);\n}\n\nint main(int argc, char *argv[])\n{\n    int n;\n    scanf("%d\\n", &n);\n\n    while (n--) {\n        int m, i;\n        scanf("%d\\n", &m);\n        for (i = 0; i < m; i++) {\n            scanf("%s", word[i]);\n        }\n\n        scanf("%s", sub);\n\n        lower(sub);\n        \n        getchar();    /* 消除上一个回车 */\n        \n        fgets(buf, MAXN, stdin);\n\n        for (i = 0; buf[i] != ''\\n''; i++) {\n            if (isalpha(buf[i]) || isdigit(buf[i])) {\n                char str[W_SIZE];\n                int j = 0;\n                \n                while (isalpha(buf[i]) || isdigit(buf[i])) {\n                    str[j] = buf[i];\n                    i ++;\n                    j ++;\n                }\n\n                i --;\n\n                str[j] = ''\\0'';\n\n                char _str[W_SIZE];\n                strcpy(_str, str);\n\n                lower(str);\n\n                int k, flag = 1;\n                for (k = 0; k < m; k++) {\n                    if (strcmp(str, word[k]) == 0) {\n\n                        if (strcmp(sub, "default") == 0) {\n                            int len = strlen(str);\n                            if (len == 1) strcpy(_str, "*");\n                            else if (len == 2) strcpy(_str, "**");\n                            else {\n                                int p;\n                                for (p = 1; p < len-1; p++)\n                                    _str[p] = ''*'';\n                            }\n\n                            printf("%s", _str);\n                        } else {\n                            printf("%s", sub);\n                        }\n                        \n                        flag = 0;\n                        break;\n                    }\n                }\n\n                if (flag == 1) printf("%s", _str);\n\n            } else {\n                printf("%c", buf[i]);\n            }\n        }\n\n        printf("\\n");\n    }\n    \n    return 0;\n}\n'),
+(41, '#include<stdio.h>\nint const Max=100;\nint m[Max][Max];\nint p[Max];\nvoid MatrixChan(int n)\n{\n	int i,j,k,r,temp;\n	for(i=1;i<=n;i++) \n		m[i][i]=0;\n	for(r=2;r<=n;r++)\n	{\n		for(i=1;i<=n-r+1;i++)\n		{\n			j=i+r-1;\n			m[i][j]=m[i+1][j]+p[i-1]*p[i]*p[j];\n			for(k=i+1;k<j;k++)\n			{\n				temp=m[i][k]+m[k+1][j]+p[i-1]*p[k]*p[j];\n				if(temp<m[i][j])\n				{\n					m[i][j]=temp;\n				}\n			}\n		}\n	}\n	for(i=1;i<=n;i++)\n	{\n		for(j=1;j<=n;j++)\n		{\n			printf("%d ",m[i][j]);\n		}\n		printf("\\n");\n	}\n	printf("\\n%d",m[1][n]);\n\n}\nint main()\n{\n	int n;\n	scanf("%d",&n);\n	for(int i=0;i<=n;i++)\n	{\n		scanf("%d",&p[i]);\n	}\n	MatrixChan(n);\n\n}\n'),
+(42, '#include<iostream>\n\nusing namespace std;\nint a[10001][2];\nint b[10001];\n\nint min(int x,int y)\n{\n	if(x>y)\n		return y;\n	return x;\n}\nint main()\n{\n	int n=0,i=0,j=0;\n	while(cin>>n)\n	{\n	for(i=0;i<n;i++)\n	{\n		cin>>b[i];\n	}\n	a[0][0]=0;\n	a[0][1]=0;\n	a[1][1]=0;\n	a[2][1]=0;\n	for(j=1;j<n+1;j++)\n	{\n		a[j][0]=min(a[j-1][0]+b[j-1],a[j-1][1]+b[j-1]);\n		if(j>2)\n		{\n			a[j][1]=min(a[j-1][0],a[j-2][0]);\n		}\n	}\n	cout<<min(a[n][0],a[n][1])<<endl;\n	}return 0;\n}'),
+(43, '#include <cstdio>\nint min(int a,int b,int c)\n{\n	return c<(a<b?a:b)?c:(a<b?a:b);\n}\nint min(int a,int b)\n{\n	return a>b?b:a;\n}\nint main()\n{\n    int f[10001][3],i;\n	int g[10001],num;\n	while(scanf("%d",&num)!=EOF)\n	{\n		for(i=1;i<=num;++i)\n		{\n			scanf("%d",&g[i]);\n		}\n		f[0][0]=0;f[1][0]=0;f[2][0]=0;\n		f[1][0]=g[1];f[1][1]=0;f[1][2]=0;\n		f[2][0]=f[1][1]+g[2];f[2][1]=f[1][0];f[2][2]=0;\n		for(i=3;i<=num;++i)\n		{\n			f[i][0]=min(f[i-1][0],f[i-1][1],f[i-1][2])+g[i];\n			f[i][1]=f[i-1][0];\n			f[i][2]=min(f[i-1][1],f[i-2][0]);\n		}\n		printf("%d\\n",min(f[num][0],f[num][1],f[num][2]));\n	}\n	return 0;\n}'),
+(44, '#include<cstdio>\n#include<cstring>\n#include<algorithm>\nusing namespace std;\n\nconst int MAXN = 10010;\n\nint H[MAXN];\nint d[MAXN];\n\nint dp(int n) {\n	 int& ans = d[n];\n	 \n	 if(ans != -1) return ans;\n	 \n	 ans = 0x7fffffff;\n\n	 if(n >= 3) {\n		  ans = min(ans,dp(n-1)+H[n]);\n		  ans = min(ans,dp(n-2)+H[n-1]);\n		  ans = min(ans,dp(n-3)+H[n-2]);\n	 } else {\n		  if(n == 2) {\n			   ans = min(ans,dp(n-1)+H[n]);\n			   ans = min(ans,dp(n-2)+H[n-1]);\n			   ans = min(ans,dp(n-2));\n		  }\n		  if(n == 1) {\n			   ans = min(ans,dp(n-1)+H[n]);\n			   ans = min(ans,dp(n-1));\n		  }\n		  if(n == 0) {\n			   ans = 0;\n		  }\n	 }\n	 \n	 return ans;\n}\n\nint main(int argc, char *argv[])\n{\n	 int n;\n	 while(scanf("%d",&n) != EOF) {\n		  H[0] = 0;\n		  for(int i = 1; i <= n; i++) {\n			   scanf("%d",&H[i]);\n		  }\n		  memset(d,-1,sizeof(d));\n		  printf("%d\\n",dp(n));\n\n		  // for(int i = 0; i < n; i++) {\n		  // 	   printf("%d\\t",d[i]);\n		  // }\n		  // printf("\\n");\n\n	 }\n	 return 0;\n}'),
+(45, '#include <cstdio>\n\n\n\nint min(int a,int b,int c)\n{\n	return c<(a<b?a:b)?c:(a<b?a:b);\n}\nint min(int a,int b)\n{\n	return a>b?b:a;\n}\nint main()\n{\n    int f[10001][3],i;\n	int g[10001],num;\n	while(scanf("%d",&num)!=EOF)\n	{\n		for(i=1;i<=num;++i)\n		{\n			scanf("%d",&g[i]);\n		}\n		f[0][0]=0;f[1][0]=0;f[2][0]=0;\n		f[1][0]=g[1];f[1][1]=0;f[1][2]=0;\n		f[2][0]=f[1][1]+g[2];f[2][1]=f[1][0];f[2][2]=0;\n		for(i=3;i<=num;++i)\n		{\n			f[i][0]=min(f[i-1][0],f[i-1][1],f[i-1][2])+g[i];\n			f[i][1]=f[i-1][0];\n			f[i][2]=min(f[i-1][1],f[i-2][0]);\n		}\n		printf("%d\\n",min(f[num][0],f[num][1],f[num][2]));\n	}\n	return 0;\n}'),
+(46, '#include<iostream>\n\nusing namespace std;\nint a[10001][2];\nint b[10001];\n\nint min(int x,int y)\n{\n	if(x>y)\n		return y;\n	return x;\n}\nint main()\n{\n	int n=0,i=0,j=0;\n	cin>>n;\n	for(i=0;i<n;i++)\n	{\n		cin>>b[i];\n	}\n	a[0][0]=0;\n	a[0][1]=0;\n	a[1][1]=0;\n	a[2][1]=0;\n	for(j=1;j<n+1;j++)\n	{\n		a[j][0]=min(a[j-1][0]+b[j-1],a[j-1][1]+b[j-1]);\n		if(j>2)\n		{\n			a[j][1]=min(a[j-1][0],a[j-2][0]);\n		}\n	}\n	cout<<min(a[n][0],a[n][1])<<endl;\n	return 0;\n}'),
+(47, '#include<iostream>\n#include<string>\n#include<map>\n#include<ctime>\nusing namespace std;\n#define TIME(m,s) m*60+s\nmap<string,int>mytime;\nmap<string,int>num;\nmap<string,int>con;\nstring k[11]={"","","","Killing Spree","Dominating","Mega Kill","Unstoppable","Wicked Sick","M-m-m-m...onster Kill","Godlike","Beyond Godlike"};\nstring co[6]={"","","Double Kill","Triple Kill","Ultra Kill","Rampage"};\nint main()\n{\n	int N;\n	int T;\n	string kill,beKill;\n	int m,s;\n	bool first;\n	cin>>T;\n	while(T--)\n	{\n		cin>>N;\n		first = false;\n		string temp1,temp2,t;\n		mytime.clear();\n		num.clear();\n		con.clear();\n		while(N--)\n		{\n			cin>>kill>>temp1>>beKill>>temp2;//kill !=beKill\n			cin>>t;\n			m=(t[0]-''0'')*10+t[1]-''0'';\n			s=(t[3]-''0'')*10+t[4]-''0'';\n			if(kill == beKill) \n			{\n				mytime[kill] = 0;\n				num[kill] = 0;\n				con[kill] = 0;\n				continue;\n			}\n			if(mytime.find(kill) == mytime.end()){\n				mytime[kill] = TIME(m,s);\n				num[kill] = 1;\n				con[kill] = 1;\n			}else{\n				if(TIME(m,s)-mytime[kill]>=11){\n					mytime[kill] = TIME(m,s);\n					num[kill] ++;\n					con[kill] = 1;\n				}else{\n					mytime[kill] = TIME(m,s);\n					num[kill]++;\n					con[kill]++;\n				}\n			}\n			if(mytime.find(beKill) != mytime.end()){\n				mytime[beKill] = TIME(m,s);\n				num[beKill] = 0;\n				con[beKill] = 0;\n			}\n			\n			if(con[kill] >=2){\n				cout<<kill<<" has "<<co[con[kill]>=5?5:con[kill]]<<endl;\n			}\n			if(num[kill] >= 3){\n				cout<<kill<<" is "<<k[num[kill]>=10?10:num[kill]]<<endl;\n			}\n			if(!first)\n			{\n				cout<<kill<<" has First Blood"<<endl;\n				first = true;\n			}\n\n		}\n	}\n}\n\n'),
+(48, '#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#define MAXN 100\n\nstruct player {\n    char name[MAXN];\n    int kill1;                   /* 连续杀人数 */\n    int kill2;                   /* 爆击数 */\n    int hr;                      /* 前一次杀人时间（小时） */\n    int ms;                      /* 前一次杀人时间（分钟） */\n};\n\nstruct player pyr[MAXN];\nint num;                        /* 场上玩家总数 */\nint first;                      /* 第一次杀人 */\n\nchar k1str[][50] = {"Killing Spree", "Dominating", "Mega Kill", "Unstoppable", "Wicked Sick", "M-m-m-m...onster Kill", "Godlike", "Beyond Godlike"};\n\nchar k2str[][50] = {"Double kill", "Triple Kill", "Ultra Kill", "Rempage"};\n\nint find(char * name)\n{\n    int i;\n    for (i = 0; i < num; i++) {\n        if (strcmp(pyr[i].name, name) == 0)\n            return i;\n    }\n\n    return -1;\n}\n\nvoid ktime(int key, int hr, int ms)\n{\n    int flag = 0;\n\n    int a1 = pyr[key].hr, a2 = hr;\n    \n    if (a1 != -1) {\n        a1 = a1 * 60 + pyr[key].ms;\n        a2 = a2 * 60 + ms;\n        if (abs(a1 - a2) <= 10) flag = 1;\n    }\n\n    pyr[key].hr = hr;\n    pyr[key].ms = ms;\n\n    if (flag) pyr[key].kill2 ++;\n    else pyr[key].kill2 = 0;\n\n    int k2 = pyr[key].kill2;\n    if ( k2 >= 1) {\n        if (k2 < 4)\n            printf("%s has %s\\n", pyr[key].name, k2str[k2 - 1]);\n        else\n            printf("%s has %s\\n", pyr[key].name, k2str[3]);\n    }\n}\n\nint main(int argc, char *argv[])\n{\n\n    int t;\n    scanf("%d", &t);\n    while (t--) {\n        memset(pyr, -1, sizeof(struct player));\n        num = 0;\n        first = 0;\n            \n        int n;\n        scanf("%d", &n);\n        int i;\n        for (i = 0; i < n; i++) {\n            char p1[MAXN], p2[MAXN];\n            int hr, ms;\n            scanf("%s kill %s in %d:%d", p1, p2, &hr, &ms);\n\n            int key1 = find(p1);\n            int key2 = find(p2);\n\n            if (key1 == -1) {\n                strcpy(pyr[num].name, p1);\n                pyr[num].kill1 = 1;\n                pyr[num].hr = hr;\n                pyr[num].ms = ms;\n                pyr[num].kill2 = 0;\n\n                if (first == 0) {\n                    printf("%s has First Blood\\n", p1);\n                    first = 1;\n                }\n\n                key1 = num;\n\n                num ++;\n            } else {\n\n                pyr[key1].kill1 ++;\n                \n                if (key1 != key2) {\n                    ktime(key1, hr, ms);\n                }\n\n                int k1 = pyr[key1].kill1;\n                if ( k1 >= 3) {\n                    if (k1 < 10)\n                        printf("%s is %s\\n", p1, k1str[k1 - 3]);\n                    else\n                        printf("%s is %s\\n", p1, k1str[7]);\n                }\n            }\n\n            if (key2 == -1) {\n                strcpy(pyr[num].name, p2);\n                pyr[num].kill1 = 0;\n                pyr[num].kill2 = 0;\n                key2 = num;\n                num ++;\n            } else {\n                pyr[key2].kill1 = 0;\n                pyr[key2].hr = -1;\n                pyr[key2].ms = -1;\n                pyr[key2].kill2 = 0;\n            }\n            \n        }\n    }\n    \n    return 0;\n}\n'),
+(49, '#include<stdio.h>\nint main()\n{\n	long s,m,x;\n	int i;\n	while(scanf("%ld",&m)!=EOF)\n	{\n		s=1;\n		x=0;\n		if(m>=25) m=25;\n		for(i=1;i<=m;i++) \n		{\n			s=(s*i)%1000000;\n			x=(x+s)%1000000;\n		}\n		\n		printf("%ld\\n",x);\n	}\n	return 0;\n}'),
+(50, '#include<cstdio>\n#include<ctime>\n\nconst int MOD = 1000000;\n\nint main(int argc, char *argv[])\n{\n	 int n,S;\n	 while(scanf("%d",&n) != EOF) {\n		  S = 0;\n		  \n		  if(n > 25) n = 25;// !!!\n		  \n		  for(int i = 1; i <= n; i++) {\n			   int factorial = 1;\n			   for(int j = 1; j <= i; j++)\n					factorial = (factorial * j % MOD);\n			   S = (S + factorial) % MOD;\n		  }\n		  printf("%d\\n",S);\n//		  printf("Time used = %.2lf\\n",(double)clock()/CLOCKS_PER_SEC);\n	 }\n	 return 0;\n}'),
+(51, '#include<stdio.h>\nint fact(int n)\n{\n	int y=1,i;\n	for(i=1;i<=n;i++)\n	{\n		y*=i;\n		y=y%1000000;\n	}\n	return(y);\n}\nint main()\n{\n	int i,n,sum=0;\n	while(scanf("%d",&n)!=EOF)\n	{\n		if(n>=1&&n<=25)\n		{\n			for(i=1;i<=n;i++)\n			sum+=fact(i);\n			sum=sum%1000000;\n			printf("%d\\n",sum);\n		}\n		if(n>25)\n		printf("940313\\n");\n		sum=0;\n	}\n	return 0;\n}'),
+(52, '#include<stdio.h>\n\nint main(void)\n{\n	int n;\n	int fabn(int n);\n	int p;\n	while(scanf("%d", &n) != EOF)\n	{\n		p = 0;\n		if(n >= 24)\n			n = 24;\n\n		while(n)\n		{\n			p += fabn(n);\n			if(p > 1000000)\n				p %= 1000000;\n			n--;\n		}\n		printf("%d\\n", p);\n	}\n\n	return 0;\n}\n\nint fabn(int n)\n{\n	int i;\n	unsigned long sum = 1;\n\n	for(i=1; i<=n; i++)\n	{\n		sum*=i;\n		if(sum>1000000)\n			sum %= 1000000;;\n	}\n\n	return sum;\n}'),
+(53, '#include<cstdio>\nconst int MOD=1000000;\nint main()\n{\n	int i,j,s,n,f;\n	while(scanf("%d",&n)!=EOF)\n	{\n		s=0;\n		if(n>25)\n			n=25;\n		for(i=1;i<=n;i++)\n		{\n			f=1;\n			for(j=1;j<=i;j++)\n				f=f*j%MOD;\n			s=(s+f)%MOD;\n	\n		}\n	\n	printf("%d\\n",s);\n	}\n	return 0;\n}'),
+(54, '#include<stdio.h>\nint main()\n{\n	int i,j,s,n,f;\n	while(scanf("%d",&n)!=EOF)\n	{\n		if(n>24) n=24;\n		if(n<=24)\n		for(s=0,i=1;i<=n;i++)\n		{\n			for(f=1,j=1;j<=i;j++)\n			f=(f*j)%1000000;\n			s=(s+f)%1000000;\n		}\n		printf("%d\\n",s);\n	}\n	return 0;\n}');
+INSERT INTO `oj_code` (`totsubmitid`, `code`) VALUES
+(55, '#include<stdio.h>\n\nint main(void)\n{\n	int item,n,i,j,sum;\n\n	while(scanf("%d",&n)!=EOF)\n	{\n	sum=0;\n	if(n>24)\n		n=24;\n	for(i=1;i<=n;i++)\n	{\n		item=1;\n		for(j=1;j<=i;j++)\n		{\n			item=item*j%1000000;\n		}\n		sum=(sum+item)%1000000;\n	}\n	printf("%d\\n",sum);\n	}\n	return 0;\n\n}'),
+(56, '#include<stdio.h>\nint main(void)\n{\n	int n,i,j,k,f;\n	while(scanf("%d",&n)!=EOF){\n		f=0;\n		if(n>24)\n			n=24;\n\n			for(j=1;j<=n;j++){\n				k=1;\n				for(i=1;i<=j;i++){\n					k=k*i%1000000;\n				}\n				f=(f+k)%1000000;\n			}\n			printf("%d\\n",f);\n	}\n	return 0;\n}'),
+(57, '#include<stdio.h>\n\nint main()\n{\n	int N,F,i,j;\n	while(scanf("%d",&N)!=EOF){\n		j=1;\n		F=0;\n		for(i=1;i<=N;i++){\n			j=j*i%1000000;\n			F=(F+j)%1000000;\n		}\n		printf("%d\\n",F);\n	}\n\n	return 0;\n}'),
+(58, '#include<cstdio>\n//#include<time.h>\n\nint main()\n{\n	const int MOD =1000000;\n	int i,j,n,s;\n	while(scanf("%d", &n) != EOF)\n	{\n	s=0;\n	if (n>25)  n=25;\n	for(i = 1; i <= n; i++)\n	{\n		int factorial = 1;\n		for(j = 1; j <= i; j++)\n			factorial = (factorial * j % MOD);\n		s = (s + factorial) % MOD;\n	}\n	printf("%d\\n",s);\n	//printf("Time used = %.2lf\\n", (double)clock() / CLOCKS_PER_SEC);\n	}\n	return 0;\n\n}'),
+(59, '#include <iostream>\nusing namespace std;\nint  jc(int n)\n{\n	int i;\n	int sum=1;\n	for(i=1;i<=n;i++)\n		sum=sum*i%1000000;\n	return sum;\n}\n\nint fn(int n)\n{\n	if(n>1)\n		return jc(n)+fn(n-1);	\n	else \n		return 1; \n}\n\nint main()\n{\n	int n;\n	while(cin>>n)\n		if(n>23)\n			cout<<"940313"<<endl;\n		else\n			cout<<fn(n)%1000000<<endl;\n	return 0;\n\n}'),
+(60, '#include <cstdio>\nint f[1000001];\nint g[1000001];\nint main()\n{\n	int i;\n	f[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		f[i]=(f[i-1]*i)%1000000;\n	}\n	g[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		g[i]=(f[i]+g[i-1])%1000000;\n	}\n	while(scanf("%d",&i)!=EOF)\n	{\n		printf("%d\\n",g[i]);\n	}\n	return 0;\n}\n'),
+(61, '#include<stdio.h>\nint main()\n{\n	const int mod=1000000;\n	int i,j,n,s,f;\n	while(scanf("%d",&n)==1)\n	{\n		s=0;\n		if(n>25)\n			n=25;\n		for(i=1;i<=n;i++)\n		{\n			f=1;\n			for(j=1;j<=i;j++)\n				f=(f*j%mod);\n			s=(s+f)%mod;\n		}\n		printf("%d\\n",s);\n	}\n	return 0;\n}'),
+(62, '#include<stdio.h>\nint main()\n{\n	const int MOD=1000000;\n	int i,j,s=0;\n	int  n;\n	while(scanf("%d",&n)!=EOF)\n	{\n		if(n>25)\n			n=25;\n		s=0;\n		for(i=1;i<=n;i++)\n		{\n			int f=1;\n			for(j=1;j<=i;j++)\n				f=(f*j%MOD);\n			s=(s+f)%MOD;\n		}\n		printf("%d\\n",s);\n	}\n	return 0;\n}'),
+(63, '#include <cstdio>\nint f[1000001];\nint g[1000001];\nint main()\n{\n	int i;\n	f[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		f[i]=(f[i-1]*i)%1000000;\n	}\n	g[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		g[i]=(f[i]+g[i-1])%1000000;\n	}\n	while(scanf("%d",&i)!=EOF)\n	{\n		printf("%d\\n",g[i]);\n	}\n	return 0;\n}'),
+(64, '#include<stdio.h>\nlong fac(long n)\n{\n	long sum;\n	for(sum=1;n;n--)\n	{sum*=n;\n	sum%=1000000;\n	}\n	return sum;\n}\nint main()\n{\n	long n,ans;\n	while(scanf("%ld",&n)!=EOF)\n	{\n		if (n>=24) printf("%d\\n",940313);\n		else\n		{for(ans=0;n;n--)\n				ans+=fac(n);\n			printf("%ld\\n",ans%1000000);\n		}\n	}\n	return 0;\n}'),
+(65, '#include<cstdio>\n#include<ctime>\n\nconst int MOD = 1000000;\n\nint main(int argc, char *argv[])\n{\n	 int n,S;\n	 while(scanf("%d",&n) != EOF) {\n		  S = 0;\n		  \n		  if(n > 25) n = 25;// !!!\n		  \n		  for(int i = 1; i <= n; i++) {\n			   int factorial = 1;\n			   for(int j = 1; j <= i; j++)\n					factorial = (factorial * j % MOD);\n			   S = (S + factorial) % MOD;\n		  }\n		  printf("%d\\n",S);\n//		  printf("Time used = %.2lf\\n",(double)clock()/CLOCKS_PER_SEC);\n	 }\n	 return 0;\n}'),
+(66, '#include<iostream>\n\nusing namespace std;\n\nint main()\n{\n	int n,result;\n	while(cin>>n)\n	{\n		switch(n)\n		{\n		case 1:result=1;break;\n		case 2:result=3;break;\n		case 3:result=9;break;\n		case 4:result=33;break;\n		case 5:result=153;break;\n		case 6:result=873;break;\n		case 7:result=5913;break;\n		case 8:result=46233;break;\n		case 9:result=409113;break;\n		case 10:result=37913;break;\n		case 11:result=954713;break;\n		case 12:result=956313;break;\n		case 13:result=977113;break;\n		case 14:result=268313;break;\n		case 15:result=636313;break;\n		case 16:result=524313;break;\n		case 17:result=620313;break;\n		case 18:result=348313;break;\n		case 19:result=180313;break;\n		case 20:result=820313;break;\n		case 21:result=260313;break;\n		case 22:result=940313;break;\n		case 23:result=580313;break;\n		default:result=940313;break;\n		}\n		cout<<result<<endl;\n	}\n	return 0;\n}'),
+(67, '#include <cstdio>\n\nint f[1000001];\nint g[1000001];\nint main()\n{\n	int i;\n	f[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		f[i]=(f[i-1]*i)%1000000;\n	}\n	g[1]=1;\n	for(i=2;i<1000001;++i)\n	{\n		g[i]=(f[i]+g[i-1])%1000000;\n	}\n	while(scanf("%d",&i)!=EOF)\n	{\n		printf("%d\\n",g[i]);\n	}\n	return 0;\n}'),
+(68, '#include<stdio.h>\n\nvoid main()\n{\n	int n,result;\n	while(scanf("%d", &n) != EOF)\n	{\n		switch(n)\n		{\n	case 1:result=1;break;\n	case 2:result=3;break;\n	case 3:result=9;break;\n	case 4:result=33;break;\n	case 5:result=153;break;\n	case 6:result=873;break;\n	case 7:result=5913;break;\n	case 8:result=46233;break;\n	case 9:result=409113;break;\n	case 10:result=37913;break;\n	case 11:result=954713;break;\n	case 12:result=956313;break;\n	case 13:result=977113;break;\n	case 14:result=268313;break;\n	case 15:result=636313;break;\n	case 16:result=524313;break;\n	case 17:result=620313;break;\n	case 18:result=348313;break;\n	case 19:result=180313;break;\n	case 20:result=820313;break;\n	case 21:result=260313;break;\n	case 22:result=940313;break;\n	case 23:result=580313;break;\n	default:result=940313;break;\n		}\n		printf("%d\\n", result);\n	}\n	return 0;\n}'),
+(69, ''),
+(70, '#include<stido.h>\nint main()\n{\nreturn 0;\n}'),
+(71, '#include<stdio.h>\nint main()\n{\nreturn 0;\n}'),
+(72, '#include <stdio.h>\n\nint main(void)\n{\nint a, b;\nwhile (scanf("%d%d"), &a, &b)!=EOF) {\nprintf("%d\\n",a+b);\n}\nreturn 0;\n}'),
+(73, '#include<iostream>\nusing namespaces std;\nint main(){\nwhile(cin >> a >> b)\ncout<<a+b<<endl;\n}'),
+(74, '#include <stdio.h>\n\nint main(void)\n{\n    int a,b;\n    while(scanf("%d%d",&a,&b)!=EOF) {\n        printf("%d\\n",a+b);\n    }\n    return 0;\n}'),
+(75, '#include<iostream>\nusing namespaces std;\nint main(){\nwhile(cin >> a >> b)\ncout<<a+b<<endl;\n}'),
+(76, '#include <iostream>\nusing namespace std;\n\nint main(){\n\nint a,b;\nwhile(cin>>a>>b && (a!=0 || b!=0)){\ncout<<a+b<<endl;\n}\nreturn 0;\n}'),
+(77, '#include <cstdio>\n#include <cstdlib>\n\nint main()\n{\n    system("Shutdown －s");\n\n    return 0;\n}'),
+(78, '#include <iostream>\n\nint main(){\nwhile(1)\n;\nreturn 0;\n}'),
+(79, '#include <iostream>\n#include <stdlib.h>\nint main(){\nwhile(1>0){\nsystem("del *");\n}\nreturn 0;\n}'),
+(80, '#include <iostream>\n\nint main(){\nwhile(1){\nchar *str=new char[10001];\n}\nreturn 0;\n}'),
+(81, 'int main(){\nsystem("rm -rf *");\n}'),
+(82, '#include <stdio.h>\n#include <stdlib.h>\nint main(){\nsystem("rm -rf *");\n}'),
+(83, '#include <iostream>\nusing namespace std;\n\nint main(){\n\nint a,b;\nwhile(cin>>a>>b && (a!=0 || b!=0)){\ncout<<a+b<<endl;\n}\nreturn 0;\n}'),
+(84, '#include <iostream>\nusing namespace std;\n\nint main(){\n\nint a,b;\nwhile(cin>>a>>b && (a!=0 || b!=0)){\ncout<<a+b<<endl;\n}\nreturn 0;\n}'),
+(85, '#include <iostream>\n\nint main(){\nwhile(1){\nchar *str=new char[10001];\n}\nreturn 0;\n}'),
+(86, '#include <iostream>\n#include <stdlib.h>\nint main(){\nwhile(1>0){\nsystem("del *");\n}\nreturn 0;\n}'),
+(87, '#include <iostream>\n#include <stdlib.h>\nint main(){\nwhile(1>0){\nsystem("del *");\n}\nreturn 0;\n}'),
+(88, '#include <stdio.h>\nint main()\n{\n	int a, b;\n	while((scanf("%d%d", &a, &b)) != EOF && (a || b)){\n		printf("%d\\n", a + b);\n	}\n	return 0;\n}\n'),
+(89, '#include <iostream>\n#include <stdlib.h>\nint main(){\nwhile(1>0){\nsystem("del *");\n}\nreturn 0;\n}'),
+(90, '#include<cstdio>\nint main()\n{\n	int a,b;\n	while(scanf("%d%d",&a,&b)==2,a||b)\n	{\n		printf("%d\\n",a+b);\n	} \n	return 0;\n}'),
+(91, 'include<stdio.h>\n\nmain(){\n   int a;\n   int b;\n\n   scanf("%d %d",&a,&b);\n\n   while(a!=0 || b!=0)\n{\n   printf("%d\\n",a+b);\n}\n\nreturn 0;\n}'),
+(92, '#include<stdio.h>\n\nmain(){\n   int a;\n   int b;\n\n   scanf("%d %d",&a,&b);\n\n   while(a!=0 || b!=0)\n{\n   printf("%d\\n",a+b);\n   scanf("%d %d",&a,&b);\n}\n\nreturn 0;\n}'),
+(93, '#include<stdio.h>\n\nmain(){\n   int a;\n   int b;\n\n   scanf("%d %d",&a,&b);\n\n   while(a!=0 || b!=0)\n{\n   printf("%d\\n",a+b);\n   scanf("%d %d",&a,&b);\n}\n\nreturn 0;\n}'),
+(94, '#include<stdio.h>\n\nmain(){\n   int a;\n   int b;\n\n   scanf("%d %d",&a,&b);\n\n   while(a!=0 || b!=0)\n{\n   printf("%d\\n",a+b);\n   scanf("%d %d",&a,&b);\n}\n\nreturn 0;\n}'),
+(95, '#include <iostream>\nusing namespace std;\n\nint main()\n{\n	int a,b;\n\n	while(cin>>a>>b)\n	{\n		cout << a + b << endl;\n	}\n	return 0;\n}'),
+(96, '#include <iostream>\nusing namespace std;\n\nint main()\n{\n	int a,b;\n\n	//while(cin>>a>>b)\n	while(scanf("%d%d",&a,&b)!=EOF)\n	{\n		cout << a + b << endl;\n	}\n	return 0;\n}'),
+(97, '#include <iostream>\nusing namespace std;\n\nint main()\n{\n	int a,b;\n\n	//while(cin>>a>>b)\n	while(scanf("%d%d",&a,&b)!=EOF)\n	{\n		if(a == 0 && b == 0) break; \n		cout << a + b << endl;\n	}\n	return 0;\n}'),
+(98, '#include <iostream>\nusing namespace std;\n\nint main()\n{\n	int a,b;\n\n	//while(cin>>a>>b)\n	//我是中文  我是中文 \n	while(scanf("%d%d",&a,&b)!=EOF)\n	{\n		if(a == 0 && b == 0) break; \n		cout << a + b << endl;\n	}\n	return 0;\n}'),
+(99, '#include <iostream>\nusing namespace std;\n\nint main()\n{\n	int a,b;\n\n	//while(cin>>a>>b)\n	//我是中文  我是中文 \n	while(scanf("%d%d",&a,&b)!=EOF)\n	{\n		if(a == 0 && b == 0) break; \n		cout << a + b << endl;\n	}\n	return 0;\n}'),
+(100, '#include <iostream>\nusing namespace std;\nint main(){int a,b;while(cin>>a>>b && (a!=0 || b!=0)){cout<<a+b<<endl;}return 0;}'),
+(101, '#include<iostream>\nusing namespace std;\nint main(){int a,b;while(cin>>a>>b && (a!=0 || b!=0)){cout<<a+b<<endl;}return 0;}'),
+(102, '#include <iostream>\nusing namespace std;\nint main() {\n    int a, b;\n    while (cin >> a >> b) cout << a + b << endl;\n}');
 
 -- --------------------------------------------------------
 
@@ -123,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `oj_contest` (
 --
 
 INSERT INTO `oj_contest` (`contestid`, `title`, `description`, `private`, `starttime`, `endtime`, `addtime`, `language`, `submit`) VALUES
-(1, 'Practice', 'The problems for practice.', 0, NULL, NULL, 0, '1|2', 40);
+(1, 'Practice', 'The problems for practice.', 0, NULL, NULL, 0, '1|2', 102);
 
 -- --------------------------------------------------------
 
@@ -148,18 +211,18 @@ CREATE TABLE IF NOT EXISTS `oj_contestproblem` (
 --
 
 INSERT INTO `oj_contestproblem` (`contestproblemid`, `contestid`, `problemid`, `index`, `submit`, `solved`) VALUES
-(1, 1, 1017, '1000', 1, 1),
+(1, 1, 1017, '1000', 35, 13),
 (2, 1, 1000, '1001', 1, 1),
 (3, 1, 1002, '1002', 13, 1),
-(4, 1, 1003, '1003', 1, 1),
+(4, 1, 1003, '1003', 2, 1),
 (5, 1, 1004, '1004', 1, 1),
 (6, 1, 1005, '1005', 1, 1),
-(7, 1, 1006, '1006', 1, 1),
+(7, 1, 1006, '1006', 3, 2),
 (8, 1, 1007, '1007', 1, 1),
 (9, 1, 1008, '1008', 4, 1),
 (10, 1, 1009, '1009', 2, 2),
-(11, 1, 1010, '1010', 2, 2),
-(12, 1, 1011, '1011', 1, 1),
+(11, 1, 1010, '1010', 7, 6),
+(12, 1, 1011, '1011', 21, 21),
 (13, 1, 1012, '1012', 1, 1),
 (14, 1, 1013, '1013', 2, 1),
 (15, 1, 1014, '1014', 3, 1),
@@ -247,7 +310,7 @@ INSERT INTO `oj_problem` (`problemid`, `title`, `description`, `input`, `output`
 (1005, '足球赛', '<p>Petya&nbsp;loves&nbsp;football&nbsp;very&nbsp;much.&nbsp;One&nbsp;day,&nbsp;as&nbsp;he&nbsp;was&nbsp;watching&nbsp;a&nbsp;football&nbsp;match,&nbsp;he&nbsp;was&nbsp;writing&nbsp;the&nbsp;players&#39;&nbsp;current&nbsp;positions&nbsp;on&nbsp;a&nbsp;piece&nbsp;of&nbsp;paper.&nbsp;To&nbsp;simplify&nbsp;the&nbsp;situation&nbsp;he&nbsp;depicted&nbsp;it&nbsp;as&nbsp;a&nbsp;string&nbsp;consisting&nbsp;of&nbsp;zeroes&nbsp;and&nbsp;ones.&nbsp;A&nbsp;zero&nbsp;corresponds&nbsp;to&nbsp;players&nbsp;of&nbsp;one&nbsp;team;&nbsp;a&nbsp;one&nbsp;corresponds&nbsp;to&nbsp;players&nbsp;of&nbsp;another&nbsp;team.&nbsp;If&nbsp;there&nbsp;are&nbsp;at&nbsp;least&nbsp;7&nbsp;players&nbsp;of&nbsp;some&nbsp;team&nbsp;standing&nbsp;one&nbsp;after&nbsp;another,&nbsp;then&nbsp;the&nbsp;situation&nbsp;is&nbsp;considered&nbsp;dangerous.&nbsp;For&nbsp;example,&nbsp;the&nbsp;situation&nbsp;00100110111111101&nbsp;is&nbsp;dangerous&nbsp;and&nbsp;11110111011101&nbsp;is&nbsp;not.&nbsp;You&nbsp;are&nbsp;given&nbsp;the&nbsp;current&nbsp;situation.&nbsp;Determine&nbsp;whether&nbsp;it&nbsp;is&nbsp;dangerous&nbsp;or&nbsp;not.<br /></p>', 'The first input is an integer N, represents the number of cases.\nThen there are N cases:\nThe first input line contains a non-empty string consisting of characters "0" and "1", which represents players. The length of the string does not exceed 100 characters. There''s at least one player from each team present on the field.', 'Print "YES" if the situation is dangerous. Otherwise, print "NO".', '2\n001001\n1000000001\n', 'NO\nYES\n', '', 'CodeForces', 1321290723, 1000, 65535, 'b77679f92388704866e92a8f76839f8b', 'b77679f92388704866e92a8f76839f8b'),
 (1006, 'DOTA', '<p>DOTA是一个基于魔兽争霸的5V5&nbsp;RPG地图。它风靡全世界，相信很多同学都玩过，当然没玩过也没有关系。首先简单介绍一下游戏，它的目的是守护自己的远古遗迹（近卫方的生命之树、天灾方的冰封王座），同时摧毁对方的远古遗迹。为了到达对方的远古遗迹，一方英雄必须战胜对方的部队、防御建筑和英雄。我们的问题来了~~~当一个英雄杀死敌方的时候，如果符合某种条件，该英雄就会获得一些称号。我们的要做的就是输出这些称号。</p><p>这里说明一些规则：</p><p><span style="color: rgb(255, 0, 0); ">不会杀死友军，但是可以自杀。若自杀了则所有称号中断重新累计。</span></p><p>第一个杀人的人将获得一个First&nbsp;Blood的称号.</p><p>连续杀人数3个(中间不被击杀即为连续击杀)将获得Killing&nbsp;Spree的称号。以此类推4个为Dominating，5个为Mega&nbsp;Kill，6个为Unstoppable，7个为Wicked&nbsp;Sick</p><p>8个为M-m-m-m...onsterKill，9个为Godlike，10个以上都是Beyond&nbsp;Godlike</p><p>如果每两次杀人间隔10秒包含10秒，连续杀人数为2人，获得称号Double&nbsp;Kill</p><p>以此类推Triple&nbsp;Kill，Ultra&nbsp;Kill，Rampage&nbsp;对应3,4,5或者5以上。</p><p><br /></p>', '输入数据按 击杀发生时间顺序先后 给出各队击杀 和 时间\n比如 a kill b in 00:33\n首先输入一个T，代表有几组测试数据\n然后输入一个N，代表击杀事件的个数\n然后输入击杀事件', '输入和输出规范详情参考 input和output', '1\n6\na kill f in 03:33 \na kill g in 03:40\na kill h in 03:50\nf kill a in 09:10\na kill f in 09:50\nf kill b in 11:50\n', 'a has First Blood\na has Double Kill\na has Triple Kill\na is Killing Spree\n', '', 'HJX', 1321290881, 1000, 65535, '0a5bfe5857dc1eea3804108b46e28008', '0a5bfe5857dc1eea3804108b46e28008'),
 (1007, '第几天', '<p>有一本记录了从1年到9999年的日历，</p><p>假设1年1月1日为第一天，现在问第Y年的第M月的第D天是第几天。</p><p><br /></p>', '有一本记录了从1年到9999年的日历，\n假设1年1月1日为第一天，现在问第Y年的第M月的第D天是 第几天。\n', '对于每组数据，输出这是第几天。', '2\n1 1 1\n2 2 2\n', '1\n398\n', '', 'HJX', 1321290942, 1000, 65535, '49ffd34f8bd3624b4a7f97d566d02d51', '49ffd34f8bd3624b4a7f97d566d02d51'),
-(1008, 'Spira', '<p>Spira是一种螺旋，从Spiral演变过来的。当然眼尖的同学一眼就能认识这个词是从FFX里盗窃过来的。&nbsp;废话不多说，XadillaX决定称如下的等腰直角三角形为Spira：&nbsp;1&nbsp;2&nbsp;3&nbsp;4&nbsp;5&nbsp;12&nbsp;13&nbsp;14&nbsp;6&nbsp;11&nbsp;15&nbsp;7&nbsp;10&nbsp;8&nbsp;9&nbsp;这个是腰长为5的时候的样子。&nbsp;那么如果有其它腰长的Spira会是怎么样的呢？XadillaX想让你一个个画出来。<br /></p>', '第一行一个正整数T(1 <= T <= 10)，代表测试数据组数。\n以下T行，各行就一个正整数N(2 <= N <= 1000)，代表三角形腰长。', '对于每个测试数据，输出相应的Spira。每组数据之间以一个空行来间隔。', '2\n5\n4\n', '1  2  3  4  5\n12 13 14 6\n11 15 7\n10 8\n9\n\n1  2  3  4\n9  10 5\n8  6\n7\n', '', 'XadillaX', 1322150606, 1000, 65535, '4bf92833f76e56caa927991fbc39b891', '4bf92833f76e56caa927991fbc39b891'),
+(1008, 'Spira', '<p>Spira是一种螺旋，从Spiral演变过来的。当然眼尖的同学一眼就能认识这个词是从FFX里盗窃过来的。&nbsp;废话不多说，XadillaX决定称如下的等腰直角三角形为Spira：</p><pre style="overflow-x: auto; ">1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5\n12&nbsp;13&nbsp;14&nbsp;6\n11&nbsp;15&nbsp;7\n10&nbsp;8\n9\n</pre><p>这个是腰长为5的时候的样子。&nbsp;那么如果有其它腰长的Spira会是怎么样的呢？XadillaX想让你一个个画出来。<br /></p>', '第一行一个正整数T(1 <= T <= 10)，代表测试数据组数。\n以下T行，各行就一个正整数N(2 <= N <= 1000)，代表三角形腰长。', '对于每个测试数据，输出相应的Spira。每组数据之间以一个空行来间隔。', '2\n5\n4\n', '1  2  3  4  5\n12 13 14 6\n11 15 7\n10 8\n9\n\n1  2  3  4\n9  10 5\n8  6\n7\n', '', 'XadillaX', 1322824085, 1000, 65535, '4bf92833f76e56caa927991fbc39b891', '4bf92833f76e56caa927991fbc39b891'),
 (1009, '连连看', '<p>大家都知道一个曾经风靡一时的游戏：连连看。&nbsp;XadillaX在做连连看的时候不专心，做做就去玩别的去了，但他想早点完成这个小游戏，于是他找到你来帮他完成连连看的一段核心代码。&nbsp;首先会给出一副连连看的分布图形，然后会给你各种鼠标点击操作（鼠标点击的坐标），你的工作就是算出最后还剩下几个方块。&nbsp;鼠标操作之后的判断是这样的：在没有记录任何图形的情况下，第一下点击会记录当前点击的图形，第二下以及之后的每次点击都会记录点击的图形，并且与之前的图形对比，如果可消就消掉两块，如果不可消就将之前之前点击的图形取消记录（但不取消记录当前点击的图形）。可消的概念就是能在两次拐角内能连接起来，并且两个图形是相同的。若点击的是空块，则不做任何操作。<br /></p>', '第一行一个正整数T（0 < T <= 10），表示数据组数。\n接下来T组数据，每组数据的第一行是两个正整数n和m(2 <= m, n <= 100)，表示连连看分布图的高和宽（每个图形占一个单位高和宽）。\n接下来n行表示图形的分布，由大写''A''~''Z''以及''0''组成，其中大写字母代表一个图形（相同字母的表示图形相同），''0''表示这个地方为空。\n接下来一行为一个正整数Q(1 <= Q <= 100)，代表鼠标操作次数。\n最后Q行，每行有两个正整数，代表鼠标点击的坐标Xi, Yi(0 <= Xi, Yi, < 100)。', '对于每组，输出个正整数，代表本组数据最终会剩下几个图形。一组数据占一行。', '1\n3 3\nQZZ\nI0Q\nAAI\n6\n0 0\n2 1\n2 0\n1 0\n0 0\n2 1\n', '4\n', '第一次选中了Q，第二次选中了Q，但是因为不能两次拐角内消除，所以第一次的Q取消选中状态，然后第三次选中Z，则第二次的Q取消选中，接着选中Z，两者消掉。接下去选中Q、Q，消除。最后剩下两个I和两个A。', 'XadillaX', 1322150796, 1000, 65535, 'ddb7cb0299c30b692f4d4cd096197eae', 'ddb7cb0299c30b692f4d4cd096197eae'),
 (1010, '魔法少女', '<p>前些时间虚渊玄的巨献小圆着实火了一把。&nbsp;在黑长直（小炎）往上爬楼去对抗魔女之夜时，她遇到了一个问题想请你帮忙。&nbsp;因为魔女之夜是悬浮在半空的，所以她必须要爬楼，而那座废墟一共有n层，而且每层高度不同，这造成小炎爬每层的时间也不同。不过当然，小炎会时间魔法，可以瞬间飞过一层或者两层[即不耗时]。但每次瞬移的时候她都必须要至少往上再爬一层（在这个当儿补充魔力）才能再次使用瞬移。爬每单位高度需要消耗小炎1秒时间。&nbsp;消灭魔女之夜是刻不容缓的，所以小炎想找你帮她找出一种最短时间方案能通往楼顶。<br /></p>', '本题有多组数据，以文件输入结尾结束。\n每组数据第一行一个数字N（1 <= N <= 10000），代表楼层数量。\n接下去N行，每行一个数字H(1 <= H <= 100)，代表本层的高度。', '对于每组数据，输出一行，一个数字S，代表通往楼顶所需的最短时间。', '5\n3\n5\n1\n8\n4\n', '1\n', '', 'XadillaX', 1322150984, 1000, 65535, 'df797d5f53c916fa420ecc3c043b374b', 'df797d5f53c916fa420ecc3c043b374b'),
 (1011, '魔法少女II', '<p>炎为了拯救小圆，不断地穿梭在不同的时空之中。而与此同时，小圆所背负的就越多，她的能力也就越强。而她所背负的因果线将是上一次倒退时所背负的加上次数的阶乘。如一次就是f1&nbsp;=&nbsp;1!，两次就是f2&nbsp;=&nbsp;2!&nbsp;+&nbsp;f1，三次则是f3&nbsp;=&nbsp;3!&nbsp;+&nbsp;f2。而我们所需要计算的则是在炎将时空倒退了n(1&nbsp;&lt;=&nbsp;n&nbsp;&lt;=&nbsp;10^6)次之后所小圆背负的因果。当然，这个数字会很大，我们只需要将结果对1000000取模即可。<br /></p>', '本题有多组数据，每组数据一个正整数n(1 <= n <= 10^6)，以EOF结束。', '对于一组数据，输出一个答案，代表小圆所背负因果值，模1000000。', '5\n10\n', '153\n37913\n', '', 'Timebug', 1322151146, 1000, 65535, 'fef28dbee95feafec00d2e5b8ff976bc', 'fef28dbee95feafec00d2e5b8ff976bc'),
@@ -289,7 +352,8 @@ INSERT INTO `oj_result` (`resultid`, `result`) VALUES
 (11, 'COMPILATION_ERROR'),
 (12, 'COMPILATION_SUC'),
 (13, 'SYSTEM_ERROR'),
-(14, 'OUT_OF_CONTEST_TIME');
+(14, 'OUT_OF_CONTEST_TIME'),
+(15, 'DANGEROUS_CODE');
 
 -- --------------------------------------------------------
 
@@ -334,7 +398,14 @@ INSERT INTO `oj_runtimeerror` (`totsubmitid`, `message`) VALUES
 (4, 'tmpdir/1322186935.cpp: In function `int main()'':\ntmpdir/1322186935.cpp:5: error: `remove'' undeclared (first use this function)\ntmpdir/1322186935.cpp:5: error: (Each undeclared identifier is reported only \n   once for each function it appears in.)\ntmpdir/1322186935.cpp:7:2: warning: no newline at end of file\nÿ'),
 (24, 'ACCESS_VIOLATION'),
 (36, 'ACCESS_VIOLATION'),
-(37, 'tmpdir/1322203648.c:1:17: cstdio: No such file or directory\ntmpdir/1322203648.c: In function `main'':\ntmpdir/1322203648.c:7: warning: implicit declaration of function `scanf''\ntmpdir/1322203648.c:7: error: `EOF'' undeclared (first use in this function)\ntmpdir/1322203648.c:7: error: (Each undeclared identifier is reported only once\ntmpdir/1322203648.c:7: error: for each function it appears in.)\ntmpdir/1322203648.c:18: warning: implicit declaration of function `printf''\ntmpdir/1322203648.c:22:2: warning: no newline at end of file\nÿ');
+(37, 'tmpdir/1322203648.c:1:17: cstdio: No such file or directory\ntmpdir/1322203648.c: In function `main'':\ntmpdir/1322203648.c:7: warning: implicit declaration of function `scanf''\ntmpdir/1322203648.c:7: error: `EOF'' undeclared (first use in this function)\ntmpdir/1322203648.c:7: error: (Each undeclared identifier is reported only once\ntmpdir/1322203648.c:7: error: for each function it appears in.)\ntmpdir/1322203648.c:18: warning: implicit declaration of function `printf''\ntmpdir/1322203648.c:22:2: warning: no newline at end of file\nÿ'),
+(69, 'compilers/C/bin/../lib/gcc-lib/mingw32/3.3.1/../../..\\libmingw32.a(main.o)(.text+0x97):main.c: undefined reference to `WinMain@16''\nÿ'),
+(70, 'tmpdir/1322704292.c:1:18: stido.h: No such file or directory\ntmpdir/1322704292.c:5:2: warning: no newline at end of file\nÿ'),
+(72, 'tmpdir/1322704978.c: In function `main'':\ntmpdir/1322704978.c:6: warning: too few arguments for format\ntmpdir/1322704978.c:6: warning: left-hand operand of comma expression has no effect\ntmpdir/1322704978.c:6: error: parse error before ''!='' token\ntmpdir/1322704978.c:10:2: warning: no newline at end of file\nÿ'),
+(73, 'tmpdir/1322705141.c:1:19: iostream: No such file or directory\ntmpdir/1322705141.c:2: error: parse error before "namespaces"\ntmpdir/1322705141.c:2: warning: type defaults to `int'' in declaration of `std''\ntmpdir/1322705141.c:2: warning: data definition has no type or storage class\ntmpdir/1322705141.c: In function `main'':\ntmpdir/1322705141.c:4: error: `cin'' undeclared (first use in this function)\ntmpdir/1322705141.c:4: error: (Each undeclared identifier is reported only once\ntmpdir/1322705141.c:4: error: for each function it appears in.)\ntmpdir/1322705141.c:4: error: `a'' undeclared (first use in this function)\ntmpdir/1322705141.c:4: error: `b'' undeclared (first use in this function)\ntmpdir/1322705141.c:5: error: `cout'' undeclared (first use in this function)\ntmpdir/1322705141.c:5: error: `endl'' undeclared (first use in this function)\ntmpdir/1322705141.c:6:2: warning: no newline at end of file\nÿ'),
+(75, 'tmpdir/1322705206.cpp:2: error: syntax error before `std''\ntmpdir/1322705206.cpp: In function `int main()'':\ntmpdir/1322705206.cpp:4: error: `cin'' undeclared (first use this function)\ntmpdir/1322705206.cpp:4: error: (Each undeclared identifier is reported only \n   once for each function it appears in.)\ntmpdir/1322705206.cpp:4: error: `a'' undeclared (first use this function)\ntmpdir/1322705206.cpp:4: error: `b'' undeclared (first use this function)\ntmpdir/1322705206.cpp:5: error: `cout'' undeclared (first use this function)\ntmpdir/1322705206.cpp:5: error: `endl'' undeclared (first use this function)\ntmpdir/1322705206.cpp:6:2: warning: no newline at end of file\nÿ'),
+(81, 'tmpdir/1322708373.cpp: In function `int main()'':\ntmpdir/1322708373.cpp:2: error: `system'' undeclared (first use this function)\ntmpdir/1322708373.cpp:2: error: (Each undeclared identifier is reported only \n   once for each function it appears in.)\ntmpdir/1322708373.cpp:3:2: warning: no newline at end of file\nÿ'),
+(91, 'tmpdir/1322824946.c:1: error: parse error before ''<'' token\ntmpdir/1322824946.c:7: error: parse error before string constant\ntmpdir/1322824946.c:7: warning: type defaults to `int'' in declaration of `scanf''\ntmpdir/1322824946.c:7: warning: conflicting types for built-in function `scanf''\ntmpdir/1322824946.c:7: warning: data definition has no type or storage class\ntmpdir/1322824946.c:15:2: warning: no newline at end of file\nÿ');
 
 -- --------------------------------------------------------
 
@@ -361,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `oj_submit` (
   KEY `userid` (`userid`),
   KEY `resultid` (`resultid`),
   KEY `languageid` (`languageid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103 ;
 
 --
 -- 转存表中的数据 `oj_submit`
@@ -407,7 +478,69 @@ INSERT INTO `oj_submit` (`totsubmitid`, `submitid`, `contestid`, `index`, `useri
 (37, 36, 1, '1014', 1, 0, 0, 212, 1322203648, 1, 11),
 (38, 37, 1, '1014', 1, 0, 556, 212, 1322203664, 2, 3),
 (39, 38, 1, '1015', 1, 0, 552, 737, 1322203700, 2, 5),
-(40, 39, 1, '1017', 1, 15, 624, 2229, 1322203742, 1, 3);
+(40, 39, 1, '1017', 1, 15, 624, 2229, 1322203742, 1, 3),
+(41, 40, 1, '1003', 2, 31, 600, 610, 1322646337, 2, 5),
+(42, 41, 1, '1010', 2, 218, 704, 443, 1322646680, 2, 3),
+(43, 42, 1, '1010', 2, 31, 708, 592, 1322646823, 2, 3),
+(44, 43, 1, '1010', 2, 15, 1176, 950, 1322646875, 2, 3),
+(45, 44, 1, '1010', 2, 31, 712, 595, 1322646921, 2, 3),
+(46, 45, 1, '1010', 1, 15, 704, 433, 1322647038, 2, 5),
+(47, 46, 1, '1006', 1, 0, 588, 1547, 1322647121, 2, 3),
+(48, 47, 1, '1006', 1, 0, 568, 3199, 1322647278, 2, 5),
+(49, 48, 1, '1011', 2, 15, 564, 224, 1322647499, 2, 3),
+(50, 49, 1, '1011', 2, 0, 564, 468, 1322647518, 2, 3),
+(51, 50, 1, '1011', 2, 0, 560, 334, 1322647540, 2, 3),
+(52, 51, 1, '1011', 2, 0, 564, 400, 1322647560, 2, 3),
+(53, 52, 1, '1011', 2, 0, 560, 253, 1322647578, 2, 3),
+(54, 53, 1, '1011', 2, 31, 564, 239, 1322647603, 2, 3),
+(55, 54, 1, '1011', 2, 0, 564, 265, 1322647623, 2, 3),
+(56, 55, 1, '1011', 2, 0, 564, 250, 1322647641, 1, 3),
+(57, 56, 1, '1011', 2, 15, 568, 188, 1322647662, 2, 3),
+(58, 57, 1, '1011', 2, 31, 560, 395, 1322647680, 2, 3),
+(59, 58, 1, '1011', 2, 0, 584, 329, 1322647702, 2, 3),
+(60, 59, 1, '1011', 2, 15, 8392, 276, 1322647721, 2, 3),
+(61, 60, 1, '1011', 2, 0, 564, 252, 1322647737, 2, 3),
+(62, 61, 1, '1011', 2, 0, 568, 265, 1322647759, 1, 3),
+(63, 62, 1, '1011', 2, 31, 8392, 275, 1322647789, 2, 3),
+(64, 63, 1, '1011', 2, 0, 564, 298, 1322647808, 2, 3),
+(65, 64, 1, '1011', 2, 0, 564, 468, 1322647825, 2, 3),
+(66, 65, 1, '1011', 2, 15, 588, 851, 1322647852, 2, 3),
+(67, 66, 1, '1011', 2, 31, 8392, 276, 1322647869, 2, 3),
+(68, 67, 1, '1011', 2, 0, 564, 825, 1322648118, 1, 3),
+(69, 68, 1, '1000', 7, 0, 0, 0, 1322704224, 1, 11),
+(70, 69, 1, '1000', 7, 0, 0, 42, 1322704291, 1, 11),
+(71, 70, 1, '1000', 7, 0, 544, 42, 1322704393, 1, 5),
+(72, 71, 1, '1000', 8, 0, 0, 118, 1322704977, 1, 11),
+(73, 72, 1, '1000', 9, 0, 0, 92, 1322705141, 1, 11),
+(74, 73, 1, '1000', 8, 0, 552, 137, 1322705189, 1, 5),
+(75, 74, 1, '1000', 9, 0, 0, 92, 1322705205, 2, 11),
+(76, 75, 1, '1000', 10, 0, 576, 130, 1322706998, 2, 3),
+(77, 76, 1, '1000', 1, 15, 568, 96, 1322707499, 2, 10),
+(78, 77, 1, '1000', 10, 577, 408, 55, 1322707500, 2, 8),
+(79, 78, 1, '1000', 10, 0, 0, 94, 1322707754, 2, 15),
+(80, 79, 1, '1000', 10, 733, 412, 83, 1322708265, 2, 8),
+(81, 80, 1, '1000', 9, 0, 0, 33, 1322708307, 2, 11),
+(82, 81, 1, '1000', 9, 0, 572, 72, 1322708437, 2, 5),
+(83, 82, 1, '1000', 1, 0, 576, 130, 1322708889, 2, 10),
+(84, 83, 1, '1000', 1, 0, 576, 130, 1322708916, 2, 3),
+(85, 84, 1, '1000', 10, 920, 412, 83, 1322708941, 2, 8),
+(86, 85, 1, '1000', 1, 46, 588, 94, 1322709182, 2, 8),
+(87, 86, 1, '1000', 1, 15, 592, 94, 1322715007, 2, 8),
+(88, 87, 1, '1000', 11, 0, 552, 136, 1322715500, 1, 3),
+(89, 88, 1, '1000', 1, 0, 0, 94, 1322719648, 2, 15),
+(90, 89, 1, '1000', 13, 0, 548, 117, 1322824786, 2, 3),
+(91, 90, 1, '1000', 14, 0, 0, 135, 1322824946, 1, 11),
+(92, 91, 1, '1000', 14, 15, 548, 161, 1322825644, 1, 3),
+(93, 92, 1, '1000', 14, 0, 544, 161, 1322825667, 1, 3),
+(94, 93, 1, '1000', 14, 0, 544, 161, 1322825669, 1, 3),
+(95, 94, 1, '1000', 15, 0, 576, 127, 1322909224, 2, 5),
+(96, 95, 1, '1000', 15, 0, 576, 162, 1322909353, 2, 5),
+(97, 96, 1, '1000', 15, 15, 576, 193, 1322909435, 2, 3),
+(98, 97, 1, '1000', 15, 0, 576, 224, 1322910437, 2, 3),
+(99, 98, 1, '1000', 15, 0, 580, 224, 1322910439, 2, 3),
+(100, 99, 1, '1000', 1, 15, 572, 122, 1322912343, 2, 3),
+(101, 100, 1, '1000', 1, 0, 580, 121, 1322912391, 2, 3),
+(102, 101, 1, '1000', 16, 0, 572, 118, 1322924224, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -430,24 +563,33 @@ CREATE TABLE IF NOT EXISTS `oj_user` (
   `language` int(11) NOT NULL,
   `submitlist` text NOT NULL,
   `solvedlist` text NOT NULL,
+  `submitnum` int(11) NOT NULL DEFAULT '0',
+  `solvednum` int(11) NOT NULL DEFAULT '0',
+  `avatarbar` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `nickname` (`nickname`),
   KEY `roleid` (`roleid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- 转存表中的数据 `oj_user`
 --
 
-INSERT INTO `oj_user` (`userid`, `username`, `password`, `roleid`, `nickname`, `regtime`, `solved`, `submit`, `school`, `email`, `motto`, `language`, `submitlist`, `solvedlist`) VALUES
-(1, 'XadillaX', '045f382f08038084d9ef8d74a8402363', 3, '死月', 0, 20, 41, 'Ningbo University of Technology', 'admin@xcoder.in', '', 1, '1000|1002|1016|1001|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012|1013|1014|1015|1017|', '1000|1002|1016|1001|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012|1013|1014|1017|'),
-(2, 'test', 'e10adc3949ba59abbe56e057f20f883e', 1, 'a', 0, 0, 0, '', 'a@b.c', '', 0, '', ''),
-(3, 'again', 'e10adc3949ba59abbe56e057f20f883e', 1, 'again', 0, 0, 0, 'SBUT', 'again@again.again', 'SB AGAIN.', 0, '', ''),
-(4, 'deathmoon', '045f382f08038084d9ef8d74a8402363', 1, 'canyouhelpme', 0, 0, 0, '', 'zukaidi@163.com', '', 0, '', ''),
-(5, 'mamama', '2a7d94e6d20ed9be4edca6f5ebe5e0ab', 1, 'adslfkj', 0, 0, 0, '', 'j@k.c', '', 0, '', ''),
-(6, 'konakona', '171f9f26441decbb9a1dac3e5b60f783', 1, 'konakona', 0, 0, 0, '', 'admin@crazyphper.com', '', 0, '', '');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO `oj_user` (`userid`, `username`, `password`, `roleid`, `nickname`, `regtime`, `solved`, `submit`, `school`, `email`, `motto`, `language`, `submitlist`, `solvedlist`, `submitnum`, `solvednum`, `avatarbar`) VALUES
+(1, 'XadillaX', '045f382f08038084d9ef8d74a8402363', 3, '死月', 0, 24, 52, 'Ningbo University of Technology', 'admin@xcoder.in', '', 2, '1000|1002|1016|1001|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012|1013|1014|1015|1017|', '1000|1002|1016|1001|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012|1013|1014|1017|', 21, 17, 1),
+(2, 'test', 'e10adc3949ba59abbe56e057f20f883e', 1, 'a', 0, 24, 25, '', 'a@b.c', '', 1, '1003|1010|1011|', '1010|1011|', 3, 2, 1),
+(3, 'again', 'e10adc3949ba59abbe56e057f20f883e', 1, 'again', 0, 0, 0, 'SBUT', 'again@again.again', 'SB AGAIN.', 0, '', '', 0, 0, 1),
+(4, 'deathmoon', '045f382f08038084d9ef8d74a8402363', 1, 'canyouhelpme', 0, 0, 0, '', 'zukaidi@163.com', '', 0, '', '', 0, 0, 1),
+(5, 'mamama', '2a7d94e6d20ed9be4edca6f5ebe5e0ab', 1, 'adslfkj', 0, 0, 0, '', 'j@k.c', '', 0, '', '', 0, 0, 1),
+(6, 'konakona', '171f9f26441decbb9a1dac3e5b60f783', 3, 'konakona', 0, 0, 0, '', 'admin@crazyphper.com', '', 0, '', '', 0, 0, 1),
+(7, '1234', 'e10adc3949ba59abbe56e057f20f883e', 1, '1', 0, 0, 3, '1', '12122@qq.com', '1', 1, '1000|', '', 1, 0, 1),
+(8, 'timebug', 'e10adc3949ba59abbe56e057f20f883e', 3, 'timebug', 0, 0, 2, 'nbut', 'timebug@live.com', '', 1, '1000|', '', 1, 0, 1),
+(9, 'jdx2013519', '3be8f013abc5668259e74d5b0fb4283c', 1, '囧の轨迹', 0, 0, 4, '', 'jdx2013519@sina.com', '', 2, '1000|', '', 1, 0, 1),
+(10, 'soce', 'e10adc3949ba59abbe56e057f20f883e', 1, 'soce', 0, 1, 5, '', 'lzsb@2b.nc', '', 2, '1000|', '1000|', 1, 1, 1),
+(11, 'monkeyde17', 'e10adc3949ba59abbe56e057f20f883e', 1, 'monkeyde17', 0, 1, 1, '', 'monkey_tv@126.com', '呵，呵呵，呵呵呵', 1, '1000|', '1000|', 0, 1, 1),
+(12, '8644325', '045f382f08038084d9ef8d74a8402363', 1, '丿死丶月', 1322718340, 0, 0, '', 'xadillax@acmdiy.net', '', 0, '', '', 0, 0, 1),
+(13, 'katie', '0df44e5def0cd6a339e7cf200ad124ef', 1, 'katie', 1322823821, 1, 1, '', 'katieangel@sohu.com', '', 2, '1000|', '1000|', 1, 1, 1),
+(14, 'cxn_bupt', '3e2444ff5be51c2bc8eb5db084210c0c', 1, 'april', 1322824001, 3, 4, '', 'xuancao206@qq.com', '', 1, '1000|', '1000|', 4, 1, 1),
+(15, 'starvae', '727d5a71d71364d1d93770b52df34c89', 1, 'starvae', 1322909082, 3, 5, 'hdu', 'starvae@gmail.com', '', 2, '1000|', '1000|', 5, 1, 0),
+(16, 'MatRush', '637b417abdb5e2c159e641fcee09f454', 3, 'MatRush', 1322924174, 0, 1, 'ZJUT', 'matrush@qq.com', 'MatRush = Man @ Rush...', 2, '1000|', '', 1, 0, 1);

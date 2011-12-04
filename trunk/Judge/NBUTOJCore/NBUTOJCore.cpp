@@ -118,6 +118,14 @@ bool CNBUTOJCore::CompileFile(const string type, const string input, const strin
     string newinput = string(TEMP_PATH) + input;
     string newoutput = string(TEMP_PATH) + output;
 
+    /** 过滤代码 */
+    bool fr = cp->FilterCode(newinput.c_str());
+    if(fr == true)
+    {
+        cs.state = DANGEROUS_CODE;
+        return false;
+    }
+
     /** 编译文件 */
     bool r = cp->CompileFile(newinput.c_str(), newoutput.c_str(), cs.err_code);
     
@@ -566,6 +574,11 @@ bool CNBUTOJCore::Judge(const char *exe, const char *stdinput, const char *stdou
     /** 监视若有异常 */
     if(!WatchCode(hProcess, lim_time, lim_memo, maxSize, exeoutput.c_str(), cs, ProcInfo)) 
     {
+        if(cs.state == NState::TIME_LIMIT_EXCEEDED_1 || cs.state == NState::TIME_LIMIT_EXCEEDED_2)
+        {
+            cs.exe_time = lim_time;
+        }
+
         if(bPause) system("pause");
         //ReleaseIOHandle(hInput, hOutput);
         ClearUp(newexe.c_str(), exeoutput.c_str(), ProcInfo);

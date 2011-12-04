@@ -142,7 +142,7 @@ bool NCompiler::_CompileFile(char *err_code)
  *
  * @note Ğéº¯Êı£¬ÓÃÓÚ¼Ì³Ğ
  */
-bool NCompiler::FilterCode(const char *input, const char *filter_filename)
+bool NCompiler::FilterCode(const char *input)
 {
 
     return false;

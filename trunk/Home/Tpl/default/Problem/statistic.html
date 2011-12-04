@@ -1,0 +1,126 @@
+<php>
+    function get_result_color($result)
+    {
+        switch($result)
+        {
+            case "QUEUING": return "#ff7800";
+            case "ACCEPTED": return "red";
+            default: return "green";
+        }
+    }
+</php>
+<include file="Public:header"/>
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/js/sh/sh_style.css" media="screen"/>
+
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_main.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_c.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_cpp.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_java.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $(".titles").click(function() {
+            $(this).next().slideToggle("normal");
+        });
+
+        sh_highlightDocument();
+    });
+</script>
+
+<php>
+    $code_class = "sh_c";
+    if($submit["language"] == "GCC") $code_class = "sh_c";
+    else
+    if($submit["language"] == "G++") $code_class = "sh_cpp";
+</php>
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>Best Solution of <a style="display: inline;" href="{:U('Problem/view')}?id={$problem_info['index']}">P{$problem_info["index"]}</a></h3></li>
+
+        <li class="contents">
+            <div class="fl" id="view-code-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;">RANK</th>
+                        <th style="text-align: center;">RUNID</th>
+                        <th style="text-align: center;">用户</th>
+                        <th style="text-align: center;">时间</th>
+                        <th style="text-align: center;">内存</th>
+                        <th style="text-align: center;">长度</th>
+                        <th style="text-align: center;">语言</th>
+                        <th style="text-align: center;">提交时间</th>
+                    </tr>
+                    </thead>
+
+                    <tfoot>
+                    <tr>
+                        <td colspan="9" id="page_td">
+                            {$page_str}
+                        </td>
+                    </tr>
+                    </tfoot>
+
+                    <tbody>
+                    <foreach name="submit_list" item="list">
+                        <tr>
+                            <td style="text-align: center;">{$list.rank}</td>
+                            <td style="text-align: center;">{$list.submitid}</td>
+                            <td style="text-align: center;">{$list.username}</td>
+                            <td style="text-align: center;">{$list.time}</td>
+                            <td style="text-align: center;">{$list.memory}</td>
+                            <td style="text-align: center;">{$list.length}</td>
+                            <td style="text-align: center;">
+                                <a href="{:U('Problem/viewcode')}?submitid={$list['submitid']}" target="_blank">
+                                    {$list.language}
+                                </a>
+                            </td>
+                            <td style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fr" id="view-code-baseinfo">
+                <h4>信息统计</h4>
+                <table style="font-size: 12px; font-family: consolas;" width="100%">
+                    <tr>
+                        <td>AC</td>
+                        <td>{$analyze["ACCEPTED"]}</td>
+                    </tr>
+                    <tr>
+                        <td>WA</td>
+                        <td>{$analyze["WRONG_ANSWER"]}</td>
+                    </tr>
+                    <tr>
+                        <td>RE</td>
+                        <td>{$analyze["RUNTIME_ERROR"]}</td>
+                    </tr>
+                    <tr>
+                        <td>TLE</td>
+                        <td>{$analyze["TIME_LIMIT_EXCEEDED"]}</td>
+                    </tr>
+                    <tr>
+                        <td>MLE</td>
+                        <td>{$analyze["MEMORY_LIMIT_EXCEEDED"]}</td>
+                    </tr>
+                    <tr>
+                        <td>CE</td>
+                        <td>{$analyze["COMPILATION_ERROR"]}</td>
+                    </tr>
+                    <tr>
+                        <td>PE</td>
+                        <td>{$analyze["PRESENTATION_ERROR"]}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="cl"></div>
+        </li>
+    </ul>
+</div>
+
+<include file="Public:footer"/>

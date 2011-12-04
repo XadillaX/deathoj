@@ -201,7 +201,7 @@ class ProblemAction extends CommonAction
         if(!is_numeric($page)) $page = 1;
         $prob_count = $this->submit_model->get_count($this->contestid);
         $page_count = (int)((int)$prob_count / (int)$this->status_per_page) + (($prob_count % $this->status_per_page == 0) ? 0 : 1);
-        if($page > $page_count) $page = $page_count;
+        if($page > $page_count && $page_count != 0) $page = $page_count;
 
         /** 分页对象 */
         import("@.Plugin.XPage");
@@ -248,7 +248,7 @@ class ProblemAction extends CommonAction
         }
 
         /** 用户对不上号 */
-        if($this->user_information["userid"] != $data["userid"])
+        if($this->user_information["userid"] != $data["userid"] && $this->user_information["roleid"] != 3)
         {
             exit(0);
         }
@@ -288,6 +288,72 @@ class ProblemAction extends CommonAction
         $this->web_config["title"] .= ("查看源代码 #" . $data["submitid"]);
         $this->assign("HC", $this->web_config);
         $this->assign("submit", $data);
+
+        $this->display();
+    }
+
+    /**
+     * 题目状态统计
+     * @return void
+     */
+    public function statistic()
+    {
+        $index = $_GET["id"];
+
+        /** 若木有这个题目 */
+        $problem = $this->contestproblem_model->get_problem_by_index(1, $index);
+        if(false === $problem)
+        {
+            redirect(__ROOT__);
+        }
+
+        $this->assign("problem_info", $problem);
+
+        /** 获取统计信息 */
+        $result_model = new Model("result");
+        $analyze = $this->submit_model->get_statistic($index);
+        $result_info = $result_model->select();
+        $newanalyze = array();
+        for($i = 0; $i < count($result_info); $i++) $newanalyze[$result_info[$i]["result"]] = 0;
+        for($i = 0; $i < count($analyze); $i++)
+        {
+            if("TIME_LIMIT_EXCEEDED" != $analyze[$i]["result"])
+                $newanalyze[$analyze[$i]["result"]] = $analyze[$i]["count"];
+            else $newanalyze[$analyze[$i]["result"]] += $analyze[$i]["count"];
+        }
+
+        /** 获取分页信息 */
+        $page = $_GET["page"];
+        if(!is_numeric($page)) $page = 1;
+        $submit_count = $this->submit_model->where(array("contestid" => $this->contestid, "index" => $index, "resultid" => 3))->count();
+        $page_count = (int)((int)$submit_count / (int)$this->status_per_page) + (($submit_count % $this->status_per_page == 0) ? 0 : 1);
+        if($page > $page_count && $page_count != 0) $page = $page_count;
+
+        /** 分页对象 */
+        import("@.Plugin.XPage");
+        $page_obj = new XPage();
+        $page_obj->link_str = U("Problem/statistic") . "?page=%s&id=" . $index;
+        $page_obj->per_page = $this->status_per_page;              ///< 每页数量
+        $page_obj->item_count = $submit_count;                ///< 记录数
+        $page_obj->cur_page = $page;                        ///< 当前页码
+        $page_obj->id = "xpage";
+        $page_str = $page_obj->create_links();
+        $this->assign("page_str", $page_str);
+
+        $this->web_config["title"] .= "状态统计 - P{$index} :: 第 {$page} 页";
+        $this->assign("HC", $this->web_config);
+
+        /** 提交列表 */
+        $submit_list = $this->submit_model->get_submit_by_page($this->contestid, $page, $this->status_per_page, $index, true, "time ASC, memory ASC, length ASC");
+
+        /** RANK */
+        for($i = 0; $i < count($submit_list); $i++)
+        {
+            $submit_list[$i]["rank"] = ($page - 1) * $this->status_per_page + $i + 1;
+        }
+
+        $this->assign("analyze", $newanalyze);
+        $this->assign("submit_list", $submit_list);
 
         $this->display();
     }

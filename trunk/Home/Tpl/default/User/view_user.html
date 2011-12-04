@@ -1,0 +1,78 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<script type="text/javascript">
+$(function(){
+    $(".titles").click(function(){
+        $(this).next().slideToggle("normal");
+    });
+});
+</script>
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>{$info["username"]}</h3></li>
+        <li id="limit">
+            提交题目数: {$info["submitnum"]}　AC题目数: {$info["solvednum"]}　注册时间: {:date("Y-m-d H:i:s", $info["regtime"])}
+        </li>
+
+        <!-- 正文内容 -->
+        <li class="titles" id="nickname-title">昵称</li>
+        <li class="contents" id="nickname">
+            <div>
+                {$info["nickname"]}
+            </div>
+        </li>
+
+        <li class="titles" id="school-title">学校</li>
+        <li class="contents" id="school">
+            <div>
+                {$info["school"]}
+            </div>
+        </li>
+
+        <li class="titles" id="motto-title">格言</li>
+        <li class="contents" id="motto">
+            <div>
+                {$info["motto"]}
+            </div>
+        </li>
+
+        <li class="titles" id="solvedlist-title">已解决问题</li>
+        <li class="contents" id="solvedlist">
+            <php>$solvedarray = $info['solvedarray'];</php>
+            <foreach name="solvedarray" item="solved">
+                <div class="fl" style="margin-right: 5px;">
+                    <a href="{:U('Problem/view')}?id={$solved}">{$solved}</a>
+                </div>
+            </foreach>
+            <div class="cl"></div>
+        </li>
+
+        <li class="titles" id="todolist-title">等待解决问题</li>
+        <li class="contents" id="todolist">
+            <php>$todoarray = $info['todoarray'];</php>
+            <foreach name="todoarray" item="todo">
+                <div class="fl" style="margin-right: 5px;">
+                    <a href="{:U('Problem/view')}?id={$todo}">{$todo}</a>
+                </div>
+            </foreach>
+            <div class="cl"></div>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    $("#submit").click(function(){
+        window.location = "{:U('Problem/submit')}?id={$info['index']}";
+    });
+    $("#statistic").click(function(){
+        window.location = "{:U('Problem/statistic')}?id={$info['index']}";
+    });
+    $("#back").click(function(){
+        window.history.go(-1);
+    });
+});
+</script>
+<include file="Public:footer" />

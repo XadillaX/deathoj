@@ -13,6 +13,12 @@ class UserModel extends CommonModel {
     private $MaxLoginTime = 1800;
     private $PREFIX;
 
+    /**
+     * 构造函数
+     * @version $Id$
+     * @param string $name
+     * @param string $connection
+     */
     public function __construct($name = "", $connection = "")
     {
         parent::__construct($name, $connection);
@@ -33,13 +39,13 @@ class UserModel extends CommonModel {
     /**
      * 检测是否用户已登录
      * @version $Id$
-     * @version $Id$
      * ↑这货被删掉了 - -|||
      * @return array|null 返回登录用户数据数组，若未登录则返回null
      */
 
     /**
      * 新建用户
+     * @version $Id$
      * @param $username
      * @param $password
      * @param $nickname
@@ -56,7 +62,8 @@ class UserModel extends CommonModel {
             "nickname" => $nickname,
             "email" => $email,
             "school" => $school,
-            "motto" => $motto
+            "motto" => $motto,
+            "regtime" => time()
         );
 
         $result = $this->add($condition);
@@ -65,6 +72,7 @@ class UserModel extends CommonModel {
 
     /**
      * 根据键值对获取用户信息
+     * @version $Id$
      * @param $key
      * @param $value
      * @return array
@@ -99,6 +107,7 @@ class UserModel extends CommonModel {
 
     /**
      * 获取Gravatar的头像链接地址
+     * @version $Id$
      * @param $email
      * @param int $size
      * @return string 链接地址
@@ -110,6 +119,7 @@ class UserModel extends CommonModel {
 
     /**
      * 新增submit
+     * @version $Id$
      * @param $userid
      * @return bool
      */
@@ -117,6 +127,7 @@ class UserModel extends CommonModel {
     {
         $condition = array("userid" => $userid);
         $data["submit"] = array("exp", "submit + 1");
+        $data["submitnum"] = array("exp", "submitnum + 1");
 
         return $this->where($condition)->save($data);
     }
@@ -138,6 +149,7 @@ class UserModel extends CommonModel {
 
     /**
      * 获取提交列表
+     * @version $Id$
      * @param $userid
      * @return string
      */
@@ -150,6 +162,7 @@ class UserModel extends CommonModel {
 
     /**
      * 修改提交列表
+     * @verson $Id$
      * @param $userid
      * @param $list
      * @return bool
@@ -160,5 +173,48 @@ class UserModel extends CommonModel {
         $data["submitlist"] = $list;
 
         return $this->where($condition)->save($data);
+    }
+
+    /**
+     * 根据条件获取用户信息（分页）
+     * @version $Id$
+     * @param $condition
+     * @param $page
+     * @param $per_page
+     * @param string $order
+     * @return array|bool
+     */
+    public function get_user_by_page($condition, $page, $per_page, $order = "userid ASC")
+    {
+        $data = $this->where($condition)
+                ->limit((($page - 1) * $per_page) . ", " . $per_page)
+                ->order($order)
+                ->select();
+
+        return $data;
+    }
+
+    /**
+     * 根据用户id获取用户信息
+     * @version $Id$
+     * @param $userid
+     * @return array|NULL
+     */
+    public function get_user_by_id($userid)
+    {
+        $condition = array("userid" => $userid);
+        return $this->where($condition)->find();
+    }
+
+    /**
+     * 保存头像栏状态
+     * @param $userid
+     * @param $state
+     * @return bool
+     */
+    public function save_avatar_state($userid, $state)
+    {
+        $condition = array("userid" => $userid);
+        return $this->where($condition)->save(array("avatarbar" => $state));
     }
 }

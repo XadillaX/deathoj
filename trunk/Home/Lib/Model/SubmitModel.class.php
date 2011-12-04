@@ -81,28 +81,52 @@ class SubmitModel extends CommonModel
 
     /**
      * 根据分页信息获取运行结果
-     * @param $contestid
-     * @param $page
-     * @param $per_page
+     * @version $Id$
+     * @param int $contestid
+     * @param int $page
+     * @param int $per_page
+     * @param string $index
+     * @param bool $is_ac 是否是ACCEPTED的
+     * @param string $order
      * @return array|bool
      */
-    public function get_submit_by_page($contestid, $page, $per_page)
+    public function get_submit_by_page($contestid, $page, $per_page, $index = "", $is_ac = false, $order = "")
     {
         $PREFIX = C("DB_PREFIX");
         $condition = array("contestid" => $contestid);
+        if($index != "") $condition["index"] = $index;
+        if($is_ac === true) $condition["{$PREFIX}submit.resultid"] = 3;
 
-        return $this->where($condition)
-                ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
-                ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
-                ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
-                ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
-                ->limit((($page - 1) * $per_page) . ", " . $per_page)
-                ->order("`submitid` desc")
-                ->select();
+        $data = array();
+        if(!is_ac)
+        {
+            $data = $this->where($condition)
+                    ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
+                    ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+                    ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                    ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+                    ->limit((($page - 1) * $per_page) . ", " . $per_page)
+                    ->order((($order != "") ? "{$order}, " : "") . "`submitid` desc")
+                    ->select();
+        }
+        else
+        {
+            $data = $this->where($condition)
+                    ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
+                    ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+                    ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                    ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+                    ->limit((($page - 1) * $per_page) . ", " . $per_page)
+                    ->order((($order != "") ? "{$order}, " : "") . "`submitid` desc")
+                    ->select();
+        }
+
+        return $data;
     }
 
     /**
      * 获取某场比赛的总提交数
+     * @version $Id$
      * @param $contestid
      * @return int
      */
@@ -111,5 +135,25 @@ class SubmitModel extends CommonModel
         $condition = array("contestid" => $contestid);
 
         return $this->where($condition)->count();
+    }
+
+    /**
+     * 获取问题的提交状态统计
+     * @param $index
+     * @version $Id$
+     * @param int $contestid
+     * @return
+     */
+    public function get_statistic($index, $contestid = 1)
+    {
+        $PREFIX = C("DB_PREFIX");
+        $submit = $PREFIX . "submit";
+        $result = $PREFIX . "result";
+
+        $SQL = "SELECT count(*) AS count, {$result}.resultid, {$result}.result FROM `{$result}` LEFT JOIN `$submit` ON {$submit}.resultid = {$result}.resultid WHERE {$submit}.index = '{$index}' AND" .
+               " {$submit}.contestid = {$contestid} GROUP BY {$result}.resultid";
+        $data = $this->query($SQL);
+
+        return $data;
     }
 }

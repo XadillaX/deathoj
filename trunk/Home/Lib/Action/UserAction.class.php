@@ -13,9 +13,13 @@
  */
 class UserAction extends CommonAction
 {
+    private $user_per_page;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->user_per_page = C("USER_NUM_PER_PAGE");
     }
 
     /**
@@ -90,9 +94,9 @@ class UserAction extends CommonAction
             die("两次密码输入不一致。");
         }
         /** TODO: 让昵称可以是中文。 -- 小熊,谢谢 */
-        if(!$this->common_str_validate($nickname, 1, 32))
+        if(!$this->common_str_validate($nickname, 1, 32, false))
         {
-            die("昵称长度必须介于1~32之间，且只能是字母、数字和下划线。");
+            die("昵称长度必须介于1~32之间。");
         }
         if(!ereg("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+", $email) || !$this->common_str_validate($email, 5, 255, false))
         {
@@ -290,5 +294,109 @@ class UserAction extends CommonAction
         ob_clean();
         header("Content-type: image/jpeg");
         echo $bin;
+    }
+
+    /**
+     * 用户列表
+     * @version $Id$
+     * @return void
+     */
+    public function user_list()
+    {
+        /** 分页信息 */
+        $page = $_GET["page"];
+        if(!is_numeric($page)) $page = 1;
+        $user_count = $this->user_model->count();
+        $page_count = (int)((int)$user_count / (int)$this->user_per_page) + (($user_count % $this->user_per_page == 0) ? 0 : 1);
+        if($page > $page_count && $page_count != 0) $page = $page_count;
+
+        /** 分页对象 */
+        import("@.Plugin.XPage");
+        $page_obj = new XPage();
+        $page_obj->link_str = U("User/user_list") . "?page=%s";
+        $page_obj->per_page = $this->user_per_page;              ///< 每页数量
+        $page_obj->item_count = $user_count;                ///< 记录数
+        $page_obj->cur_page = $page;                        ///< 当前页码
+        $page_obj->id = "xpage";
+        $page_str = $page_obj->create_links();
+        $this->assign("page_str", $page_str);
+
+        $this->web_config["title"] .= "用户排名 :: 第 {$page} 页";
+        $this->assign("HC", $this->web_config);
+
+        /** 用户列表 */
+        $user_list = $this->user_model->get_user_by_page("", $page, $this->user_per_page, "solvednum DESC, submitnum DESC");
+        for($i = 0; $i < count($user_list); $i++)
+        {
+            $user_list[$i]["rank"] = ($page - 1) * $this->user_per_page + $i + 1;
+            $user_list[$i]["solvedarray"] = explode("|", $user_list[$i]["solvedlist"]);
+            $user_list[$i]["submitarray"] = explode("|", $user_list[$i]["submitlist"]);
+        }
+        $this->assign("user_list", $user_list);
+
+        $this->display();
+    }
+
+    /**
+     * 浏览用户
+     * @version $Id$
+     * @return void
+     */
+    public function view_user()
+    {
+        $userid = $_GET["id"];
+        $user_info = $this->user_model->get_user_by_id($userid);
+        if(NULL === $user_info)
+        {
+            redirect(__ROOT__);
+            die(0);
+        }
+
+        $this->web_config["title"] .= "用户信息 - {$user_info['username']}";
+        $this->assign("HC", $this->web_config);
+
+        $user_info["motto"] = $this->user_model->HtmlEncode($user_info["motto"]);
+
+        /** AC列表 */
+        $user_info["solvedarray"] = explode("|", $user_info["solvedlist"]);
+        if($user_info["solvedarray"][count($user_info["solvedarray"]) - 1] == "") array_pop($user_info["solvedarray"]);
+        sort($user_info["solvedarray"]);
+
+        /** TODO列表 */
+        $user_info["submitarray"] = explode("|", $user_info["submitlist"]);
+        if($user_info["submitarray"][count($user_info["submitarray"]) - 1] == "") array_pop($user_info["submitarray"]);
+        $user_info["todoarray"] = array_diff($user_info["submitarray"], $user_info["solvedarray"]);
+        sort($user_info["submitarray"]);
+        sort($user_info["todoarray"]);
+
+        $this->assign("info", $user_info);
+
+        $this->display();
+    }
+
+    /**
+     * 保存头像栏状态
+     * @vesion $Id$
+     * @return void
+     */
+    public function save_avatar_bar()
+    {
+        /** 若未登录 */
+        if(null == $this->get_current_user())
+        {
+            $this->error("未登录或者登陆已超时", true);
+            die(0);
+        }
+
+        /** 头像栏状态 */
+        $state = $_POST["state"];
+        if($state != 1 && $state != 0) $state = 1;
+
+        $user_info = $this->get_current_user();
+        $result = $this->user_model->save_avatar_state($user_info["userid"], $state);
+
+        /** 结果 */
+        $this->success("保存成功。", true);
+        die(0);
     }
 }

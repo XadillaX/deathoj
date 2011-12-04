@@ -41,7 +41,7 @@ public:
     virtual ~NCompiler(void);
 
     virtual bool CompileFile(const char *input, const char *output, char *err_code);
-    virtual bool FilterCode(const char *input, const char *filter_filename);
+    virtual bool FilterCode(const char *input);
 };
 
 #endif

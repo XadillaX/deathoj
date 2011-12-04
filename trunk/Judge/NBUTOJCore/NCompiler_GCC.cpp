@@ -42,3 +42,54 @@ bool NCompiler_GCC::CompileFile(const char *input, const char *output, char *err
     }
     else return false;
 }
+
+#include <string>
+using namespace std;
+bool NCompiler_GCC::FilterCode(const char* input)
+{
+    FILE* fp = fopen(input, "r");
+    if(NULL == fp) return false;
+
+    string code;
+    char ch;
+    while(fscanf(fp, "%c", &ch) != EOF)
+    {
+        if(ch >= 'A' && ch <= 'Z') ch = ch - 'A' + 'a';
+        code += ch;
+    }
+
+    fclose(fp);
+
+    /** ¿ªÊ¼¹ýÂË */
+    int FILTER_N = 18;
+    string filter[] = {
+        "windows",
+        "system",
+        "pause",
+        "winbase",
+        "winsock",
+        "hinstance",
+        "openprocess",
+        "fopen",
+        "fclsoe",
+        "fread",
+        "remove",
+        "winapi",
+        "fwrite",
+        "fscanf",
+        "fgets",
+        "fputc",
+        "fgetc",
+        "fseek"
+    };
+
+    for(int i = 0; i < FILTER_N; i++)
+    {
+        if(code.find(filter[i]) != string::npos)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
