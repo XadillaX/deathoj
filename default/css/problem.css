@@ -190,3 +190,7 @@
 #view-code-baseinfo {
     width: 235px;
 }
+
+#view-code-wrapper table {
+    font-size: 12px;
+}

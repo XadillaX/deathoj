@@ -45,7 +45,7 @@ function get_result_color($result)
                 <td style="text-align: center;">
                     <php>
                         $result_ad = false;
-                        if($list["message"] != "" && $list["result"] == "COMPILATION_ERROR" && $current_user != NULL && $current_user["userid"] == $list["userid"])
+                        if($list["message"] != "" && $list["result"] == "COMPILATION_ERROR" && $current_user != NULL && ($current_user["userid"] == $list["userid"] || $current_user["roleid"] == 3))
                         {
                             $result_ad = true;
                         }
@@ -68,13 +68,9 @@ function get_result_color($result)
                 <td style="text-align: center;">{$list.memory}</td>
                 <td style="text-align: center;">{$list.length}</td>
                 <td style="text-align: center;">
-                    <if condition="($current_user neq null) AND (($current_user['userid'] eq $list['userid']) OR ($current_user['roleid'] eq 3))">
-                        <a href="{:U('Problem/viewcode')}?submitid={$list['submitid']}" target="_blank">
-                            {$list.language}
-                        </a>
-                    <else />
+                    <a href="{:U('Problem/viewcode')}?submitid={$list['submitid']}" target="_blank">
                         {$list.language}
-                    </if>
+                    </a>
                 </td>
                 <td style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</td>
             </tr>
@@ -82,4 +78,13 @@ function get_result_color($result)
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    function time_refresh()
+    {
+        window.location.reload();
+    }
+    $(function(){
+        setTimeout("time_refresh()", 10000);
+    });
+</script>
 <include file="Public:footer" />

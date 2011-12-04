@@ -36,10 +36,11 @@ class ContestProblemModel extends CommonModel
      * @param null $order
      * @return bool|array
      */
-    public function get_problems_by_page($contestid, $pagenum, $perpage, $order = null)
+    public function get_problems_by_page($contestid, $pagenum, $perpage, $index = '', $order = null)
     {
         $PREFIX = C("DB_PREFIX");
         $condition = array("contestid" => $contestid);
+        if($index != "") $condition["index"] = $index;
         $result = $this->join("{$PREFIX}problem ON {$PREFIX}problem.problemid = {$PREFIX}contestproblem.problemid")->where($condition)->limit(($pagenum - 1) * $perpage . ", " . $perpage)->order($order == null ? "`index` asc" : $order)->select();
 
         return $result;

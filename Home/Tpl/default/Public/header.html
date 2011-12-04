@@ -14,10 +14,23 @@
 <if condition="null neq $current_user">
 <!-- 登录的时候 -->
 <script type="text/javascript">
+var avatarbar = true;
 $(function(){
     $("#current_user_avatar").click(function(){
         $(this).parent().next().toggle("normal");
+        avatarbar = !avatarbar;
+
+        /** 保存 */
+        $.post("{:U('User/save_avatar_bar')}", { "state" : avatarbar ? 1 : 0 }, function(e){
+            /** empty */
+        });
     });
+
+    <if condition="$current_user['avatarbar'] eq 0">
+    /** 头像栏默认为不显示 */
+    $("#current_user_avatar").parent().next().css("display", "none");
+    avatarbar = false;
+    </if>
 });
 </script>
 </if>
@@ -56,7 +69,7 @@ $(function(){
                     <li><a href="{:U('OnlineJudge://Problem@')}" title="题库">题库</a></li>
                     <li><a href="{:U('Problem/status')}" title="运行状态">运行状态</a></li>
                     <li><a href="#" title="比赛">比赛</a></li>
-                    <li><a href="#" title="用户">用户</a></li>
+                    <li><a href="{:U('User/user_list')}" title="用户">用户</a></li>
                 </ul>
                 <div class="cl"></div>
             </div>

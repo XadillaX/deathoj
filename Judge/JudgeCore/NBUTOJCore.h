@@ -57,7 +57,8 @@ enum NState {
     COMPILATION_ERROR,              ///< 编译错误
     COMPILATION_SUC,                ///< 编译通过
     SYSTEM_ERROR,                   ///< 系统错误
-    OUT_OF_CONTEST_TIME             ///< 超出比赛时间
+    OUT_OF_CONTEST_TIME,            ///< 超出比赛时间
+    DANGEROUS_CODE                  ///< 危险代码
 };
 
 

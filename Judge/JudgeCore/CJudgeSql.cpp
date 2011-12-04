@@ -318,7 +318,7 @@ bool CJudgeSql::AddUserAccept(int userid, string index)
 bool CJudgeSql::UpdateUserAcceptList(int userid, string szlist)
 {
     string user = GetFieldName("user");
-    string sql = "UPDATE " + user + " SET solvedlist = '" + FilterSQLString(szlist) + "' WHERE userid = " + XStringFunc::IntToString(userid);
+    string sql = "UPDATE " + user + " SET solvedlist = '" + FilterSQLString(szlist) + "', solvednum = solvednum + 1 WHERE userid = " + XStringFunc::IntToString(userid);
 
     ::EnterCriticalSection(&m_CS);
     m_szLastSql = sql;
