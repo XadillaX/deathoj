@@ -1,0 +1,55 @@
+<include file="Public:header" />
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>题目列表 :: 第 {$_GET["page"]} 页</h3>
+        </div>
+
+        <div class="content-box-content">
+            <if condition="$cat_data eq false">
+            <div class="notification attention png_bg">
+                <a href="#" class="close"><img src="{$HC.adminroot}/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <div>
+                    咕~木有数据撒~ ╮(～▽～")╭。
+                </div>
+            </div>
+            <else />
+            <table>
+                <thead>
+                    <tr>
+                        <th width="100">比赛编号</th>
+                        <th>比赛标题</th>
+                        <th width="150">开始时间</th>
+                        <th width="150">结束时间</th>
+                        <th width="120">操作</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <div class="fl">{$page_str}</div>
+                            <div class="fr">
+                                第 <input id="goto-page" type="text" /> 页
+                                <input id="goto-page-submit" type="button" class="button" value="遁走" />
+                                <input onclick="javascript:window.location='{:U('Problem/add')}'" type="button" class="button" value="添加" />
+                            </div>
+                            <div class="cl"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                    <foreach name="cat_data" item="list">
+                    <tr>
+                        <td>{$list.contestid}</td>
+                        <td>{$list.title}</td>
+                        <td><if condition="$list['starttime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["starttime"])}</if></td>
+                        <td><if condition="$list['endtime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["endtime"])}</if></td>
+                        <td><if condition="$list['contestid'] neq 1"><a href="{:U('Contest/edit_contest')}?contestid={$list.contestid}" title="编辑">编辑</a> / 列表 / <a href="{:U('Contest/del_contest')}?contestid={$list.contestid}" title="删除">删除</a></if></td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            </if>
+        </div>
+    </div>
+<include file="Public:footer" />

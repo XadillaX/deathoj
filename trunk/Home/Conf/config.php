@@ -54,6 +54,7 @@ return array(
     PROBLEM_NUM_PER_PAGE    => 20,
     PROBLEM_SET_PER_PAGE    => 100,
     STATUS_NUM_PER_PAGE     => 20,
-    USER_NUM_PER_PAGE       => 10
+    USER_NUM_PER_PAGE       => 10,
+    CONTEST_NUM_PER_PAGE    => 20
 );
 ?>

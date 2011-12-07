@@ -16,7 +16,8 @@ string StateList[] = {
     "COMPILATION_ERROR",
     "COMPILATION_SUC",
     "SYSTEM_ERROR",
-    "OUT_OF_CONTEST_TIME"
+    "OUT_OF_CONTEST_TIME",
+    "DANGEROUS_CODE"
 };
 
 CCoreProcess::CCoreProcess(void) :
@@ -177,9 +178,75 @@ void CCoreProcess::EnterMainLoop()
         fprintf(fp, "%s", pSJI->code.c_str());
         fclose(fp);
 
+        /** 输入输出数据 */
+        CodeState code_state;
+        string ipt_data = m_szDataPath + XStringFunc::IntToString(pSJI->problemid) + "\\data.in";
+        string opt_data = m_szDataPath + XStringFunc::IntToString(pSJI->problemid) + "\\data.out";
+
+        /** 将输入输出数据复制过来 */
+        /** $Id$ */
+        FILE* ofp = NULL;
+        char data_ch;
+        fp = fopen(ipt_data.c_str(), "r");
+        if(NULL == fp)
+        {
+            code_state.state = SYSTEM_ERROR;
+            strcpy(code_state.err_code, "Can't open the std input file.");
+            UpdateState(pSJI, &code_state);
+            delete pSJI;
+            Sleep(500);
+            continue;
+        }
+        ofp = fopen((string(TEMP_PATH) + string("data.in")).c_str(), "w+");
+        if(NULL == fp)
+        {
+            code_state.state = SYSTEM_ERROR;
+            strcpy(code_state.err_code, "Can't create the std input file.");
+            UpdateState(pSJI, &code_state);
+            delete pSJI;
+            Sleep(500);
+            continue;
+        }
+        while((data_ch = fgetc(fp)) != EOF)
+        {
+            fprintf(ofp, "%c", data_ch);
+        }
+        fclose(fp);
+        fclose(ofp);
+        /////////////////////////////////////////////////
+        fp = fopen(opt_data.c_str(), "r");
+        if(NULL == fp)
+        {
+            remove(tmp_code_filename.c_str());
+            code_state.state = SYSTEM_ERROR;
+            strcpy(code_state.err_code, "Can't open the std output file.");
+            UpdateState(pSJI, &code_state);
+            delete pSJI;
+            Sleep(500);
+            continue;
+        }
+        ofp = fopen((string(TEMP_PATH) + string("data.out")).c_str(), "w+");
+        if(NULL == fp)
+        {
+            remove(tmp_code_filename.c_str());
+            code_state.state = SYSTEM_ERROR;
+            strcpy(code_state.err_code, "Can't create the std output file.");
+            UpdateState(pSJI, &code_state);
+            delete pSJI;
+            Sleep(500);
+            continue;
+        }
+        while((data_ch = fgetc(fp)) != EOF)
+        {
+            fprintf(ofp, "%c", data_ch);
+        }
+        fclose(fp);
+        fclose(ofp);
+
+
         /** 编译代码 */
         CNBUTOJCore* judger = new CNBUTOJCore();
-        CodeState code_state;
+        
         memset(&code_state, 0, sizeof(CodeState));
         bool compile_result = judger->CompileFile(compiler, tmp_code_filename_ex, string(filename_timeid + ".exe").c_str(), code_state);
         
@@ -187,6 +254,8 @@ void CCoreProcess::EnterMainLoop()
         if(!compile_result)
         {
             remove(tmp_code_filename.c_str());
+            remove((string(TEMP_PATH) + string("data.in")).c_str());
+            remove((string(TEMP_PATH) + string("data.out")).c_str());
             delete(judger);
             UpdateState(pSJI, &code_state);
             delete pSJI;
@@ -198,16 +267,13 @@ void CCoreProcess::EnterMainLoop()
         code_state.err_code[0] = '\0';
         code_state.state = RUNNING;
         UpdateState(pSJI, &code_state);
-        
-        /** 跑代码 */
-        string ipt_data = m_szDataPath + XStringFunc::IntToString(pSJI->problemid) + "\\data.in";
-        string opt_data = m_szDataPath + XStringFunc::IntToString(pSJI->problemid) + "\\data.out";
+
         //bool judge_result = m_Judger.Judge("temp.exe", ipt_data.c_str(), opt_data.c_str(), pSJI->lim_time, pSJI->lim_memo, code_state);
         judge_param* pJP = new judge_param();
         pJP->code_state = &code_state;
         pJP->exe = string(filename_timeid + ".exe").c_str();
-        pJP->ipt = ipt_data;
-        pJP->opt = opt_data;
+        pJP->ipt = string(TEMP_PATH) + string("data.in");//ipt_data;
+        pJP->opt = string(TEMP_PATH) + string("data.out");//opt_data;
         pJP->memo = pSJI->lim_memo;
         pJP->time = pSJI->lim_time;
         pJP->judger = judger;
@@ -220,6 +286,8 @@ void CCoreProcess::EnterMainLoop()
         UpdateState(pSJI, &code_state);
 
         remove(tmp_code_filename.c_str());
+        remove(pJP->ipt.c_str());
+        remove(pJP->opt.c_str());
         delete judger;
         delete pSJI;
         delete pJP;
