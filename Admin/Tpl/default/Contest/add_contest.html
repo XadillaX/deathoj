@@ -1,0 +1,130 @@
+<include file="Public:header" />
+    <!-- 这货是度娘的UEditor -->
+    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_config.js"></script>
+    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$HC.webroot}/ueditor/themes/default/ueditor.css" media="screen" />
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>添加比赛</h3>
+        </div>
+
+        <div class="content-box-content">
+            <form>
+                <fieldset>
+                    <p>
+                        <label>比赛名称</label>
+                        <input class="text-input small-input" type="text" id="title" name="title" /><br />
+                    </p>
+
+                    <p>
+                        <label>私有比赛</label>
+                        <input type="checkbox" id="private" name="private" /> <br />
+                    </p>
+
+                    <p>
+                        <label>开始时间</label>
+                        <input class="text-input small-input" value="{:date('Y-m-d H:i:s', time())}" type="text" id="starttime" name="starttime" /><br />
+                    </p>
+
+                    <p>
+                        <label>结束时间</label>
+                        <input class="text-input small-input" value="{:date('Y-m-d H:i:s', time())}" type="text" id="endtime" name="endtime" /><br />
+                    </p>
+
+                    <p>
+                        <label>比赛描述</label>
+                        <textarea id="description"> </textarea><br />
+
+                        <script type="text/javascript">
+                        var editor = new baidu.editor.ui.Editor({
+                            UEDITOR_HOME_URL: '{$HC.webroot}/ueditor/',
+                            iframeCssUrl :'{$HC.webroot}/ueditor/themes/default/iframe.css',
+                            textarea: "description"
+                        });
+                        editor.render('description');
+                        </script>
+                    </p>
+
+                    <p>
+                        <label>允许语言</label>
+                        GCC <input checked="checked" type="checkbox" id="language-gcc" name="language-gcc" /><br />
+                        GPP <input checked="checked" type="checkbox" id="language-gpp" name="language-gpp" /><br />
+                    </p>
+
+                    <p>
+                        <div id="error-tip">
+                            <div class="fl">　</div>
+                            <div class="fl" id="error-loading"><img src="__ROOT__/default/images/loading.gif" /></div>
+                            <div class="fl" id="error-message">不明物体祈祷中...</div>
+                            <div class="cl"></div>
+                        </div>
+                        <input class="button" type="button" id="submit" value="嘛，添加 - -|||" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    /** AJAX 提交的货~ */
+    function ajax_submit()
+    {
+        /** 信息窗 */
+        $("#error-tip #error-loading").css("display", "block");
+        $("#error-tip #error-message").html("不明物体祈祷中...");
+        $("#error-tip").slideDown("normal");
+
+        /** 语言 */
+        var lang = "";
+        if($("input[name=language-gcc]").prop("checked")) lang += "1";
+        if($("input[name=language-gpp]").prop("checked"))
+        {
+            if($("input[name=language-gcc]").prop("checked")) lang += "|";
+            lang += "2";
+        }
+
+        /** JSON数据 */
+        var json_array = {
+            "title" : $("input[name=title]").val(),
+            "starttime" : $("input[name=starttime]").val(),
+            "endtime": $("input[name=endtime]").val(),
+            "private": (($("input[name=language-gcc]").prop("checked")) ? 1 : 0),
+            "language": lang,
+            "description": editor.getContent(),
+
+            "{:C('TOKEN_NAME')}" : $("input[name={:C('TOKEN_NAME')}]").val()
+        };
+
+        var json_text = JSON.stringify(json_array);
+
+        $.post("{:U('Contest/chkadd_contest')}", { "data" : json_text }, function(html){
+            //alert(html);
+            var data = JSON.parse(html);
+
+            $("#error-tip #error-loading").css("display", "none");
+            if(data.status == 1)
+            {
+                $("#error-tip #error-message").html(data.info + ", 正在转向...");
+                window.location = "{:U('Contest/catalog')}?page={:Session::get('contest_page_when_back')}";
+            }
+            else
+            {
+                $("#error-tip #error-message").html(data.info);
+            }
+        });
+    }
+
+    /** 函数绑定以及其它东西们 */
+    $(function(){
+        $("#submit").click(function(){
+            ajax_submit();
+        });
+
+        $("fieldset input").keypress(function(e){
+            if(e.keyCode == 13) ajax_submit();
+        });
+    });
+    </script>
+<include file="Public:footer" />
+

@@ -6,7 +6,6 @@
  * Time: 下午2:08
  * $Id$
  */
- 
-class CommonModel extends Model{
 
-}
+if (!defined('THINK_PATH')) exit();
+$config_array = require_once '../Home/Lib/Model/CommonModel.class.php';
