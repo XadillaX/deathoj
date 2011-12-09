@@ -187,7 +187,7 @@ HANDLE CNBUTOJCore::RunCode(const char *exe, const char *input, const char *outp
     StartInfo.wShowWindow = SW_HIDE;
     //StartInfo.hStdError = hError;
 
-    /** 创建批处理文件进程 */
+    /** 运行程序 */
     bool flag = CreateProcessA(exe, NULL, NULL,
         NULL, true, DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &StartInfo, &ProcInfo);
 
@@ -323,7 +323,7 @@ bool CNBUTOJCore::WatchCode(const HANDLE hProcess, const __int64 lim_time, const
 
         if(DBE.dwDebugEventCode == EXIT_PROCESS_DEBUG_EVENT)
         {
-            ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_EXCEPTION_NOT_HANDLED);
+            ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_CONTINUE);
             CloseHandle(DBE.u.CreateProcessInfo.hFile);
             CloseHandle(DBE.u.CreateProcessInfo.hProcess);
             CloseHandle(DBE.u.CreateProcessInfo.hThread);
@@ -408,7 +408,7 @@ bool CNBUTOJCore::WatchCode(const HANDLE hProcess, const __int64 lim_time, const
         }
 
         /** 继续调试 */
-        ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_EXCEPTION_NOT_HANDLED);
+        ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_CONTINUE);
         CloseHandle(DBE.u.CreateProcessInfo.hFile);
         CloseHandle(DBE.u.CreateProcessInfo.hProcess);
         CloseHandle(DBE.u.CreateProcessInfo.hThread);
