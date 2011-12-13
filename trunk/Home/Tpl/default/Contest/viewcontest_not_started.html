@@ -1,0 +1,61 @@
+<php>
+function get_contest_status($starttime, $endtime)
+{
+    $current_time = time();
+    $results = array(
+        "<span style='color: gray;'>未开始</span>",
+        "<span style='color: red;'>进行中</span>",
+        "<span style='color: green;'>已结束</span>"
+    );
+
+    if($current_time < $starttime) return $results[0];
+    if($current_time > $starttime && $current_time < $endtime) return $results[1];
+    return $results[2];
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<script type="text/javascript">
+$(function(){
+    $(".titles").click(function(){
+        $(this).next().slideToggle("normal");
+    });
+});
+</script>
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>{$info["title"]}</h3></li>
+
+        <li class="titles" id="starttime-title">开始时间</li>
+        <li class="contents" id="starttime">
+            <div>
+                {:date("Y-m-d H:i:s", $info["starttime"])}
+            </div>
+        </li>
+
+        <li class="titles" id="endtime-title">结束时间</li>
+        <li class="contents" id="endtime">
+            <div>
+                {:date("Y-m-d H:i:s", $info["endtime"])}
+            </div>
+        </li>
+
+        <li class="titles" id="currenttime-title">服务器时间</li>
+        <li class="contents" id="currenttime">
+            <div>
+                {:date("Y-m-d H:i:s", time())}
+            </div>
+        </li>
+
+        <li class="titles" id="status-title">比赛状态</li>
+        <li class="contents" id="status">
+            <div>
+                {:get_contest_status($info["starttime"], $info["endtime"])}
+            </div>
+        </li>
+    </ul>
+</div>
+
+<include file="Pulibc:footer" />

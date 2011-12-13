@@ -1,0 +1,65 @@
+<php>
+function get_contest_status($starttime, $endtime)
+{
+    $current_time = time();
+    $results = array(
+        "<span style='color: gray;'>未开始</span>",
+        "<span style='color: red;'>进行中</span>",
+        "<span style='color: green;'>已结束</span>"
+    );
+
+    if($current_time < $starttime) return $results[0];
+    if($current_time > $starttime && $current_time < $endtime) return $results[1];
+    return $results[2];
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center;" width="50">编号</th>
+                <th style="text-align: center;">标题</th>
+                <th style="text-align: center;" width="150">开始时间</th>
+                <th style="text-align: center;" width="150">结束时间</th>
+                <th style="text-align: center;" width="75">公开比赛</th>
+                <th style="text-align: center;" width="75">比赛状态</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    {$page_str}
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+        <foreach name="cat_data" item="list">
+            <php>if($list["contestid"] != 1){</php>
+            <tr>
+                <td style="text-align: center;" class="br">{$list.contestid}</td>
+                <td class="br"><a href="{:U('Contest/view?id=' . $list['contestid'])}">{$list.title}</a></td>
+                <td class="br" style="text-align: center;"><if condition="$list['starttime'] neq null">{:date("Y-m-d H:i:s", $list['starttime'])}<else />-</if></td>
+                <td class="br" style="text-align: center;"><if condition="$list['endtime'] neq null">{:date("Y-m-d H:i:s", $list['endtime'])}<else />-</if></td>
+                <td class="br" style="text-align: center;"><if condition="$list['private'] eq 0"><span style="color: red;">√</span><else /><span style="color: green;">×</span></if></td>
+                <td>{:get_contest_status($list["starttime"], $list["endtime"])}</td>
+            </tr>
+            <php>}else{</php>
+            <tr>
+                <td style="text-align: center;" class="br">{$list.contestid}</td>
+                <td class="br"><a href="{:U('Problem/index')}">{$list.title}</a></td>
+                <td class="br" style="text-align: center;">-</td>
+                <td class="br" style="text-align: center;">-</td>
+                <td class="br" style="text-align: center;"><if condition="$list['private'] eq 0"><span style="color: red;">√</span><else /><span style="color: green;">×</span></if></td>
+                <td class="br" style="text-align: center;">-</td>
+            </tr>
+            <php>}</php>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<include file="Public:footer" />

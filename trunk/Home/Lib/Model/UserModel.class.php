@@ -186,6 +186,7 @@ class UserModel extends CommonModel {
      */
     public function get_user_by_page($condition, $page, $per_page, $order = "userid ASC")
     {
+        $condition["roleid"] = array("neq", -100);
         $data = $this->where($condition)
                 ->limit((($page - 1) * $per_page) . ", " . $per_page)
                 ->order($order)
@@ -216,5 +217,25 @@ class UserModel extends CommonModel {
     {
         $condition = array("userid" => $userid);
         return $this->where($condition)->save(array("avatarbar" => $state));
+    }
+
+    /**
+     * 新建比赛的“临时队伍用户”
+     * @param $username
+     * @param $password
+     * @return int|bool
+     */
+    public function create_team_user($username, $password, $teamname)
+    {
+        $data = array(
+            "username" => $username,
+            "password" => $password,
+            "nickname" => $teamname,
+            "regtime" => time(),
+            "roleid" => -100                    ///< CONTESTUSER比赛用户
+        );
+
+        $this->create();
+        return $this->add($data);
     }
 }

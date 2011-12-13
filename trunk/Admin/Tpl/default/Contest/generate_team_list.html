@@ -1,0 +1,61 @@
+<include file="Public:header" />
+<script type="text/javascript" src="{$HC.adminroot}/resources/scripts/jquery.PrintArea.js"></script>
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>队伍信息 :: {$contest_info["title"]}</h3>
+        </div>
+
+        <div class="content-box-content">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <th>用户编号</th>
+                        <th>用户名</th>
+                        <th>密码</th>
+                        <th>队伍编号</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <input id="to_print" type="button" class="button" value="打印" />
+                            <input id="to_download" type="button" class="button" value="下载" />
+                            <input id="to_delete" type="button" class="button" value="清空" />
+                        </td>
+                    </tr>
+                </tfoot>
+
+                <tbody style="font-family: Consolas;">
+                    <foreach name="team_list" item="list">
+                    <tr>
+                        <td>{$list.userid}</td>
+                        <td>{$list.username}</td>
+                        <td>{$list.password}</td>
+                        <td>{$list.teamname}</td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#to_print").click(function(){
+                $(".content-box").printArea();
+            });
+
+            $("#to_download").click(function(){
+                window.open("{:U('Contest/download_team_excel')}?contestid={$contest_info['contestid']}");
+            });
+
+            $("#to_delete").click(function(){
+                if(confirm("确认清空？"))
+                {
+                    window.location.href = "{:U('Contest/clear_team')}?contestid={$contest_info['contestid']}";
+                }
+            });
+        });
+    </script>
+<include file="Public:footer" />

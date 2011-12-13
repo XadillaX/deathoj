@@ -20,17 +20,17 @@
                         <th>比赛标题</th>
                         <th width="150">开始时间</th>
                         <th width="150">结束时间</th>
-                        <th width="120">操作</th>
+                        <th width="150">操作</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <div class="fl">{$page_str}</div>
                             <div class="fr">
                                 第 <input id="goto-page" type="text" /> 页
                                 <input id="goto-page-submit" type="button" class="button" value="遁走" />
-                                <input onclick="javascript:window.location='{:U('Problem/add')}'" type="button" class="button" value="添加" />
+                                <input onclick="javascript:window.location='{:U('Contest/add_contest')}'" type="button" class="button" value="添加" />
                             </div>
                             <div class="cl"></div>
                         </td>
@@ -44,7 +44,7 @@
                         <td>{$list.title}</td>
                         <td><if condition="$list['starttime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["starttime"])}</if></td>
                         <td><if condition="$list['endtime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["endtime"])}</if></td>
-                        <td><if condition="$list['contestid'] neq 1"><a href="{:U('Contest/edit_contest')}?contestid={$list.contestid}" title="编辑">编辑</a> / 列表 / <a href="{:U('Contest/del_contest')}?contestid={$list.contestid}" title="删除">删除</a></if></td>
+                        <td><if condition="$list['contestid'] neq 1"><a href="{:U('Contest/edit_contest')}?contestid={$list.contestid}" title="编辑">编辑</a> / <a href="{:U('Contest/prob_list')}?contestid={$list.contestid}">列表</a> / <a href="{:U('Contest/del_contest')}?contestid={$list.contestid}" title="删除">删除</a></if> <if condition="$list['private'] eq 1">/ <a href="{:U('Contest/generate_team')}?contestid={$list.contestid}">队伍</a></if></td>
                     </tr>
                     </foreach>
                 </tbody>

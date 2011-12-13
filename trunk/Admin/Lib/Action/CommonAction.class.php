@@ -218,4 +218,27 @@ class CommonAction extends Action
 
         return true;
     }
+
+    /**
+     * 弹出窗口并转向
+     * @param $text
+     * @param $url
+     * @return void
+     */
+    protected function alert_redirect($text, $url = -1)
+    {
+        echo "<script type='text/javascript'>";
+        echo "alert('{$text}');";
+
+        if(!is_numeric($url))
+        {
+            echo "window.location.href = '{$url}';";
+        }
+        else
+        {
+            echo "window.history.go({$url});";
+        }
+        echo "</script>";
+        die(0);
+    }
 }
