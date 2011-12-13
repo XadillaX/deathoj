@@ -12,6 +12,7 @@ return array(
     /** URL模式：2为rewrite */
     URL_MODEL               => 2,
     URL_HTML_SUFFIX         => ".xhtml",
+    URL_ROUTER_ON           => true,
 
     /** 数据库配置 */
     DB_CHARSET              => "utf8",

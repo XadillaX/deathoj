@@ -306,7 +306,7 @@ class UserAction extends CommonAction
         /** 分页信息 */
         $page = $_GET["page"];
         if(!is_numeric($page)) $page = 1;
-        $user_count = $this->user_model->count();
+        $user_count = $this->user_model->where(array("roleid" => array("neq", -100)))->count();
         $page_count = (int)((int)$user_count / (int)$this->user_per_page) + (($user_count % $this->user_per_page == 0) ? 0 : 1);
         if($page > $page_count && $page_count != 0) $page = $page_count;
 

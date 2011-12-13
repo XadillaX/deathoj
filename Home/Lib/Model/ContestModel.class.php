@@ -23,7 +23,7 @@ class ContestModel extends CommonModel
         $condition = array("contestid" => $contestid);
         $result = $this->where($condition)->select();
 
-        if(false == $result) return false;
+        if(null === $result) return false;
         else
         {
             $result[0]["title"] = $this->HtmlEncode($result[0]["title"]);

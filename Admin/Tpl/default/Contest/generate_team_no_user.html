@@ -1,0 +1,37 @@
+<include file="Public:header" />
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>生成队伍 :: {$contest_info["title"]}</h3>
+        </div>
+
+        <div class="content-box-content">
+            <form action="{:U('Contest/chk_gen_team')}?contestid={$contest_info['contestid']}" method="POST">
+                <fieldset>
+                    <p>
+                        <label>用户名前缀</label>
+                        <input class="text-input small-input" value="contest{$contest_info['contestid']}_" type="text" id="username_prefix" name="username_prefix" /><br />
+                    </p>
+                    <p>
+                        <label>用户名填充位数</label>
+                        <input class="text-input small-input" value="4" type="text" id="fill_len" name="fill_len" /><br />
+                    </p>
+                    <p>
+                        <label>队名前缀</label>
+                        <input class="text-input small-input" value="team" type="text" id="team_prefix" name="team_prefix" /><br />
+                    </p>
+                    <p>
+                        <label>队伍号码长度</label>
+                        <input class="text-input small-input" value="2" type="text" id="team_len" name="team_len" /><br />
+                    </p>
+                    <p>
+                        <label>生成数量</label>
+                        <input class="text-input small-input" value="40" type="text" id="count" name="count" /><br />
+                    </p>
+                    <p>
+                        <input class="button" type="submit" id="submit" value="嘛，给我生 - -|||" />
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+<include file="Public:footer" />

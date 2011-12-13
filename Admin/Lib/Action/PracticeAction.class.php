@@ -133,7 +133,7 @@ class PracticeAction extends CommonAction
         $result = $this->cpmodel->add_problem($this->contestid, $index, $problemid);
         if(false == $result)
         {
-            $this->error("系统错误，可能是已存在这个索引。" . $this->cpmodel->getError(), true);
+            $this->error("系统错误，可能是已存在这个索引。", true);
             die(0);
         }
         else
