@@ -17,6 +17,7 @@ function get_percent($ac, $sub)
     <table>
         <thead>
             <tr>
+                <th style="text-align: center;" width="50">状态</th>
                 <th style="text-align: center;" width="50">编号</th>
                 <th style="text-align: center;">标题</th>
                 <th style="text-align: center;" width="200">AC / 提交 (通过率)</th>
@@ -25,7 +26,7 @@ function get_percent($ac, $sub)
 
         <tfoot>
             <tr>
-                <td colspan="3">
+                <td colspan="4">
                     {$page_str}
                 </td>
             </tr>
@@ -34,6 +35,26 @@ function get_percent($ac, $sub)
         <tbody>
         <foreach name="prob_list" item="list">
             <tr>
+                <td class="br" style="text-align: center;">
+                    <php>
+                        if($current_user != null)
+                        {
+                            if(in_array($list["index"], $current_user["todoarray"]))
+                            {
+                    </php>
+                            <b style="color: green;">×</b>
+                    <php>
+                            }
+                            else
+                            if(in_array($list["index"], $current_user["solvedarray"]))
+                            {
+                    </php>
+                            <b style="color: red;">√</b>
+                    <php>
+                            }
+                        }
+                    </php>
+                </td>
                 <td style="text-align: center;" class="br">{$list.index}</td>
                 <td class="br"><a href="{:U('Problem/view')}?id={$list.index}">{$list.title}</a></td>
                 <td style="text-align: center;">{$list.solved} / {$list.submit} ({:get_percent($list["solved"], $list["submit"])})</td>
