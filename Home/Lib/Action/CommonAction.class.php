@@ -111,6 +111,17 @@ class CommonAction extends Action
             {
                 $this->user_information["language"] = 1;
             }
+
+            /** 已做题目 */
+            $this->user_information["solvedarray"] = explode("|", $this->user_information["solvedlist"]);
+            if($this->user_information["solvedarray"][count($this->user_information["solvedarray"]) - 1] == "") array_pop($this->user_information["solvedarray"]);
+            sort($this->user_information["solvedarray"]);
+
+            $this->user_information["submitarray"] = explode("|", $this->user_information["submitlist"]);
+            if($this->user_information["submitarray"][count($this->user_information["submitarray"]) - 1] == "") array_pop($this->user_information["submitarray"]);
+            $this->user_information["todoarray"] = array_diff($this->user_information["submitarray"], $this->user_information["solvedarray"]);
+            sort($this->user_information["submitarray"]);
+            sort($this->user_information["todoarray"]);
         }
     }
 

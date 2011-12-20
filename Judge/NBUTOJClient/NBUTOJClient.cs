@@ -11,7 +11,7 @@ namespace NBUTOJClient
 {
     public partial class NBUTOJForm : Form
     {
-        private string root_url = "http://127.0.0.1/oj";
+        private string root_url = "http://acm.nbut.cn/";
 
         public NBUTOJForm()
         {
