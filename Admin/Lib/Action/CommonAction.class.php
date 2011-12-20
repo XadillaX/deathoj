@@ -72,7 +72,7 @@ class CommonAction extends Action
 
             $this->web_config["webdir"] = $this->web_dir;
             $this->web_config["webroot"] = $this->web_root;
-            $this->web_config["adminroot"] = $this->web_root . "/Admin";
+            $this->web_config["adminroot"] = $this->web_root . "Admin";
         }
     }
 
