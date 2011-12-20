@@ -34,7 +34,7 @@ class ProblemAction extends CommonAction
         if(null == $page_num || !is_numeric($page_num)) $page_num = 1;
         $per_page = C("PROBLEM_NUM_PER_PAGE");
         $tot_num = $this->problem_model->count();
-        $pages = (int)((int)$tot_num / (int)$per_page) + ($tot_num % $per_page == 0) ? 0 : 1;
+        $pages = (int)((int)$tot_num / (int)$per_page) + (($tot_num % $per_page == 0) ? 0 : 1);
         if($page_num > $pages) $page_num = $pages;
         $_GET["page"] = $page_num;
         $this->web_config["title"] .= " 题库列表 :: 第 " . $page_num . " 页";

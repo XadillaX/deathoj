@@ -123,7 +123,7 @@ class CommonAction extends Action
         $this->web_config["webname"] = $this->config_model->get_value("webname");
         $this->web_config["ojname"] = $this->config_model->get_value("ojname");
         $this->web_config["title"] = $this->web_config["webname"] . " :: ";
-        $this->web_config["root"] = __ROOT__;
+        $this->web_config["root"] = __ROOT__ . "/";
     }
 
     /**
@@ -182,5 +182,18 @@ class CommonAction extends Action
         }
 
         return true;
+    }
+
+    protected function display($templateFile = '', $charset = '', $contentType = 'text/html')
+    {
+        if (extension_loaded('zlib') && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+            ini_set('zlib.output_compression', 'On');
+            ini_set('zlib.output_compression_level', 3);
+            ob_start('ob_gzhandler');
+            parent::display($templateFile, $charset, $contentType);
+            ob_end_flush();
+        } else {
+            parent::display($templateFile, $charset, $contentType);
+        }
     }
 }

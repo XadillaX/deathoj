@@ -1,7 +1,20 @@
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/register.css" media="screen" />
-
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/update.css" media="screen" />
 <script type="text/javascript">
+var chg=-1;
+$(document).ready(function(){
+	$(".pwc").click(function(){
+		$(".new_p").css("display", "table-row");
+		$(".new_u").css("display", "none");
+		chg=0;
+	});
+	$(".ctc").click(function(){
+		$(".new_p").css("display", "none");
+		$(".new_u").css("display", "table-row");
+		chg=1;
+	});
+});
 function ajax_register()
 {
     /** 信息窗 */
@@ -9,24 +22,23 @@ function ajax_register()
     $("#error-tip #error-message").html("不明物体祈祷中...");
     $("#error-tip").slideDown("normal");
 
-    var username = $("input[name=username]").val();
-    var password = $("input[name=password]").val();
-    var repwd = $("input[name=repwd]").val();
+    var oldpw = $("input[name=oldpw]").val();
+    var newpw = $("input[name=newpw]").val();
     var nickname = $("input[name=nickname]").val();
     var email = $("input[name=email]").val();
     var school = $("input[name=school]").val();
     var motto = $("textarea[name=motto]").val();
     var token = $("input[name={:C('TOKEN_NAME')}]").val();
 
-    $.post("{:U('User/chkreg')}", {
-        "username": username,
-        "password": password,
-        "repwd": repwd,
+    $.post("{:U('User/updates')}", {
+        "oldpw": oldpw,
+        "newpw": newpw,
         "nickname": nickname,
         "email": email,
         "school": school,
         "motto": motto,
-        "{:C('TOKEN_NAME')}": token
+        "chg": chg,
+		"{:C('TOKEN_NAME')}": token
     }, function(html){
         $("#error-tip #error-loading").css("display", "none");
         
@@ -54,40 +66,37 @@ $(function(){
 </script>
 
 <div id="register-wrapper">
-    <h1>新用户注册</h1>
+    <h1>用户修改</h1>
     <table id="register-table">
-        <tr>
-            <td class="reg-title"><span class="reg-tip">*</span> 用户名</td>
-            <td class="reg-input-td"><input type="text" name="username" /></td>
+		<tr class="new_1"><td class="pwc">修改密码</td><td class="ctc">修改资料</td></tr>
+        <tr class="new_p">
+            <td class="reg-title"><span class="reg-tip"></span> 旧密码</td>
+            <td class="reg-input-td"><input type="password" name="oldpw" /></td>
         </tr>
-        <tr>
-            <td class="reg-title"><span class="reg-tip">*</span> 密　码</td>
-            <td class="reg-input-td"><input type="password" name="password" /></td>
+        <tr class="new_p">
+            <td class="reg-title"><span class="reg-tip"></span> 新密码</td>
+            <td class="reg-input-td"><input type="password" name="newpw" /></td>
         </tr>
-        <tr>
-            <td class="reg-title"><span class="reg-tip">*</span> 重　复</td>
-            <td class="reg-input-td"><input type="password" name="repwd" /></td>
+        <tr class="new_u">
+            <td class="reg-title"><span class="reg-tip"></span> 昵　称</td>
+            <td class="reg-input-td"><input type="text" name="nickname" value="{$list[0]['nickname']}" /></td>
         </tr>
-        <tr>
-            <td class="reg-title"><span class="reg-tip">*</span> 昵　称</td>
-            <td class="reg-input-td"><input type="text" name="nickname" /></td>
+        <tr class="new_u">
+            <td class="reg-title"><span class="reg-tip"></span> 邮　箱</td>
+            <td class="reg-input-td"><input type="text" name="email" value="{$list[0]['email']}" /></td>
         </tr>
-        <tr>
-            <td class="reg-title"><span class="reg-tip">*</span> 邮　箱</td>
-            <td class="reg-input-td"><input type="text" name="email" /></td>
-        </tr>
-        <tr>
+        <tr class="new_u">
             <td class="reg-title">学　校</td>
-            <td class="reg-input-td"><input type="text" name="school" /></td>
+            <td class="reg-input-td"><input type="text" name="school" value="{$list[0]['school']}" /></td>
         </tr>
-        <tr>
+        <tr class="new_u">
             <td style="vertical-align: top;" class="reg-title">格　言</td>
             <td class="reg-input-td">
-                <textarea rows="10" name="motto" cols="30"></textarea>
+                <textarea rows="10" name="motto" cols="30">{$list[0]['motto']}</textarea>
             </td>
         </tr>
         <tr>
-            <td class="reg-title">注　册</td>
+            <td class="reg-title">确认修改</td>
             <td class="reg-input-td">
                 <div id="error-tip">
                     <div class="fl">　</div>

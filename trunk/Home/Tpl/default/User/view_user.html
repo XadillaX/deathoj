@@ -11,7 +11,7 @@ $(function(){
 
 <div id="prob-list-wrapper">
     <ul id="prob-info-ul">
-        <li id="title"><h3>{$info["username"]}</h3></li>
+        <li id="title"><h3>{$info["username"]} <if condition="$is_current_user eq true">[<a style="display: inline;" href="{:U('User/update')}">修改</a>]</if></h3></li>
         <li id="limit">
             提交题目数: {$info["submitnum"]}　AC题目数: {$info["solvednum"]}　注册时间: {:date("Y-m-d H:i:s", $info["regtime"])}
         </li>

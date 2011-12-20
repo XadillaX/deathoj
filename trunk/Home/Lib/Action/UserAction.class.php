@@ -31,7 +31,7 @@ class UserAction extends CommonAction
         /** 若已登录则返回首页 */
         if(null != $this->get_current_user())
         {
-            redirect(__ROOT__);
+            redirect(__ROOT__ . "/");
             die(0);
         }
 
@@ -50,7 +50,7 @@ class UserAction extends CommonAction
         /** 若已登录则返回首页 */
         if(null != $this->get_current_user())
         {
-            redirect(__ROOT__);
+            redirect(__ROOT__ . "/");
             die(0);
         }
 
@@ -152,7 +152,7 @@ class UserAction extends CommonAction
 
             /** 写入Session */
             Session::set("user_data", $session_data);
-
+			$_SESSION['uname']=$username;
             die("1");
         }
     }
@@ -214,7 +214,7 @@ class UserAction extends CommonAction
 
             /** 写入Session */
             Session::set("user_data", $session_data);
-
+			$_SESSION['uname']=$username;
             die("1");
         }
     }
@@ -223,7 +223,7 @@ class UserAction extends CommonAction
     {
         Session::set("user_data", null);
 
-        redirect(__ROOT__);
+        redirect(__ROOT__ . "/");
     }
 
     /**
@@ -348,7 +348,7 @@ class UserAction extends CommonAction
         $user_info = $this->user_model->get_user_by_id($userid);
         if(NULL === $user_info)
         {
-            redirect(__ROOT__);
+            redirect(__ROOT__ . "/");
             die(0);
         }
 
@@ -370,6 +370,14 @@ class UserAction extends CommonAction
         sort($user_info["todoarray"]);
 
         $this->assign("info", $user_info);
+        if($user_info["userid"] == $this->user_information["userid"])
+        {
+            $this->assign("is_current_user", true);
+        }
+        else
+        {
+            $this->assign("is_current_user", false);
+        }
 
         $this->display();
     }
@@ -398,5 +406,106 @@ class UserAction extends CommonAction
         /** 结果 */
         $this->success("保存成功。", true);
         die(0);
+    }
+	public function update()
+    {
+		/**判别是否登录**/
+		if(null == $this->get_current_user())
+        {
+            redirect(__ROOT__ . "/");
+            die(0);
+		}
+		/** 显示模板 */
+		$username = $_SESSION['uname'];
+        $user = new Model('user');
+		$condition['username'] = $username;
+        $list = $user->where($condition)->select();
+		$this->assign('list',$list);
+        //$this->web_config["title"] .= "update";
+        //$this->assign("HC", $this->web_config);
+        $this->display();
+    }
+	public function updates(){
+		/**判别是否登录**/
+		if(null == $this->get_current_user())
+        {
+            redirect(__ROOT__ . "/");
+            die(0);
+		}
+        $oldpw = $_POST["oldpw"];
+        $newpw = $_POST["newpw"];
+        $nickname = $_POST["nickname"];
+        $email = $_POST["email"];
+        $school = $_POST["school"];
+        $motto = $_POST["motto"];
+		$chg = $_POST["chg"];
+        /** 令牌验证 */
+        /*if(!$this->user_model->autoCheckToken($_POST))
+        {
+            die("非法提交。");
+        }*/
+		/**修改判别**/
+		if($chg == -1){
+			die("你还没有做任何修改呢");
+		}
+		/**提取数据**/
+		$username = $_SESSION['uname'];
+        $user = new Model('user');
+		$condition['username'] = $username;
+        $pwes = $user->where($condition)->select();
+        $Model = new Model();
+		if($chg==0){
+			if(!$this->common_str_validate($newpw, 6, 16, false)){
+				die("密码太长或者太短。");
+			}else{
+				if(md5($oldpw) != $pwes[0]['password']){
+					die("你把初始密码输错了");
+				}else{
+					$newpw=md5($newpw);
+					$Model->execute("update oj_user set password='$newpw' where username='$username'");	
+					die("修改成功了 >_< !!");
+				}
+			}
+		}
+		if($chg==1){
+			if(!$this->common_str_validate($nickname, 1, 32, false))
+			{
+				die("昵称长度必须介于1~32之间。");
+			}
+			if(!ereg("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+", $email) || !$this->common_str_validate($email, 5, 255, false))
+			{
+				die("邮箱地址有误！");
+			}
+			if(!$this->common_str_validate($school, 0, 255, false))
+			{
+				die("学校输入有误。");
+			}
+			if(!$this->common_str_validate($motto, 0, 255, false))
+			{
+				die("格言输入过长。");
+			}
+
+			/** 是否唯一 */
+			if($email != $pwes[0]['email'] or $nickname != $pwes[0]['nickname']){
+				$temp1=false;
+				$temp2=false;
+				if($email != $pwes[0]['email']){
+					$temp1=$Model->query("select * from oj_user where email='$email'");
+				}
+				if($nickname != $pwes[0]['nickname']){
+					$temp2=$Model->query("select * from oj_user where nickname='$nickname'");
+				}
+				if($temp1!=null or $temp2!=null)
+				{
+					die("邮箱或者昵称已存在。");
+				}else{
+					$Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
+					die("资料修改成功>_< !!谢天谢地");
+				}
+			}else{
+				$Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
+				die("资料修改成功>_< !!谢天谢地");
+			}
+		}
     }
 }
