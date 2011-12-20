@@ -37,7 +37,7 @@ class IndexAction extends CommonAction
         $contest_problem_model = new ContestProblemModel("contestproblem");
         $info = $contest_problem_model->get_problem_by_index(1, $_POST["problemid"]);
 
-        if(false == $info) redirect(__ROOT__);
+        if(false == $info) redirect(__ROOT__ . "/");
         else redirect(U("Problem/view") . "?id={$_POST['problemid']}");
     }
 }

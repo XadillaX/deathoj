@@ -43,7 +43,7 @@ class ProblemAction extends CommonAction
         $page = $_GET["page"];
         if(!is_numeric($page)) $page = 1;
         $prob_count = $this->contestproblem_model->where("contestid = {$this->contestid}")->count();
-        $page_count = (int)((int)$prob_count / (int)$this->per_page) + ($prob_count % $this->per_page == 0) ? 0 : 1;
+        $page_count = (int)((int)$prob_count / (int)$this->per_page) + (($prob_count % $this->per_page == 0) ? 0 : 1);
         if($page > $page_count) $page = $page_count;
 
         /** 分页对象 */
@@ -273,7 +273,7 @@ class ProblemAction extends CommonAction
         /** 木有数据 */
         if(false == $data)
         {
-            redirect(__ROOT__);
+            redirect(__ROOT__ . "/");
             die(0);
         }
 
@@ -304,7 +304,7 @@ class ProblemAction extends CommonAction
         $problem = $this->contestproblem_model->get_problem_by_index(1, $index);
         if(false === $problem)
         {
-            redirect(__ROOT__);
+            redirect(__ROOT__ . "/");
         }
 
         $this->assign("problem_info", $problem);
