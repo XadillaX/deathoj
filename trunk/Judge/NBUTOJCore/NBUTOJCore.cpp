@@ -484,9 +484,10 @@ bool CNBUTOJCore::_IsRight(const char *stdoutput, const char *output, CodeState 
     }
 
     char tmp1, tmp2;
+    bool wa = false;
+    bool pe = true;
     //if(stdsize == newsize)
     {
-        bool r = true;
         while(!feof(std))
         {
             tmp1 = fgetc(std);
@@ -498,24 +499,52 @@ bool CNBUTOJCore::_IsRight(const char *stdoutput, const char *output, CodeState 
 
             if(tmp1 != tmp2)
             {
-                r = false;
+                wa = true;
                 break;
             }
         }
 
         /** »Ù «AC */
-        if(r)
+        if(!wa)
         {
             fclose(std);
             fclose(out);
             cs.state = ACCEPTED;
             return true;
         }
+
+        /** ≈–∂œ «∑ÒPE */
+        fclose(std);
+        fclose(out);
+
+        FILE *std = fopen(stdoutput, "r");
+        FILE *out = fopen(output, "r");
+
+        if(std == NULL || out == NULL)
+        {
+            cs.state = SYSTEM_ERROR;
+            strcpy(cs.err_code, "No output file or no std output file.");
+            return false;
+        }
+
+        while(!feof(std))
+        {
+            tmp1 = fgetc(std);
+            tmp2 = fgetc(out);
+
+            while(!feof(std) && (tmp1 == ' ' || tmp1 == '\n' || tmp1 == '\r')) tmp1 = fgetc(std);
+            while(!feof(out) && (tmp2 == ' ' || tmp2 == '\n' || tmp2 == '\r')) tmp2 = fgetc(out);
+
+            if(tmp1 != tmp2)
+            {
+                pe = false;
+                break;
+            }
+        }
     }
 
-    cs.state = WRONG_ANSWER;
-
-    /** TODO: ≈–∂œPE */
+    if(!pe) cs.state = WRONG_ANSWER;
+    else cs.state = PRESENTATION_ERROR;
 
     fclose(std);
     fclose(out);
