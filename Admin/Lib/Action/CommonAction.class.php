@@ -50,7 +50,7 @@ class CommonAction extends Action
         }
 
         $this->web_dir = str_replace("\\", "/", substr(__FILE__, 0, -39));  //网站跟目录，绝对路径
-        $this->web_root = __ROOT__ . "/";                                          ///< 网站根目录，相对路径
+        $this->web_root = __ROOT__ . "/";                                   ///< 网站根目录，相对路径
 
         /** 获取网站配置 */
         $this->getConfig();

@@ -1,4 +1,4 @@
-#prob-list-wrapper {
+﻿#prob-list-wrapper {
     background-color: #b6ecff;
     margin-top: 15px;
     margin-left: 10px;
@@ -116,7 +116,7 @@
     padding: 5px;
     background: #e0f7ff;
 
-    font-family: "consolas", "微软雅黑", "黑体", "宋体";
+    font-family: "consolas", "宋体", "微软雅黑", "黑体", "宋体";
     line-height: 16px;
 }
 
@@ -193,4 +193,22 @@
 
 #view-code-wrapper table {
     font-size: 12px;
+}
+
+#status_query_bar {
+    text-align: center;
+    padding-top: 5px;
+    color: #000;
+}
+
+#status_query_bar input {
+    border: 1px solid #4CF;
+    background: #fff;
+    color: #4cf;
+}
+
+#status_query_bar select {
+    border: 1px solid #4CF;
+    background: #fff;
+    color: #4cf;
 }
