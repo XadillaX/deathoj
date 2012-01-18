@@ -68,7 +68,7 @@
                         <tr>
                             <td style="text-align: center;">{$list.rank}</td>
                             <td style="text-align: center;">{$list.submitid}</td>
-                            <td style="text-align: center;">{$list.username}</td>
+                            <td style="text-align: center;"><a href="{:U('User/view_user') . '?id=' . $list['userid']}" target="_blank">{$list.username}</a></td>
                             <td style="text-align: center;">{$list.time}</td>
                             <td style="text-align: center;">{$list.memory}</td>
                             <td style="text-align: center;">{$list.length}</td>
@@ -88,31 +88,31 @@
                 <h4>信息统计</h4>
                 <table style="font-size: 12px; font-family: consolas;" width="100%">
                     <tr>
-                        <td>AC</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=3" target="_blank">AC</a></td>
                         <td>{$analyze["ACCEPTED"]}</td>
                     </tr>
                     <tr>
-                        <td>WA</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=5" target="_blank">WA</a></td>
                         <td>{$analyze["WRONG_ANSWER"]}</td>
                     </tr>
                     <tr>
-                        <td>RE</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=6" target="_blank">RE</a></td>
                         <td>{$analyze["RUNTIME_ERROR"]}</td>
                     </tr>
                     <tr>
-                        <td>TLE</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=7" target="_blank">TLE</a></td>
                         <td>{$analyze["TIME_LIMIT_EXCEEDED"]}</td>
                     </tr>
                     <tr>
-                        <td>MLE</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=9" target="_blank">MLE</a></td>
                         <td>{$analyze["MEMORY_LIMIT_EXCEEDED"]}</td>
                     </tr>
                     <tr>
-                        <td>CE</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=11" target="_blank">CE</a></td>
                         <td>{$analyze["COMPILATION_ERROR"]}</td>
                     </tr>
                     <tr>
-                        <td>PE</td>
+                        <td><a href="{:U('Problem/status') . '?problemid=' . $problem_info['index']}&result=4" target="_blank">PE</a></td>
                         <td>{$analyze["PRESENTATION_ERROR"]}</td>
                     </tr>
                 </table>

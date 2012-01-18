@@ -12,7 +12,51 @@ function get_result_color($result)
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
 
+<script type="text/javascript">
+function enter_query()
+{
+    var base_url = "{:U('Problem/status') . '?page=' . $_GET['page']}";
+    if($("#status_query_bar input[name=username]").val() != "") base_url += ("&username=" + encodeURIComponent($("#status_query_bar input[name=username]").val()));
+    if($("#status_query_bar input[name=problemid]").val() != "") base_url += ("&problemid=" + encodeURIComponent($("#status_query_bar input[name=problemid]").val()));
+    if($("#select_language").val() != "") base_url += ("&language=" + encodeURIComponent($("#select_language").val()));
+    if($("#select_result").val() != "") base_url += ("&result=" + encodeURIComponent($("#select_result").val()));
+
+    window.location.href = base_url;
+}
+
+$(function(){
+    $("#status_query_bar input[type=submit]").click(function(){
+        enter_query();
+    });
+
+    $("#status_query_bar input").keypress(function(e){
+        if(e.keyCode == 13) enter_query();
+    });
+});
+</script>
+
 <div id="prob-list-wrapper">
+    <div id="status_query_bar">
+        用户名: <input name="username" type="text" value="{$_GET['username']}" />
+        题号: <input name="problemid" type="text" value="{$_GET['problemid']}" />
+        语言: <select id="select_language" name="language">
+                 <option value="">All</option>
+                 <option <if condition="$_GET['language'] eq 1">selected</if> value="1">GCC</option>
+                 <option <if condition="$_GET['language'] eq 2">selected</if> value="2">G++</option>
+             </select>
+        状态: <select id="select_result" name="result">
+                <option value="">All</option>
+                <option <if condition="$_GET['result'] eq 3">selected</if> value="3">ACCEPTED</option>
+                <option <if condition="$_GET['result'] eq 5">selected</if> value="5">WRONG_ANSWER</option>
+                <option <if condition="$_GET['result'] eq 4">selected</if> value="4">PRESENTATION_ERROR</option>
+                <option <if condition="$_GET['result'] eq 6">selected</if> value="6">RUNTIME_ERROR</option>
+                <option <if condition="$_GET['result'] eq 7">selected</if> value="7">TIME_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 9">selected</if> value="9">MEMORY_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 10">selected</if> value="10">OUTPUT_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 11">selected</if> value="11">COMPILATION_ERROR</option>
+             </select>
+        <input type="submit" value="查询" />
+    </div>
     <table>
         <thead>
             <tr>
@@ -40,7 +84,7 @@ function get_result_color($result)
         <foreach name="submit_list" item="list">
             <tr>
                 <td style="text-align: center;">{$list.submitid}</td>
-                <td style="text-align: center;">{$list.username}</td>
+                <td style="text-align: center;"><a href="{:U('User/view_user') . '?id=' . $list['userid']}" target="_blank">{$list.username}</a></td>
                 <td style="text-align: center;"><a style="color: #0072ff;" href="{:U('Problem/view')}?id={$list.index}">{$list.index}</a></td>
                 <td style="text-align: center;">
                     <php>

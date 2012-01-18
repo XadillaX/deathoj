@@ -407,6 +407,7 @@ class UserAction extends CommonAction
         $this->success("保存成功。", true);
         die(0);
     }
+    
 	public function update()
     {
 		/**判别是否登录**/
@@ -425,6 +426,7 @@ class UserAction extends CommonAction
         //$this->assign("HC", $this->web_config);
         $this->display();
     }
+    
 	public function updates(){
 		/**判别是否登录**/
 		if(null == $this->get_current_user())

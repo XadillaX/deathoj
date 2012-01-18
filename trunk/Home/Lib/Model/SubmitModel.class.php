@@ -79,6 +79,42 @@ class SubmitModel extends CommonModel
         else return $data[0];
     }
 
+    public function get_best_solution($contestid, $page, $per_page, $index)
+    {
+        $PREFIX = C("DB_PREFIX");
+        
+        $condition["contestid"] = $contestid;
+        $condition["index"] = $index;
+        $condition["{$PREFIX}submit.resultid"] = 3;
+
+        $user = $PREFIX . "user";
+        $result = $PREFIX . "result";
+        $language = $PREFIX . "language";
+        $runtimeerror = $PREFIX . "runtimeerror";
+
+        //$data = $this->where($condition)
+        //        ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
+        //        ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+        //        ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+        //        ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+        //        ->limit((($page - 1) * $per_page) . ", " . $per_page)
+        //        ->order("`time` ASC, `memory` ASC, `length` ASC")
+        //        ->group("{$PREFIX}submit.userid")
+        //        ->select();
+
+        $SQL = "SELECT * FROM ((SELECT * FROM `{$PREFIX}submit` WHERE `contestid` = '{$condition['contestid']}' AND `index` = '{$condition["index"]}' AND `resultid` = 3 ORDER BY `time` ASC, `memory` ASC, `length` ASC) AS temp_table)"
+               . " LEFT JOIN {$result} ON {$result}.resultid = temp_table.resultid"
+               . " LEFT JOIN {$user} ON {$user}.userid = temp_table.userid"
+               . " LEFT JOIN {$language} ON {$language}.languageid = temp_table.languageid"
+               . " LEFT JOIN {$runtimeerror} ON {$runtimeerror}.totsubmitid = temp_table.totsubmitid"
+               . " GROUP BY temp_table.`userid` ORDER BY `time` ASC, `memory` ASC, `length` ASC LIMIT " . ($page - 1) * $per_page . ", {$per_page}";
+
+        $data = $this->query($SQL);
+
+        //echo $this->getLastSql();
+        return $data;
+    }
+
     /**
      * 根据分页信息获取运行结果
      * @version $Id$
@@ -90,12 +126,24 @@ class SubmitModel extends CommonModel
      * @param string $order
      * @return array|bool
      */
-    public function get_submit_by_page($contestid, $page, $per_page, $index = "", $is_ac = false, $order = "")
+    public function get_submit_by_page($condition, $contestid, $page, $per_page, $index = "", $is_ac = false, $order = "")
     {
         $PREFIX = C("DB_PREFIX");
-        $condition = array("contestid" => $contestid);
+        $condition["contestid"] = $contestid;
         if($index != "") $condition["index"] = $index;
         if($is_ac === true) $condition["{$PREFIX}submit.resultid"] = 3;
+
+        /** 消除前缀影响 */
+        if(isset($condition["resultid"]))
+        {
+            $condition["{$PREFIX}submit.resultid"] = $condition["resultid"];
+            unset($condition["resultid"]);
+        }
+        if(isset($condition["languageid"]))
+        {
+            $condition["{$PREFIX}submit.languageid"] = $condition["languageid"];
+            unset($condition["languageid"]);
+        }
 
         $data = array();
         if(!is_ac)
@@ -130,11 +178,28 @@ class SubmitModel extends CommonModel
      * @param $contestid
      * @return int
      */
-    public function get_count($contestid)
+    public function get_count($contestid, $condition = null)
     {
-        $condition = array("contestid" => $contestid);
+        $PREFIX = C("DB_PREFIX");
+        if(null == $condition) $condition = array();
+        $condition["contestid"] = $contestid;
 
-        return $this->where($condition)->count();
+        /** 消除前缀影响 */
+        if(isset($condition["resultid"]))
+        {
+            $condition["{$PREFIX}submit.resultid"] = $condition["resultid"];
+            unset($condition["resultid"]);
+        }
+        if(isset($condition["languageid"]))
+        {
+            $condition["{$PREFIX}submit.languageid"] = $condition["languageid"];
+            unset($condition["languageid"]);
+        }
+
+        return $this->where($condition)
+                ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+                ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                ->count();
     }
 
     /**

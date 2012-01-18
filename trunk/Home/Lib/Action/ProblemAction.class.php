@@ -196,10 +196,37 @@ class ProblemAction extends CommonAction
 
     public function status()
     {
+        $query_condition = array();
+        
+        /** Query用户名 */
+        if(isset($_GET["username"]) && $this->common_str_validate($_GET["username"], 4, 32))
+        {
+            $query_condition["username"] = $_GET["username"];
+        }
+        /** Query题号 */
+        if(isset($_GET["problemid"]) && $_GET["problemid"] != "" && is_numeric($_GET["problemid"]))
+        {
+            $query_condition["index"] = $_GET["problemid"];
+        }
+        /** Query结果 */
+        if(isset($_GET["result"]) && $_GET["result"] != "" && is_numeric($_GET["result"]))
+        {
+            if($_GET["result"] == 7 || $_GET["result"] == 8)
+            {
+                $query_condition["resultid"] = array("in", "7, 8");
+            }
+            else $query_condition["resultid"] = $_GET["result"];
+        }
+        /** Query语言 */
+        if(isset($_GET["language"]) && $_GET["language"] != "" && is_numeric($_GET["language"]))
+        {
+            $query_condition["languageid"] = $_GET["language"];
+        }
+
         /** 分页信息 */
         $page = $_GET["page"];
         if(!is_numeric($page)) $page = 1;
-        $prob_count = $this->submit_model->get_count($this->contestid);
+        $prob_count = $this->submit_model->get_count($this->contestid, count($query_condition) == 0 ? null : $query_condition);
         $page_count = (int)((int)$prob_count / (int)$this->status_per_page) + (($prob_count % $this->status_per_page == 0) ? 0 : 1);
         if($page > $page_count && $page_count != 0) $page = $page_count;
 
@@ -207,6 +234,11 @@ class ProblemAction extends CommonAction
         import("@.Plugin.XPage");
         $page_obj = new XPage();
         $page_obj->link_str = U("Problem/status") . "?page=%s";
+        if(isset($query_condition["username"])) $page_obj->link_str .= ("&username=" . $query_condition["username"]);
+        if(isset($query_condition["index"])) $page_obj->link_str .= ("&problemid=" . $query_condition["index"]);
+        if(isset($query_condition["resultid"])) $page_obj->link_str .= ("&result=" . $query_condition["resultid"]);
+        if(isset($query_condition["languageid"])) $page_obj->link_str .= ("&language=" . $query_condition["languageid"]);
+
         $page_obj->per_page = $this->status_per_page;              ///< 每页数量
         $page_obj->item_count = $prob_count;                ///< 记录数
         $page_obj->cur_page = $page;                        ///< 当前页码
@@ -218,8 +250,10 @@ class ProblemAction extends CommonAction
         $this->assign("HC", $this->web_config);
 
         /** 提交列表 */
-        $list = $this->submit_model->get_submit_by_page($this->contestid, $page, $this->status_per_page);
+        $list = $this->submit_model->get_submit_by_page($query_condition, $this->contestid, $page, $this->status_per_page);
         $this->assign("submit_list", $list);
+
+        //dump($this->submit_model->getLastSql());
 
         $this->display();
     }
@@ -323,9 +357,11 @@ class ProblemAction extends CommonAction
         }
 
         /** 获取分页信息 */
+        $PREFIX = C("DB_PREFIX");
         $page = $_GET["page"];
         if(!is_numeric($page)) $page = 1;
-        $submit_count = $this->submit_model->where(array("contestid" => $this->contestid, "index" => $index, "resultid" => 3))->count();
+        $submit_count = $this->submit_model->query("SELECT count(*) as tp_count FROM (SELECT userid FROM `{$PREFIX}submit` WHERE ( `contestid` = 1 ) AND ( `index` = '{$index}' ) AND ( `resultid` = 3 ) group by userid) as temp LIMIT 1");//$this->submit_model->where(array("contestid" => $this->contestid, "index" => $index, "resultid" => 3))->count("userid");
+        $submit_count = $submit_count[0]["tp_count"];
         $page_count = (int)((int)$submit_count / (int)$this->status_per_page) + (($submit_count % $this->status_per_page == 0) ? 0 : 1);
         if($page > $page_count && $page_count != 0) $page = $page_count;
 
@@ -344,7 +380,8 @@ class ProblemAction extends CommonAction
         $this->assign("HC", $this->web_config);
 
         /** 提交列表 */
-        $submit_list = $this->submit_model->get_submit_by_page($this->contestid, $page, $this->status_per_page, $index, true, "time ASC, memory ASC, length ASC");
+        //$submit_list = $this->submit_model->get_submit_by_page(array(), $this->contestid, $page, $this->status_per_page, $index, true, "time ASC, memory ASC, length ASC");
+        $submit_list = $this->submit_model->get_best_solution(1, $page, $this->status_per_page, $index);
 
         /** RANK */
         for($i = 0; $i < count($submit_list); $i++)
