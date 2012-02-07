@@ -9,7 +9,7 @@ function ajax_submit()
     var id = $("input[name=id]").val();
     var code = $("#code-textarea").val();
 
-    $.post("{:U('Problem/submitok')}", { "language": language, "id": id, "code": code }, function(reply){
+    $.post("{:U('Contest/submitok')}", { "contest": {$contestid}, "language": language, "id": id, "code": code }, function(reply){
         var data = JSON.parse(reply);
 
         if(data.status == 0)
@@ -20,7 +20,7 @@ function ajax_submit()
         else
         {
             $("#message").html("提交成功，正在转向...");
-            window.location = "{:U('Problem/status')}";
+            window.location = "{:U('Contest/status?id=' . $contestid)}";
         }
 
         $("#submit-btn").removeAttr("disabled");
@@ -46,7 +46,7 @@ $(function(){
         <li id="title"><h3>提交你的代码</h3></li>
         <li id="limit" style="padding-bottom: 5px;">
             <div style="width: 393px; margin-left: auto; margin-right: auto;">
-            <div class="ipt-div fl"><span>题目编号:</span> <input type="text" name="id" value="{$_GET['id']}" /></div>
+            <div class="ipt-div fl"><span>题目编号:</span> <input type="text" name="id" value="{$problemid}" /></div>
             <div class="ipt-div fl"><span>语言:</span>
             <select style="width: 60px;" name="language">
                 <foreach name="lang_list" item="list">
@@ -81,4 +81,5 @@ $(function(){
 });
 </script>
 
+<include file="Contest:bottombar" />
 <include file="Public:footer" />

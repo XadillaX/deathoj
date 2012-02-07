@@ -12,3 +12,7 @@ problem表中
 $Id$
 problem表中
 problemid的AUTO_INCREMENT改为1000
+
+$Id$
+contest表中
+增加字段resultversion(varchar(14), default(00000000000000))

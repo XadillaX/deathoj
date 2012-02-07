@@ -221,4 +221,10 @@ class SubmitModel extends CommonModel
 
         return $data;
     }
+
+    public function del_all($contestid)
+    {
+        $condition = array("contestid" => $contestid);
+        return $this->where($condition)->delete();
+    }
 }

@@ -21,6 +21,29 @@ class CommonAction extends Action
 
     protected $web_config;
 
+    /**
+     * 弹出窗口并转向
+     * @param $text
+     * @param $url
+     * @return void
+     */
+    protected function alert_redirect($text, $url = -1, $needalert = true)
+    {
+        echo "<script type='text/javascript'>";
+        if($needalert) echo "alert('{$text}');";
+
+        if(!is_numeric($url))
+        {
+            echo "window.location.href = '{$url}';";
+        }
+        else
+        {
+            echo "window.history.go({$url});";
+        }
+        echo "</script>";
+        die(0);
+    }
+
     public function __construct()
     {
         parent::__construct();

@@ -59,10 +59,9 @@ $(function(){
         </li>
 
         <li class="titles" id="operation-title">操作</li>
-        <li class="contents" id="operation">
+        <li class="contents" id="source">
             <div>
                 <input class="block-btn" type="button" id="submit" value="提交" />
-                <input class="block-btn" type="button" id="status" value="状态" />
                 <input class="block-btn" type="button" id="statistic" value="统计" />
                 <input class="block-btn" type="button" id="back" value="返回" />
             </div>
@@ -73,17 +72,15 @@ $(function(){
 <script type="text/javascript">
 $(function(){
     $("#submit").click(function(){
-        window.location = "{:U('Problem/submit')}?id={$info['index']}";
-    });
-    $("#status").click(function(){
-        window.location = "{:U('Problem/status')}?problemid={$info['index']}";
+        window.location = "{:U('Contest/submit')}?contest={$contest_info['contestid']}&prob={$info['index']}";
     });
     $("#statistic").click(function(){
-        window.location = "{:U('Problem/statistic')}?id={$info['index']}";
+        window.location = "{:U('Contest/statistics?id=' . $contest_info['contestid'] . '&problem=' . $info['index'])}";
     });
     $("#back").click(function(){
-        window.history.go(-1);
+        window.location = "{:U('Contest/view?id=' . $contest_info['contestid'])}";
     });
 });
 </script>
+        <include file="Contest:bottombar" />
 <include file="Public:footer" />

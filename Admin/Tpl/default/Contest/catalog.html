@@ -44,7 +44,7 @@
                         <td>{$list.title}</td>
                         <td><if condition="$list['starttime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["starttime"])}</if></td>
                         <td><if condition="$list['endtime'] eq null">-<else />{:date("Y-m-d H:i:s", $list["endtime"])}</if></td>
-                        <td><if condition="$list['contestid'] neq 1"><a href="{:U('Contest/edit_contest')}?contestid={$list.contestid}" title="编辑">编辑</a> / <a href="{:U('Contest/prob_list')}?contestid={$list.contestid}">列表</a> / <a href="{:U('Contest/del_contest')}?contestid={$list.contestid}" title="删除">删除</a></if> <if condition="$list['private'] eq 1">/ <a href="{:U('Contest/generate_team')}?contestid={$list.contestid}">队伍</a></if></td>
+                        <td><if condition="$list['contestid'] neq 1"><a href="{:U('Contest/edit_contest')}?contestid={$list.contestid}" title="编辑">编辑</a> / <a href="{:U('Contest/prob_list')}?contestid={$list.contestid}">列表</a> / <a href="{:U('Contest/del_contest')}?contestid={$list.contestid}&state=confirm" title="删除">删除</a></if> <if condition="$list['private'] eq 1">/ <a href="{:U('Contest/generate_team')}?contestid={$list.contestid}">队伍</a></if></td>
                     </tr>
                     </foreach>
                 </tbody>

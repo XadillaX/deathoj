@@ -28,17 +28,12 @@ $(function(){
     <ul id="prob-info-ul">
         <li id="title"><h3>{$info["title"]}</h3></li>
 
-        <li class="titles" id="starttime-title">开始时间</li>
-        <li class="contents" id="starttime">
+        <li class="titles" id="contesttime-title">比赛时间</li>
+        <li class="contents" id="contesttime">
             <div>
-                {:date("Y-m-d H:i:s", $info["starttime"])}
-            </div>
-        </li>
-
-        <li class="titles" id="endtime-title">结束时间</li>
-        <li class="contents" id="endtime">
-            <div>
-                {:date("Y-m-d H:i:s", $info["endtime"])}
+                <span style="color: #ff0099;">{:date("Y-m-d H:i:s", $info["starttime"])}</span> -
+                <span style="color: #ff7800;">{:date("Y-m-d H:i:s", $info["endtime"])}</span>
+                [{:get_contest_status($info["starttime"], $info["endtime"])}]
             </div>
         </li>
 
@@ -49,12 +44,7 @@ $(function(){
             </div>
         </li>
 
-        <li class="titles" id="status-title">比赛状态</li>
-        <li class="contents" id="status">
-            <div>
-                {:get_contest_status($info["starttime"], $info["endtime"])}
-            </div>
-        </li>
+        <li class="titles" id="no-permission">对不起，这是私有比赛，您暂时无权查看。</li>
     </ul>
 </div>
 

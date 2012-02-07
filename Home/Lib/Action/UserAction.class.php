@@ -455,6 +455,13 @@ class UserAction extends CommonAction
         $user = new Model('user');
 		$condition['username'] = $username;
         $pwes = $user->where($condition)->select();
+
+        /** 比赛用户不能修改密码 */
+        if($pwes[0]["roleid"] == -100)
+        {
+            die("比赛用户不允许修改密码。");
+        }
+
         $Model = new Model();
 		if($chg==0){
 			if(!$this->common_str_validate($newpw, 6, 16, false)){
@@ -478,11 +485,11 @@ class UserAction extends CommonAction
 			{
 				die("邮箱地址有误！");
 			}
-			if(!$this->common_str_validate($school, 0, 255, false))
+			if(!$this->common_str_validate($school, 0, 255, true, true, false))
 			{
 				die("学校输入有误。");
 			}
-			if(!$this->common_str_validate($motto, 0, 255, false))
+			if(!$this->common_str_validate($motto, 0, 255, false, true, false))
 			{
 				die("格言输入过长。");
 			}
@@ -501,12 +508,28 @@ class UserAction extends CommonAction
 				{
 					die("邮箱或者昵称已存在。");
 				}else{
-					$Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
-					die("资料修改成功>_< !!谢天谢地");
+                    if($pwes[0]["roleid"] == -100)
+                    {
+                        $Model->execute("update oj_user set email='$email',school='$school',motto='$motto' where username='$username'");
+					    die("资料修改成功>_< !!谢天谢地");
+                    }
+                    else
+                    {
+					    $Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
+					    die("资料修改成功>_< !!谢天谢地");
+                    }
 				}
 			}else{
-				$Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
-				die("资料修改成功>_< !!谢天谢地");
+                if($pwes[0]["roleid"] == -100)
+                {
+                    $Model->execute("update oj_user set email='$email',school='$school',motto='$motto' where username='$username'");
+				    die("资料修改成功>_< !!谢天谢地");
+                }
+                else
+                {
+                    $Model->execute("update oj_user set nickname='$nickname',email='$email',school='$school',motto='$motto' where username='$username'");
+				    die("资料修改成功>_< !!谢天谢地");
+                }
 			}
 		}
     }

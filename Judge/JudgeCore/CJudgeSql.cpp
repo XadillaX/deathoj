@@ -99,6 +99,7 @@ tagSQL_JUDGE_INFO* CJudgeSql::GetNextQueuingRecord()
         if(0 == res.size())
         {
             m_szLastError = "没有符合条件的记录。";
+            Disconnect();
             ::LeaveCriticalSection(&m_CS);
             return NULL;
         }
@@ -196,11 +197,12 @@ string CJudgeSql::GetUserAcceptList(int userid)
         if(0 == res.size())
         {
             m_szLastError = "没有符合条件的记录。";
+            Disconnect();
             ::LeaveCriticalSection(&m_CS);
             return "";
         }
 
-        tagSQL_JUDGE_INFO* info = new tagSQL_JUDGE_INFO();
+        //tagSQL_JUDGE_INFO* info = new tagSQL_JUDGE_INFO();
 
         string result = res[0]["solvedlist"];
 
@@ -421,28 +423,220 @@ bool CJudgeSql::TurnResultStatus(int resultid, int time, int memory, string cond
     return true;
 }
 
+int CJudgeSql::GetSubmissionsByTime(int contestid, vector<tagSQL_RES_INFO>& res)
+{
+    res.clear();
+
+    string submit = GetFieldName("submit");
+    string sql = "SELECT `totsubmitid`, `submitid`, `contestid`, `index`, `userid`, `resultid`, `submittime` FROM `" +
+        submit + "` WHERE `resultid` > 2 AND `resultid` != 14 AND `contestid` = " + XStringFunc::IntToString(contestid) + " ORDER BY `submittime` ASC";
+
+    ::EnterCriticalSection(&m_CS);
+    m_szLastSql = sql;
+    if(!Connect())
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        return 0;
+    }
+
+    /** 开始查询 */
+    try
+    {
+        mysqlpp::Query query = m_Conn.query(sql);
+        if(mysqlpp::StoreQueryResult Qres = query.store())
+        {
+            tagSQL_RES_INFO info;
+            int cnt = Qres.size();
+            for(int i = 0; i < cnt; i++)
+            {
+                info.contestid = Qres[i]["contestid"];
+                info.problemindex = Qres[i]["index"];
+                info.resultid = Qres[i]["resultid"];
+                info.submitid = Qres[i]["submitid"];
+                info.time = Qres[i]["submittime"];
+                info.totsubmitid = Qres[i]["totsubmitid"];
+                info.userid = Qres[i]["userid"];
+
+                res.push_back(info);
+            }
+
+            Disconnect();
+            ::LeaveCriticalSection(&m_CS);
+            
+            return cnt;
+        }
+        else
+        {
+            Disconnect();
+            ::LeaveCriticalSection(&m_CS);
+            m_szLastError = query.error();
+            return 0;
+        }
+    }
+    catch(exception &e)
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        m_szLastError = e.what();
+        return 0;
+    }
+}
+
+bool CJudgeSql::UpdateRankVersion(int contestid, string version)
+{
+    //string res = "00000000000000";
+    //
+    //time_t timer;
+    //struct tm *tblock;
+    //timer = time(NULL);
+    //tblock = localtime(&timer);
+
+    //char r[20];
+    //sprintf(r, "%04d%02d%02d%02d%02d%02d", tblock->tm_year + 1900, tblock->tm_mon + 1, tblock->tm_mday,
+    //    tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+
+    //res = r;
+    
+    string contest = this->GetFieldName("contest");
+    string sql = "UPDATE `" + contest + "` SET `resultversion` = '" + version + "' WHERE `contestid` = " + XStringFunc::IntToString(contestid);
+
+    ::EnterCriticalSection(&m_CS);
+    m_szLastSql = sql;
+    if(!Connect())
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        return false;
+    }
+
+    /** 开始查询 */
+    try
+    {
+        mysqlpp::Query query = m_Conn.query(sql);
+        mysqlpp::StoreQueryResult res = query.store();
+    }
+    catch(exception &e)
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        m_szLastError = e.what();
+        return false;
+    }
+
+    /** 断开数据库 */
+    Disconnect();
+    ::LeaveCriticalSection(&m_CS);
+
+    return true;
+}
+
+int CJudgeSql::GetContestStartTime(int contestid)
+{
+    string contest = this->GetFieldName("contest");
+
+    string sql = "SELECT `starttime` FROM `" + contest + "` WHERE `contestid` = " + XStringFunc::IntToString(contestid);
+
+    ::EnterCriticalSection(&m_CS);
+    m_szLastSql = sql;
+    if(!Connect())
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        return 0;
+    }
+
+    try
+    {
+        mysqlpp::Query query = m_Conn.query(sql);
+        if(mysqlpp::StoreQueryResult res = query.store())
+        {
+            if(0 == res.size())
+            {
+                m_szLastError = "没有符合条件的记录。";
+                Disconnect();
+                ::LeaveCriticalSection(&m_CS);
+                return 0;
+            }
+
+            int result = res[0]["starttime"];
+
+            Disconnect();
+            ::LeaveCriticalSection(&m_CS);
+            return result;
+        }
+        else
+        {
+            Disconnect();
+            m_szLastError = query.error();
+            ::LeaveCriticalSection(&m_CS);
+            return 0;
+        }
+    }
+    catch(exception &e)
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        m_szLastError = e.what();
+        return 0;
+    }
+}
+
+string CJudgeSql::GetRankVersion(int contestid)
+{
+    string contest = this->GetFieldName("contest");
+
+    string sql = "SELECT `resultversion` FROM `" + contest + "` WHERE `contestid` = " + XStringFunc::IntToString(contestid);
+
+    ::EnterCriticalSection(&m_CS);
+    m_szLastSql = sql;
+    if(!Connect())
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        return 0;
+    }
+
+    try
+    {
+        mysqlpp::Query query = m_Conn.query(sql);
+        if(mysqlpp::StoreQueryResult res = query.store())
+        {
+            if(0 == res.size())
+            {
+                m_szLastError = "没有符合条件的记录。";
+                Disconnect();
+                ::LeaveCriticalSection(&m_CS);
+                return "";
+            }
+
+            //tagSQL_JUDGE_INFO* info = new tagSQL_JUDGE_INFO();
+
+            string result = res[0]["resultversion"];
+
+            Disconnect();
+            ::LeaveCriticalSection(&m_CS);
+            return result;
+        }
+        else
+        {
+            Disconnect();
+            m_szLastError = query.error();
+            ::LeaveCriticalSection(&m_CS);
+            return "";
+        }
+    }
+    catch(exception &e)
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        m_szLastError = e.what();
+        return 0;
+    }
+}
+
 string CJudgeSql::FilterSQLString(string str)
 {
-    ///** 找\n */
-    //int pos = 0;
-    //string before, after;
-    //while((pos = str.find("\n", pos + 1)) != string::npos)
-    //{
-    //    before = str.substr(0, pos);
-    //    after = str.substr(pos + 1);
-    //    str = before + "\\n" + after;
-    //}
-
-    ///** 找\r */
-    //pos = 0;
-    //before, after;
-    //while((pos = str.find("\r", pos + 1)) != string::npos)
-    //{
-    //    before = str.substr(0, pos);
-    //    after = str.substr(pos + 1);
-    //    str = before + "\\r" + after;
-    //}
-
     /** 找\\ */
     int pos = 0;
     string before, after;

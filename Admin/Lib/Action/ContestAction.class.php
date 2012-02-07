@@ -17,6 +17,7 @@ class ContestAction extends CommonAction
     private $contest_model;
     private $contestproblem_model;
     private $contestuser_model;
+    private $submit_model;
 
     public function __construct()
     {
@@ -26,6 +27,7 @@ class ContestAction extends CommonAction
         $this->contest_model = new ContestModel("contest");
         $this->contestproblem_model = new ContestProblemModel("contestproblem");
         $this->contestuser_model = new ContestUserModel("contestuser");
+        $this->submit_model = new SubmitModel("submit");
     }
 
     /**
@@ -583,5 +585,65 @@ class ContestAction extends CommonAction
         /** 删除CONTESTUSER表中的相应用户 */
         $this->contestuser_model->where(array("contestid" => $contestid))->delete();
         $this->alert_redirect("清空成功。", U("Contest/generate_team") . "?contestid={$contestid}");
+    }
+
+    /**
+     * 删除比赛
+     * @return void
+     */
+    public function del_contest()
+    {
+        $contestid = $_GET["contestid"];
+        $state = $_GET["state"];
+
+        /** 是否有比赛 */
+        $contest_info = $this->contest_model->get_contest_info($contestid);
+        if(false === $contest_info || $contestid == 1)
+        {
+            $this->alert_redirect("不存在的比赛。");
+            die(0);
+        }
+
+        /** 状态 */
+        switch($state)
+        {
+        case "del":
+            {
+                /** !小心删除! */
+                $condition = array("contestid" => $contestid);
+
+                $code_model = new Model("code");
+                $re_model = new Model("runtimeerror");
+
+                $this->contestuser_model->del_all($contestid);          ///< 删除比赛用户表数据
+                $this->submit_model->del_all($contestid);               ///< 删除提交表数据
+                $code_model->where($condition)->delete();               ///< 删除代码表数据
+                $re_model->where($condition)->delete();                 ///< 删除RE表数据
+                $this->contestproblem_model->where($condition)->delete();   ///< 题目表数据
+                $this->contest_model->where($condition)->delete();      ///< 比赛详细数据
+
+                $this->alert_redirect("删除 [{$contest_info['title']}] 成功。", U("Contest/catalog") . "?page=" . Session::get("contest_page_when_back"));
+
+                break;
+            }
+
+        case "confirm":
+        default:
+            {
+                /** ASSIGN数据 */
+                $this->web_config["action_class"] = "contest";
+                $this->web_config["sub_action"] = "contest";
+                $this->web_config["title"] .= " 删除比赛 :: {$contest_info['title']}";
+                $this->assign("HC", $this->web_config);
+                $this->assign("admin_information", $this->admin_information);
+                $this->assign("contest_info", $contest_info);
+                $this->assign("back_page", Session::get("contest_page_when_back"));
+
+                /** 有用户 */
+                $this->display("del_contest");
+
+                break;
+            }
+        }
     }
 }

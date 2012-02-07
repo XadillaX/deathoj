@@ -49,7 +49,9 @@ return array(
     /** 输入、输出数据地址 */
     MAX_DATA_SIZE           => 10240,
     IO_DATA_DIR             => "/oj/__data#",
+    RANK_DIR                => "/oj/__rank#",
     IO_DATA_PATH             => dirname(dirname(dirname(__FILE__))) . "\\__data#",
+    RANK_PATH               => dirname(dirname(dirname(__FILE__))) . "\\__rank#",
 
     /** 分页设置 */
     PROBLEM_NUM_PER_PAGE    => 20,

@@ -46,7 +46,7 @@ function get_contest_status($starttime, $endtime)
                 <td class="br" style="text-align: center;"><if condition="$list['starttime'] neq null">{:date("Y-m-d H:i:s", $list['starttime'])}<else />-</if></td>
                 <td class="br" style="text-align: center;"><if condition="$list['endtime'] neq null">{:date("Y-m-d H:i:s", $list['endtime'])}<else />-</if></td>
                 <td class="br" style="text-align: center;"><if condition="$list['private'] eq 0"><span style="color: red;">√</span><else /><span style="color: green;">×</span></if></td>
-                <td>{:get_contest_status($list["starttime"], $list["endtime"])}</td>
+                <td style="text-align: center;">{:get_contest_status($list["starttime"], $list["endtime"])}</td>
             </tr>
             <php>}else{</php>
             <tr>
@@ -55,7 +55,7 @@ function get_contest_status($starttime, $endtime)
                 <td class="br" style="text-align: center;">-</td>
                 <td class="br" style="text-align: center;">-</td>
                 <td class="br" style="text-align: center;"><if condition="$list['private'] eq 0"><span style="color: red;">√</span><else /><span style="color: green;">×</span></if></td>
-                <td class="br" style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
             </tr>
             <php>}</php>
         </foreach>

@@ -1,0 +1,136 @@
+<php>
+function get_result_color($result)
+{
+    switch($result)
+    {
+    case "QUEUING": return "#ff7800";
+    case "ACCEPTED": return "red";
+    default: return "green";
+    }
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<script type="text/javascript">
+function enter_query()
+{
+    var base_url = "{:U('Contest/status?id=' . $_GET['id']) . '?page=' . $_GET['page']}";
+    if($("#status_query_bar input[name=username]").val() != "") base_url += ("&username=" + encodeURIComponent($("#status_query_bar input[name=username]").val()));
+    if($("#status_query_bar input[name=problemid]").val() != "") base_url += ("&problemid=" + encodeURIComponent($("#status_query_bar input[name=problemid]").val()));
+    if($("#select_language").val() != "") base_url += ("&language=" + encodeURIComponent($("#select_language").val()));
+    if($("#select_result").val() != "") base_url += ("&result=" + encodeURIComponent($("#select_result").val()));
+
+    window.location.href = base_url;
+}
+
+$(function(){
+    $("#status_query_bar input[type=submit]").click(function(){
+        enter_query();
+    });
+
+    $("#status_query_bar input").keypress(function(e){
+        if(e.keyCode == 13) enter_query();
+    });
+});
+</script>
+
+<div id="prob-list-wrapper">
+    <div id="status_query_bar">
+        用户名: <input name="username" type="text" value="{$_GET['username']}" />
+        题号: <input name="problemid" type="text" value="{$_GET['problemid']}" />
+        语言: <select id="select_language" name="language">
+                 <option value="">All</option>
+                 <option <if condition="$_GET['language'] eq 1">selected</if> value="1">GCC</option>
+                 <option <if condition="$_GET['language'] eq 2">selected</if> value="2">G++</option>
+             </select>
+        状态: <select id="select_result" name="result">
+                <option value="">All</option>
+                <option <if condition="$_GET['result'] eq 3">selected</if> value="3">ACCEPTED</option>
+                <option <if condition="$_GET['result'] eq 5">selected</if> value="5">WRONG_ANSWER</option>
+                <option <if condition="$_GET['result'] eq 4">selected</if> value="4">PRESENTATION_ERROR</option>
+                <option <if condition="$_GET['result'] eq 6">selected</if> value="6">RUNTIME_ERROR</option>
+                <option <if condition="$_GET['result'] eq 7">selected</if> value="7">TIME_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 9">selected</if> value="9">MEMORY_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 10">selected</if> value="10">OUTPUT_LIMIT_EXCEEDED</option>
+                <option <if condition="$_GET['result'] eq 11">selected</if> value="11">COMPILATION_ERROR</option>
+             </select>
+        <input type="submit" value="查询" />
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center;">RUNID</th>
+                <th style="text-align: center;">用户</th>
+                <th style="text-align: center;">题号</th>
+                <th style="text-align: center;">状态</th>
+                <th style="text-align: center;">运行时间(MS)</th>
+                <th style="text-align: center;">运行内存(K)</th>
+                <th style="text-align: center;">代码长度</th>
+                <th style="text-align: center;">语言</th>
+                <th style="text-align: center;">提交时间</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="9" id="page_td">
+                    {$page_str}
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+        <foreach name="submit_list" item="list">
+            <tr>
+                <td style="text-align: center;">{$list.submitid}</td>
+                <td style="text-align: center;"><a style="line-height: 15px;" href="{:U('User/view_user') . '?id=' . $list['userid']}" target="_blank">{$list.username}<br />({$list.nickname})</a></td>
+                <td style="text-align: center;"><a style="color: #0072ff;" href="{:U('Contest/view?id=' . $_GET['id'] . '&problem=' . $list['index'])}">{$list.index}</a></td>
+                <td style="text-align: center;">
+                    <php>
+                        $result_ad = false;
+                        if($list["message"] != "" && $list["result"] == "COMPILATION_ERROR" && $current_user != NULL && ($current_user["userid"] == $list["userid"] || $current_user["roleid"] == 3))
+                        {
+                            $result_ad = true;
+                        }
+                    </php>
+
+                    <if condition="$result_ad eq true">
+                        <a href="{:U('Problem/viewce')}?submitid={$list['submitid']}&cid={$_GET['id']}" target="_blank">
+                            <span style="color: {:get_result_color($list["result"])}">{$list.result}</span>
+                        </a>
+                    <else />
+                        <span style="color: {:get_result_color($list["result"])}">{$list.result}</span>
+                    </if>
+
+                    <php>
+                        if($list["message"] != "" && $list["result"] == "RUNTIME_ERROR")
+                            echo "<br />[" . $list["message"] . "]<br />";
+                    </php>
+                </td>
+                <td style="text-align: center;">{$list.time}</td>
+                <td style="text-align: center;">{$list.memory}</td>
+                <td style="text-align: center;">{$list.length}</td>
+                <td style="text-align: center;">
+                    <a href="{:U('Problem/viewcode')}?submitid={$list['submitid']}&cid={$_GET['id']}" target="_blank">
+                        {$list.language}
+                    </a>
+                </td>
+                <td style="text-align: center;">{:date("Y-m-d H:i:s", $list["submittime"])}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    function time_refresh()
+    {
+        window.location.reload();
+    }
+    $(function(){
+        setTimeout("time_refresh()", 60000);
+    });
+</script>
+
+<include file="Contest:bottombar" />
+<include file="Public:footer" />

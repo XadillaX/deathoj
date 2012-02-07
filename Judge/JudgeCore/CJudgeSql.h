@@ -5,6 +5,7 @@
 #include <mysql++.h>
 #include <string>
 #include "XStringFunc.h"
+#include <vector>
 using namespace std;
 
 struct tagSQL_JUDGE_INFO
@@ -24,6 +25,19 @@ struct tagSQL_JUDGE_INFO
     char                                output_md5[33];             ///< 用于以后分布式
 
     string                              code;
+};
+
+struct tagSQL_RES_INFO
+{
+    int                                 totsubmitid;
+    int                                 submitid;
+    int                                 contestid;
+    string                              problemindex;
+
+    int                                 userid;
+    int                                 resultid;
+
+    int                                 time;
 };
 
 class CJudgeSql : public Singleton<CJudgeSql>
@@ -66,6 +80,12 @@ public:
     bool                                AddUserAccept(int userid, string index);
     bool                                UpdateUserAcceptList(int userid, string szlist);
     bool                                AddProblemAccept(int contestid, string index);
+
+    int                                 GetSubmissionsByTime(int contestid, vector<tagSQL_RES_INFO>& res);
+    string                              GetRankVersion(int contestid);
+    bool                                UpdateRankVersion(int contestid, string version);
+
+    int                                 GetContestStartTime(int contestid);
 
 private:
     mysqlpp::Connection                 m_Conn;             ///< 连接对象

@@ -1,0 +1,88 @@
+<php>
+function get_contest_status($starttime, $endtime)
+{
+    $current_time = time();
+    $results = array(
+        "<span style='color: gray;'>未开始</span>",
+        "<span style='color: red;'>进行中</span>",
+        "<span style='color: green;'>已结束</span>"
+    );
+
+    if($current_time < $starttime) return $results[0];
+    if($current_time > $starttime && $current_time < $endtime) return $results[1];
+    return $results[2];
+}
+
+function get_fine_str($time)
+{
+    $hour = (int)((int)$time / (int)3600);
+    $time = $time % 3600;
+    $minute = (int)((int)$time / (int)60);
+    $second = $time % 60;
+
+    if(strlen($hour) < 2) $hour = "0" . $hour;
+    if(strlen($minute) < 2) $minute = "0" . $minute;
+    if(strlen($second) < 2) $second = "0" . $second;
+
+    return $hour . ":" . $minute . ":" . $second;
+}
+</php>
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/ranklist.css" media="screen" />
+
+<script type="text/javascript">
+$(function(){
+    $(".titles").click(function(){
+        $(this).next().slideToggle("normal");
+    });
+});
+</script>
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>{$contest_info["title"]}</h3></li>
+
+        <li class="titles" id="contesttime-title">比赛时间</li>
+        <li class="contents" id="contesttime">
+            <div>
+                <span style="color: #ff0099;">{:date("Y-m-d H:i:s", $contest_info["starttime"])}</span> -
+                <span style="color: #ff7800;">{:date("Y-m-d H:i:s", $contest_info["endtime"])}</span>
+                [{:get_contest_status($contest_info["starttime"], $contest_info["endtime"])}]
+            </div>
+        </li>
+
+        <li class="titles" id="ranklist-title">排名列表</li>
+        <li class="contents" id="ranklist">
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="text-align: center; width: 50px;">排名</th>
+                        <th style="text-align: center; width: 150px;">队名</th>
+                        <th style="text-align: center; width: 50px;">解决</th>
+                        <th style="text-align: center; width: 150px;">罚时</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="rank-body">
+                        <tr>
+                            <td style="text-align: center;" colspan="4">本比赛还未有排名信息或者暂时无法读取排名缓存。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    $("#rank-body tr").each(function(){
+        $(this).children().last().removeClass("br");
+    });
+});
+</script>
+        
+<include file="Contest:bottombar" />
+<include file="Public:footer" />

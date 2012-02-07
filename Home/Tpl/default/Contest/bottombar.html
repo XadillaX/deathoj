@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/contest_bottom_bar.css" media="screen" />
+<div id="contest-bottom-bar">
+    <ul id="contest-bottom-bar-ul">
+        <li style="width: 50px;">&nbsp;</li>
+        <li id="problem-link">
+            <a href="{$bar['problem']}">题目 Problems</a>
+
+            <div id="contest-bottom-bar-problems">
+                <ul>
+                <foreach name="bar['problems']" item="list">
+                    <li><a href="{$list.url}">{$list.index} - {$list.title} <span style="color: red; font-size: 8px;">[{$list.ac} / {$list.sub} ({$list.percent})]</span></a></li>
+                </foreach>
+                </ul>
+            </div>
+        </li>
+        <li><a href="{$bar['status']}">状态 Status</a></li>
+        <li><a href="{$bar['statistics']}">统计 Statistics</a></li>
+        <li><a href="{$bar['rank']}">排名 Rank</a></li>
+
+        <php>
+            if($bar['needsignup'] == true)
+            {
+        </php>
+        <li><a style="color: red; font-weight: bold;" href="{$bar['signup']}">报名参赛 SIGN UP</a></li>
+        <php>
+            }
+            else
+            {
+        </php>
+        <li><a href="#" style="color: red; font-weight: bold;">{$bar["teamname"]}</a></li>
+        <php>
+            }
+        </php>
+    </ul>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    $("#problem-link").hover(
+        function(){
+            $("#contest-bottom-bar-problems").css("bottom", "30px");
+            $("#contest-bottom-bar-problems").fadeIn(210);
+
+            $("#contest-bottom-bar-problems").prev().css("background", "#fff");
+        },
+        function(){
+            $("#contest-bottom-bar-problems").fadeOut(180);
+            $("#contest-bottom-bar-problems").prev().css("background", "none");
+        }
+    );
+});
+</script>

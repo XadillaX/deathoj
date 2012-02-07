@@ -12,4 +12,11 @@ $(function(){
     $("#goprob-id").blur(function(){
         if($(this).val() == "") $(this).val("题目编号");
     });
+
+    $("a, blockquote").hover(
+        function(){
+            if(!$(this).is(":animated"))
+                $(this).animate({ opacity : ".6" }, 210).animate({ opacity : "1" }, 180);
+        }
+    );
 });

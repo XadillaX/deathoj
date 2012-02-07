@@ -95,7 +95,15 @@ class UserModel extends CommonModel {
     {
         /** 条件数组 */
         $condition["username"] = $username;
-        $condition["password"] = ($already_md5) ? $password : md5($password);
+        //$condition["password"] = ($already_md5) ? $password : md5($password);
+
+        /** XadillaX+ $Id$ */
+        if($already_md5) $condition["password"] = $password;
+        else
+        {
+            $md5_p = md5($password);
+            $condition["password"] = array("exp", "IN('{$password}', '{$md5_p}')");
+        }
 
         /** 搜索数据库 */
         $result = $this->join("{$this->PREFIX}role ON {$this->PREFIX}user.roleid = {$this->PREFIX}role.roleid")->where($condition)->select();
