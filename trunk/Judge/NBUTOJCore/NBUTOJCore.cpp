@@ -324,9 +324,9 @@ bool CNBUTOJCore::WatchCode(const HANDLE hProcess, const __int64 lim_time, const
         if(DBE.dwDebugEventCode == EXIT_PROCESS_DEBUG_EVENT)
         {
             ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_CONTINUE);
-            CloseHandle(DBE.u.CreateProcessInfo.hFile);
-            CloseHandle(DBE.u.CreateProcessInfo.hProcess);
-            CloseHandle(DBE.u.CreateProcessInfo.hThread);
+            if(DBE.u.CreateProcessInfo.hFile) CloseHandle(DBE.u.CreateProcessInfo.hFile);
+            if(DBE.u.CreateProcessInfo.hProcess) CloseHandle(DBE.u.CreateProcessInfo.hProcess);
+            if(DBE.u.CreateProcessInfo.hThread) CloseHandle(DBE.u.CreateProcessInfo.hThread);
             break;
         }
         else
@@ -400,18 +400,18 @@ bool CNBUTOJCore::WatchCode(const HANDLE hProcess, const __int64 lim_time, const
                 }
 
                 /** 关闭句柄，否则调试进程不能被结束 */
-                CloseHandle(DBE.u.CreateProcessInfo.hFile);
-                CloseHandle(DBE.u.CreateProcessInfo.hProcess);
-                CloseHandle(DBE.u.CreateProcessInfo.hThread);
+                if(DBE.u.CreateProcessInfo.hFile) CloseHandle(DBE.u.CreateProcessInfo.hFile);
+                if(DBE.u.CreateProcessInfo.hProcess) CloseHandle(DBE.u.CreateProcessInfo.hProcess);
+                if(DBE.u.CreateProcessInfo.hThread) CloseHandle(DBE.u.CreateProcessInfo.hThread);
                 return _ErrExit(hProcess, ProcInfo.dwProcessId, cs, RUNTIME_ERROR, RunTime, maxMemo);
             }
         }
 
         /** 继续调试 */
         ContinueDebugEvent(DBE.dwProcessId, DBE.dwThreadId, DBG_CONTINUE);
-        CloseHandle(DBE.u.CreateProcessInfo.hFile);
-        CloseHandle(DBE.u.CreateProcessInfo.hProcess);
-        CloseHandle(DBE.u.CreateProcessInfo.hThread);
+        if(DBE.u.CreateProcessInfo.hFile) CloseHandle(DBE.u.CreateProcessInfo.hFile);
+        if(DBE.u.CreateProcessInfo.hProcess) CloseHandle(DBE.u.CreateProcessInfo.hProcess);
+        if(DBE.u.CreateProcessInfo.hThread) CloseHandle(DBE.u.CreateProcessInfo.hThread);
     }
 
     cs.exe_time = RunTime;

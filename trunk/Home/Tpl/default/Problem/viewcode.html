@@ -25,6 +25,12 @@ $(function(){
     });
 
     sh_highlightDocument();
+
+    if("{$_GET['cid']}" != "")
+    {
+        $("#view-code-url").attr("href", $("#view-code-url").attr("href") + "&cid={$_GET['cid']}");
+        $("#view-code-prob").attr("href", "{:U('Contest/view?id=' . $_GET['cid'] . '&problem=' . $submit['index'])}");
+    }
 });
 </script>
 
@@ -58,17 +64,17 @@ $(function(){
                 <table width="100%">
                     <tr>
                         <td style="text-align: right; width: 30%">#: </td>
-                        <td><a href="{:U('Problem/viewcode')}?submitid={$submit['submitid']}">{$submit["submitid"]}</a></td>
+                        <td><a id="view-code-url" href="{:U('Problem/viewcode')}?submitid={$submit['submitid']}">{$submit["submitid"]}</a></td>
                     </tr>
 
                     <tr>
                         <td style="text-align: right; width: 30%">题目: </td>
-                        <td><a href="{:U('problem/view')}?id={$submit['index']}">{$submit["index"]}</a></td>
+                        <td><a id="view-code-prob" href="{:U('problem/view')}?id={$submit['index']}">{$submit["index"]}</a></td>
                     </tr>
 
                     <tr>
                         <td style="text-align: right; width: 30%">提交人: </td>
-                        <td>{$submit["nickname"]}</td>
+                        <td><a href="{:U('User/view_user')}?id={$submit['userid']}" target="_blank">{$submit["nickname"]}</a></td>
                     </tr>
 
                     <tr>

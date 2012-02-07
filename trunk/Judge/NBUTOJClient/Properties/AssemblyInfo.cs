@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("NBUTOJClient")]
+[assembly: AssemblyTitle("宁波工程学院在线评测系统 客户端")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Lenovo")]
+[assembly: AssemblyCompany("宁波工程学院ACM团队")]
 [assembly: AssemblyProduct("NBUTOJClient")]
-[assembly: AssemblyCopyright("Copyright © Lenovo 2011")]
+[assembly: AssemblyCopyright("Copyright © NBUT ACM GROUP")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

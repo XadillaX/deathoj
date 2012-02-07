@@ -118,6 +118,16 @@ class ProblemAction extends CommonAction
             $this->error("您尚未未登录。", true);
             die(0);
         }
+        else
+        {
+            /** 比赛用户不允许提交 */
+            $userinfo = $this->get_current_user();
+            if($userinfo["roleid"] == -100)
+            {
+                $this->error("比赛用户不允许在此提交。", true);
+                die(0);
+            }
+        }
 
         /** 不存在此语言 */
         $language_model = new Model("language");
@@ -149,7 +159,7 @@ class ProblemAction extends CommonAction
         $submitid = $this->contest_model->get_next_submitid($this->contestid);
         if(false === $submitid || null === $submitid)
         {
-            $this->error("系统错误。" . $this->contest_model->getLastSql(), true);
+            $this->error("系统错误。", true);
             die(0);
         }
         else
@@ -264,7 +274,7 @@ class ProblemAction extends CommonAction
      */
     public function viewce()
     {
-        $contestid = $_GET["contestid"];
+        $contestid = $_GET["cid"];
         $submitid = $_GET["submitid"];
 
         if(!is_numeric($contestid)) $contestid = 1;
@@ -296,7 +306,7 @@ class ProblemAction extends CommonAction
      */
     public function viewcode()
     {
-        $contestid = $_GET["contestid"];
+        $contestid = $_GET["cid"];
         $submitid = $_GET["submitid"];
 
         if(!is_numeric($contestid)) $contestid = 1;

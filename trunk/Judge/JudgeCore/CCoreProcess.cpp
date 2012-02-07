@@ -21,22 +21,154 @@ string StateList[] = {
 };
 
 CCoreProcess::CCoreProcess(void) :
-    m_szDataPath("D:\\")
+    m_szDataPath("D:\\"),
+    m_szRankPath("D:\\")
 {
     FILE* fp = fopen("datapath.cfg", "r");
     if(NULL == fp)
     {
         return;
     }
-    char path[512];
+    char path[512] = "\0";
     fgets(path, 511, fp);
     fclose(fp);
 
+    fp = fopen("rankpath.cfg", "r");
+    if(NULL == fp)
+    {
+        return;
+    }
+    char rank[512] = "\0";
+    fgets(rank, 511, fp);
+    fclose(fp);
+
     m_szDataPath = path;
+    m_szRankPath = rank;
+
+    m_RankArray.clear();
 }
 
 CCoreProcess::~CCoreProcess(void)
 {
+}
+
+bool sort_rank(tagRANK_MAP_ELEMENT*& a, tagRANK_MAP_ELEMENT*& b)
+{
+    if(a->acnum > b->acnum) return true;
+    else
+    if(a->acnum < b->acnum) return false;
+    else
+    {
+        return a->time < b->time;
+    }
+}
+
+string CCoreProcess::GetRankFilename(int contestid, string version)
+{
+    string fn = m_szRankPath;
+    fn += XStringFunc::IntToString(contestid);
+    fn += ("-" + version + ".php");
+
+    return fn;
+}
+
+void CCoreProcess::UpdateRank(int nContestID)
+{
+    int starttime = CJudgeSql::Instance().GetContestStartTime(nContestID);
+
+    /** 获取RANK信息 */
+    int cnt = CJudgeSql::Instance().GetSubmissionsByTime(nContestID, m_RankArray);
+
+    /** 整理rank信息 */
+    string index;
+    int userid;
+    map<int, tagRANK_MAP_ELEMENT> mapRME;
+    for(int i = 0; i < cnt; i++)
+    {
+        index = m_RankArray[i].problemindex;
+        userid = m_RankArray[i].userid;
+        mapRME[userid].userid = userid;
+
+        /** 若已AC */
+        if(mapRME[userid].RMPE[index].ac) continue;
+
+        mapRME[userid].RMPE[index].problemindex = index;
+
+        /** 若此条记录为AC */
+        if(m_RankArray[i].resultid == 3)
+        {
+            mapRME[userid].RMPE[index].ac = true;
+            mapRME[userid].RMPE[index].time = m_RankArray[i].time - starttime;
+            //mapRME[userid].RMPE[index].time += (mapRME[userid].RMPE[index].fine * 1200);
+
+            mapRME[userid].time += mapRME[userid].RMPE[index].time;
+            mapRME[userid].time += (mapRME[userid].RMPE[index].fine * 1200);
+            mapRME[userid].acnum++;
+        }
+        else
+        {
+            mapRME[userid].RMPE[index].fine++;
+        }
+    }
+
+    vector<tagRANK_MAP_ELEMENT*> arrayRME;
+    for(map<int, tagRANK_MAP_ELEMENT>::iterator it = mapRME.begin(); it != mapRME.end(); it++)
+    {
+        arrayRME.push_back(&(it->second));
+    }
+
+    sort(arrayRME.begin(), arrayRME.end(), sort_rank);
+    int rank_count = arrayRME.size();
+
+    /** 写入文件 */
+    time_t timer;
+    struct tm *tblock;
+    timer = time(NULL);
+    tblock = localtime(&timer);
+
+    char r[20];
+    sprintf(r, "%04d%02d%02d%02d%02d%02d", tblock->tm_year + 1900, tblock->tm_mon + 1, tblock->tm_mday,
+        tblock->tm_hour, tblock->tm_min, tblock->tm_sec);
+
+    string filename = this->GetRankFilename(nContestID, r);
+    FILE* fp = fopen(filename.c_str(), "w+");
+    if(NULL == fp) return;
+
+    /** 写入PHP代码 */
+    fprintf(fp, "<?php\n$rank_info = array();\n\n");
+    for(int i = 0; i < rank_count; i++)
+    {
+        tagRANK_MAP_ELEMENT* pRME = arrayRME[i];
+        fprintf(fp, "$rank_info[%d]['userid'] = %d; $rank_info[%d]['acnum'] = %d; $rank_info[%d]['time'] = %d;\n",
+            i, pRME->userid, i, pRME->acnum, i, pRME->time
+            );
+        
+        for(map<string, tagRANK_MAP_PROB_ELEMENT>::iterator it = pRME->RMPE.begin(); it != pRME->RMPE.end(); it++)
+        {
+            fprintf(fp, "    $rank_info[%d]['prob']['%s']['fine'] = %d; $rank_info[%d]['prob']['%s']['time'] = %d;\n",
+                i, it->first.c_str(), it->second.fine, i, it->first.c_str(), it->second.time
+                );
+        }
+        printf("\n");
+    }
+
+    char log_msg[256];
+    sprintf(log_msg, "生成 [比赛 %d] RANK文件缓存", nContestID);
+    CMyLogger::Instance().SetLog(log_msg, filename, false, false, "#000", "green");
+    fclose(fp);
+
+    /** 更新数据库 */
+    sprintf(log_msg, "更新数据库 - [比赛 %d] RANK文件版本", nContestID);
+    string old_version = CJudgeSql::Instance().GetRankVersion(nContestID);
+    if(CJudgeSql::Instance().UpdateRankVersion(nContestID, r))
+    {
+        remove(this->GetRankFilename(nContestID, old_version).c_str());
+        CMyLogger::Instance().SetLog(log_msg, "成功", false, false, "#000", "green");
+    }
+    else
+    {
+        CMyLogger::Instance().SetLog(log_msg, "失败", false, true, "#000", "red");
+    }
 }
 
 bool CCoreProcess::UpdateState(tagSQL_JUDGE_INFO* pSJI, CodeState* code_state)
@@ -85,6 +217,9 @@ bool CCoreProcess::UpdateState(tagSQL_JUDGE_INFO* pSJI, CodeState* code_state)
             CJudgeSql::Instance().AddProblemAccept(pSJI->contestid, pSJI->problemindex);
         }
     }
+
+    /** 若是比赛，则更新Rank页面 */
+    if(pSJI->contestid != 1 && code_state->state > 2) UpdateRank(pSJI->contestid);
 
     return true;
 }

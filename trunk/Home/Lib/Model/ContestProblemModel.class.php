@@ -27,6 +27,15 @@ class ContestProblemModel extends CommonModel
         return $result;
     }
 
+    public function get_all_problems_with_info($contestid, $order = null)
+    {
+        $PREFIX = C("DB_PREFIX");
+        $condition = array("contestid" => $contestid);
+        $result = $this->where($condition)->join("{$PREFIX}problem ON {$PREFIX}problem.problemid = {$PREFIX}contestproblem.problemid")->order($order == null ? "`index` asc" : $order)->select();
+
+        return $result;
+    }
+
     /**
      * 根据分页信息获取某场比赛题目信息
      * @version $Id$

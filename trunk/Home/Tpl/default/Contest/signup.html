@@ -1,0 +1,24 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>报名参赛 - {$contest_info["title"]}</h3></li>
+        <li>
+            <form action="{:U('Contest/validate_signup')}" method="POST">
+                <input type="hidden" name="cid" value="{$contest_info['contestid']}" />
+                <div class="ipt-div" style="font-size: 34px; width: 480px; margin-left: auto; margin-right: auto;">
+                    <span>队名(昵称)</span>
+                    <input style="font-size: 34px; width: 300px;" type="text" name="teamname" value="{$current_user['nickname']}" />
+                </div>
+                <div style="border-bottom: 1px dotted #ff0000; width: 100%; height: 0px; margin-top: 5px; margin-bottom: 5px;"></div>
+                <div class="ipt-div" style="width: 480px; margin-left: auto; margin-right: auto;">
+                    <input style="width: 480px; cursor: pointer;" id="submit-btn" type="submit" name="submit" value="提交">
+                </div>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<include file="Contest:bottombar" />
+<include file="Public:footer" />

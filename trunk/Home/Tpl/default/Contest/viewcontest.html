@@ -12,6 +12,17 @@ function get_contest_status($starttime, $endtime)
     if($current_time > $starttime && $current_time < $endtime) return $results[1];
     return $results[2];
 }
+
+function get_percent($ac, $sub)
+{
+    if($ac == 0) return "0.00%";
+    else
+    {
+        $result;
+        $result = sprintf("%.2f%%", ($ac / $sub) * 100);
+        return $result;
+    }
+}
 </php>
 <include file="Public:header" />
 <link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
@@ -51,8 +62,9 @@ $(function(){
                     <thead>
                     <tr>
                         <th style="text-align: center;" width="50">解决</th>
-                        <th style="text-align: center;" width="150">索引</th>
+                        <th style="text-align: center;" width="100">索引</th>
                         <th style="text-align: center;">标题</th>
+                        <th style="text-align: center;" width="200">AC / 提交 (通过率)</th>
                     </tr>
                     </thead>
 
@@ -61,7 +73,8 @@ $(function(){
                         <tr>
                             <td style="text-align: center;" class="br"></td>
                             <td style="text-align: center;" class="br">{$list.index}</td>
-                            <td><a href="{:U('Contest/view?id=' . $list['contestid'] . '&problem=' . $list['index'])}">{$list.title}</td>
+                            <td class="br"><a href="{:U('Contest/view?id=' . $list['contestid'] . '&problem=' . $list['index'])}">{$list.title}</td>
+                            <td style="text-align: center;">{$list.solved} / {$list.submit} ({:get_percent($list["solved"], $list["submit"])})</td>
                         </tr>
                     </foreach>
                     </tbody>
@@ -70,5 +83,7 @@ $(function(){
         </li>
     </ul>
 </div>
-
-<include file="Pulibc:footer" />
+        
+<include file="Contest:bottombar" />
+<include file="Public:footer" />
+        
