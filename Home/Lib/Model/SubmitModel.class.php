@@ -146,7 +146,7 @@ class SubmitModel extends CommonModel
         }
 
         $data = array();
-        if(!is_ac)
+        if(!$is_ac)
         {
             $data = $this->where($condition)
                     ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
@@ -226,5 +226,17 @@ class SubmitModel extends CommonModel
     {
         $condition = array("contestid" => $contestid);
         return $this->where($condition)->delete();
+    }
+
+    public function rejudge($contestid)
+    {
+        $condition = array("contestid" => $contestid);
+        $data = array(
+            "resultid" => 0,
+            "time" => 0,
+            "memory" => 0
+        );
+
+        return $this->where($condition)->save($data);
     }
 }

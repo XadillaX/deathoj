@@ -78,7 +78,7 @@ tagSQL_JUDGE_INFO* CJudgeSql::GetNextQueuingRecord()
     string code = GetFieldName("code");
 
     /** SQL语句 */
-    string sql = "SELECT " + contestproblem + ".contestid, " + contestproblem + ".index, " + problem + ".timelimit, " + problem + ".memorylimit, " + problem + ".inputmd5, " + problem + ".outputmd5, " + submit + ".totsubmitid, " + submit + ".submitid, " + problem + ".problemid, " + submit + ".userid, " + submit + ".languageid, " + code + ".code ";
+    string sql = "SELECT " + contestproblem + ".contestid, " + contestproblem + ".index, " + problem + ".timelimit, " + problem + ".memorylimit, " + problem + ".inputmd5, " + problem + ".outputmd5, " + submit + ".totsubmitid, " + submit + ".submitid, " + problem + ".problemid, " + submit + ".userid, " + submit + ".languageid, " + code + ".code, " + submit + ".submittime ";
     sql += ("FROM " + submit + ", " + code + ", " + contestproblem + ", " + problem);
     sql += (" WHERE " + submit + ".totsubmitid = " + code + ".totsubmitid AND " + submit + ".contestid = " + contestproblem + ".contestid ");
     sql += ("AND " + submit + ".index = " + contestproblem + ".index AND " + problem + ".problemid = " + contestproblem + ".problemid ");
@@ -116,6 +116,7 @@ tagSQL_JUDGE_INFO* CJudgeSql::GetNextQueuingRecord()
         info->lim_time = res[0]["timelimit"];
         info->contestid = res[0]["contestid"];
         info->problemindex = res[0]["index"];
+        info->submittime = res[0]["submittime"];
         string md51 = res[0]["inputmd5"], md52 = res[0]["outputmd5"];
         strcpy(info->input_md5, md51.c_str());
         strcpy(info->output_md5, md52.c_str());
@@ -529,6 +530,57 @@ bool CJudgeSql::UpdateRankVersion(int contestid, string version)
     ::LeaveCriticalSection(&m_CS);
 
     return true;
+}
+
+int CJudgeSql::GetContestEndTime(int contestid)
+{
+    string contest = this->GetFieldName("contest");
+
+    string sql = "SELECT `endtime` FROM `" + contest + "` WHERE `contestid` = " + XStringFunc::IntToString(contestid);
+
+    ::EnterCriticalSection(&m_CS);
+    m_szLastSql = sql;
+    if(!Connect())
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        return 0;
+    }
+
+    try
+    {
+        mysqlpp::Query query = m_Conn.query(sql);
+        if(mysqlpp::StoreQueryResult res = query.store())
+        {
+            if(0 == res.size())
+            {
+                m_szLastError = "没有符合条件的记录。";
+                Disconnect();
+                ::LeaveCriticalSection(&m_CS);
+                return 0;
+            }
+
+            int result = res[0]["endtime"];
+
+            Disconnect();
+            ::LeaveCriticalSection(&m_CS);
+            return result;
+        }
+        else
+        {
+            Disconnect();
+            m_szLastError = query.error();
+            ::LeaveCriticalSection(&m_CS);
+            return 0;
+        }
+    }
+    catch(exception &e)
+    {
+        Disconnect();
+        ::LeaveCriticalSection(&m_CS);
+        m_szLastError = e.what();
+        return 0;
+    }
 }
 
 int CJudgeSql::GetContestStartTime(int contestid)

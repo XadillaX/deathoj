@@ -98,6 +98,21 @@ class ContestAction extends CommonAction
         else
         {
             $bar["teamname"] = $this->contestuser_model->get_teamname($contestid, $login_user["userid"]);
+            $bar["userid"] = $login_user["userid"];
+
+            /** 已做的题目和已AC的题目 */
+            $this->submit_model = new SubmitModel("submit");
+            $condition = array("userid" => $login_user["userid"], "contestid" => $contestid);
+            $submited = $this->submit_model->field("`index`")->where($condition)->group("`index`")->order("`index` asc")->select();
+
+            $condition["resultid"] = 3;
+            $aced = $this->submit_model->field("`index`")->where($condition)->group("`index`")->order("`index` asc")->select();
+
+            for($i = 0; $i < count($submited); $i++) $submited[$i] = $submited[$i]["index"];
+            for($i = 0; $i < count($aced); $i++) $aced[$i] = $aced[$i]["index"];
+
+            $bar["submited"] = $submited;
+            $bar["aced"] = $aced;
         }
 
         //dump($this->contestuser_model->is_user_joined($contestid, $login_user["userid"]));
@@ -118,6 +133,13 @@ class ContestAction extends CommonAction
         if(false == $contest_info || $contestid == 1)
         {
             redirect("OnlineJudge://Problem@");
+            die(0);
+        }
+
+        /** 比赛已结束 */
+        if($this->get_contest_state($contest_info["starttime"], $contest_info["endtime"], time()) > 0)
+        {
+            $this->alert_redirect("比赛已结束。", -1);
             die(0);
         }
 
@@ -182,6 +204,13 @@ class ContestAction extends CommonAction
         if(false == $contest_info || $contestid == 1)
         {
             redirect("OnlineJudge://Problem@");
+            die(0);
+        }
+
+        /** 比赛已结束 */
+        if($this->get_contest_state($contest_info["starttime"], $contest_info["endtime"], time()) > 0)
+        {
+            $this->alert_redirect("比赛已结束。", -1);
             die(0);
         }
 
@@ -447,7 +476,7 @@ class ContestAction extends CommonAction
         $page_str = $page_obj->create_links();
         $this->assign("page_str", $page_str);
 
-        $this->web_config["title"] .= "{$contest_info['title']} 状态统计 - {$index} :: 第 {$page} 页";
+        $this->web_config["title"] .= "{$contest_info['title']} 状态统计 - {$problem_info['index']} :: 第 {$page} 页";
         $this->assign("HC", $this->web_config);
 
         /** 提交列表 */
@@ -649,6 +678,13 @@ class ContestAction extends CommonAction
         if(!in_array($_POST["language"], $valid_lang))
         {
             $this->error("该比赛不允许此语言。", true);
+            die(0);
+        }
+
+        /** 比赛时间 */
+        if($this->get_contest_state($contest_info["starttime"], $contest_info["endtime"], time()) != 0)
+        {
+            $this->error("当前非比赛时间。", true);
             die(0);
         }
 

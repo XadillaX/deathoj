@@ -588,6 +588,57 @@ class ContestAction extends CommonAction
     }
 
     /**
+     * Rejudge功能
+     * @return void
+     */
+    public function rejudge()
+    {
+        $contestid = $_GET["contestid"];
+        $state = $_GET["state"];
+
+        /** 是否有比赛 */
+        $contest_info = $this->contest_model->get_contest_info($contestid);
+        if(false === $contest_info || $contestid == 1)
+        {
+            $this->alert_redirect("不存在的比赛。");
+            die(0);
+        }
+
+        switch($state)
+        {
+        case "rejudge":
+            {
+                $this->contestproblem_model->rejudge($contestid);
+                $this->submit_model->rejudge($contestid);
+                $this->contest_model->rejudge($contestid);
+
+                $re_mode = new Model("runtimeerror");
+                $re_mode->where(array("contestid" => $contestid))->delete();
+
+                $this->alert_redirect("Rejudge [{$contest_info['title']}] 成功。", U("Contest/catalog") . "?page=" . Session::get("contest_page_when_back"));
+
+                break;
+            }
+
+        case "confirm":
+        default:
+            {
+                /** ASSIGN数据 */
+                $this->web_config["action_class"] = "contest";
+                $this->web_config["sub_action"] = "contest";
+                $this->web_config["title"] .= "Rejudge :: {$contest_info['title']}";
+                $this->assign("HC", $this->web_config);
+                $this->assign("admin_information", $this->admin_information);
+                $this->assign("contest_info", $contest_info);
+                $this->assign("back_page", Session::get("contest_page_when_back"));
+
+                $this->display("rejudge");
+                break;
+            }
+        }
+    }
+
+    /**
      * 删除比赛
      * @return void
      */
@@ -639,7 +690,6 @@ class ContestAction extends CommonAction
                 $this->assign("contest_info", $contest_info);
                 $this->assign("back_page", Session::get("contest_page_when_back"));
 
-                /** 有用户 */
                 $this->display("del_contest");
 
                 break;

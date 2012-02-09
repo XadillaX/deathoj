@@ -147,4 +147,19 @@ class ContestProblemModel extends CommonModel
 
         return $this->where($condition)->save($data);
     }
+
+    /**
+     * Rejudge
+     * @param $contestid
+     * @return bool
+     */
+    public function rejudge($contestid)
+    {
+        $condition["contestid"] = $contestid;
+        $data = array(
+            "solved" => 0
+        );
+
+        return $this->where($condition)->save($data);
+    }
 }

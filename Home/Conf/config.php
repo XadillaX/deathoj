@@ -47,7 +47,7 @@ return array(
     WEB_ROOT_DIR            => "/oj",
 
     /** 输入、输出数据地址 */
-    MAX_DATA_SIZE           => 10240,
+    MAX_DATA_SIZE           => 20480,
     IO_DATA_DIR             => "/oj/__data#",
     RANK_DIR                => "/oj/__rank#",
     IO_DATA_PATH             => dirname(dirname(dirname(__FILE__))) . "\\__data#",

@@ -29,18 +29,24 @@ class CommonAction extends Action
      */
     protected function alert_redirect($text, $url = -1, $needalert = true)
     {
-        echo "<script type='text/javascript'>";
-        if($needalert) echo "alert('{$text}');";
+        $javascript = "<script type='text/javascript'>";
+        if($needalert) $javascript .= "alert('{$text}');";
 
         if(!is_numeric($url))
         {
-            echo "window.location.href = '{$url}';";
+            $javascript .= "window.location.href = '{$url}';";
         }
         else
         {
-            echo "window.history.go({$url});";
+            $javascript .= "window.history.go({$url});";
         }
-        echo "</script>";
+        $javascript .= "</script>";
+
+        $this->assign("javascript", $javascript);
+        $this->assign("msg", $text);
+
+        $this->display("Public:alert_redirect");
+
         die(0);
     }
 
@@ -223,7 +229,7 @@ class CommonAction extends Action
         if (extension_loaded('zlib') && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
             ini_set('zlib.output_compression', 'On');
             ini_set('zlib.output_compression_level', 3);
-            ob_start('ob_gzhandler');
+            ob_start('ob_gzip');
             parent::display($templateFile, $charset, $contentType);
             ob_end_flush();
         } else {

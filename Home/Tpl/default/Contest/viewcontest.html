@@ -71,7 +71,13 @@ $(function(){
                     <tbody>
                     <foreach name="prob_list" item="list">
                         <tr>
-                            <td style="text-align: center;" class="br"></td>
+                            <td style="text-align: center;" class="br">
+                            <php>
+                            if(isset($bar["aced"]) && in_array($list["index"], $bar["aced"])) echo "<span style='color: red;'>√</span>";
+                            else
+                            if(isset($bar["submited"]) && in_array($list["index"], $bar["submited"])) echo "<span style='color: green;'>×</span>";
+                            </php>
+                            </td>
                             <td style="text-align: center;" class="br">{$list.index}</td>
                             <td class="br"><a href="{:U('Contest/view?id=' . $list['contestid'] . '&problem=' . $list['index'])}">{$list.title}</td>
                             <td style="text-align: center;">{$list.solved} / {$list.submit} ({:get_percent($list["solved"], $list["submit"])})</td>
