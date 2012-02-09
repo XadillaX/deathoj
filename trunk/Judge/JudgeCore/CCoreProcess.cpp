@@ -75,6 +75,7 @@ string CCoreProcess::GetRankFilename(int contestid, string version)
 void CCoreProcess::UpdateRank(int nContestID)
 {
     int starttime = CJudgeSql::Instance().GetContestStartTime(nContestID);
+    int endtime = CJudgeSql::Instance().GetContestEndTime(nContestID);
 
     /** 获取RANK信息 */
     int cnt = CJudgeSql::Instance().GetSubmissionsByTime(nContestID, m_RankArray);
@@ -93,6 +94,11 @@ void CCoreProcess::UpdateRank(int nContestID)
         if(mapRME[userid].RMPE[index].ac) continue;
 
         mapRME[userid].RMPE[index].problemindex = index;
+
+        /** 若不在比赛时间里 */
+        if(m_RankArray[i].time < starttime) continue;
+        else
+        if(m_RankArray[i].time > endtime) break;
 
         /** 若此条记录为AC */
         if(m_RankArray[i].resultid == 3)
@@ -162,7 +168,12 @@ void CCoreProcess::UpdateRank(int nContestID)
     string old_version = CJudgeSql::Instance().GetRankVersion(nContestID);
     if(CJudgeSql::Instance().UpdateRankVersion(nContestID, r))
     {
-        remove(this->GetRankFilename(nContestID, old_version).c_str());
+        /** 若两次版本不同 */
+        if(old_version != r)
+        {
+            remove(this->GetRankFilename(nContestID, old_version).c_str());
+        }
+
         CMyLogger::Instance().SetLog(log_msg, "成功", false, false, "#000", "green");
     }
     else
@@ -285,6 +296,41 @@ void CCoreProcess::EnterMainLoop()
         {
             Sleep(500);
             continue;
+        }
+
+        /** 如果是比赛且比赛结束或者未开始 */
+        if(pSJI->contestid != 1)
+        {
+            time_t timer = pSJI->submittime;
+
+            int starttime = CJudgeSql::Instance().GetContestStartTime(pSJI->contestid);
+            if(starttime > timer)
+            {
+                CodeState cs;
+                cs.state = OUT_OF_CONTEST_TIME;                  ///< 超出比赛时间
+                cs.exe_memory = cs.exe_time = 0;
+
+                UpdateState(pSJI, &cs);
+                delete(pSJI);
+
+                Sleep(500);
+                continue;
+            }
+
+
+            int endtime = CJudgeSql::Instance().GetContestEndTime(pSJI->contestid);
+            if(endtime < timer)
+            {
+                CodeState cs;
+                cs.state = OUT_OF_CONTEST_TIME;                  ///< 超出比赛时间
+                cs.exe_memory = cs.exe_time = 0;
+
+                UpdateState(pSJI, &cs);
+                delete(pSJI);
+
+                Sleep(500);
+                continue;
+            }
         }
 
         /** 将其转换为COMPILING */

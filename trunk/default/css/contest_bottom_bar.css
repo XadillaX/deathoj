@@ -40,7 +40,7 @@
 #contest-bottom-bar a:visited { color: #444; }
 #contest-bottom-bar a:hover { color: #111; }
 
-#contest-bottom-bar-problems {
+#contest-bottom-bar-problems, #download-browers-sub {
     position: absolute;
 
     display: none;
@@ -48,6 +48,6 @@
     background: #fff;
 }
 
-#contest-bottom-bar-problems ul li {
+#contest-bottom-bar-problems ul li, #download-browers-sub ul li {
     float: none;
 }

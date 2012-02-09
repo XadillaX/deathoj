@@ -76,7 +76,7 @@ $(function(){
 
                     <tbody id="rank-body">
                     <foreach name="rank_info" item="list">
-                        <tr>
+                        <tr id="u-{$list['userid']}">
                             <td style="text-align: center;" class="br">{$list["rank"]}</td>
                             <td style="text-align: center;" class="br">{$list['teamname']}<br />({$list['nickname']})</td>
                             <td style="text-align: center;" class="br">{$list["acnum"]}</td>

@@ -92,4 +92,21 @@ class ContestModel extends CommonModel
         $data["addtime"] = time();
         return $this->where(array("contestid" => $id))->save($data);
     }
+
+    public function rejudge($contestid)
+    {
+        /** 删除RANK文件 */
+        $info = $this->get_contest_info($contestid);
+        $rankver = $info["resultversion"];
+        $filename = C("RANK_PATH") . "\\{$contestid}-{$rankver}.php";
+
+        $condition = array("contestid" => $contestid);
+        $data = array(
+            "resultversion" => "00000000000000"
+        );
+        $res = $this->where($condition)->save($data);
+        unlink($filename);
+
+        return $res;
+    }
 }

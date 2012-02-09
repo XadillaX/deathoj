@@ -21,6 +21,8 @@ struct tagSQL_JUDGE_INFO
     int                                 lim_time;
     int                                 lim_memo;
 
+    int                                 submittime;
+
     char                                input_md5[33];              ///< 用于以后分布式
     char                                output_md5[33];             ///< 用于以后分布式
 
@@ -86,6 +88,7 @@ public:
     bool                                UpdateRankVersion(int contestid, string version);
 
     int                                 GetContestStartTime(int contestid);
+    int                                 GetContestEndTime(int contestid);
 
 private:
     mysqlpp::Connection                 m_Conn;             ///< 连接对象
