@@ -283,21 +283,65 @@ class ProblemAction extends CommonAction
         $data = $this->submit_model->get_submit_info($contestid, $submitid);
 
         /** 木有数据 */
-        if(false == $data) exit(0);
-
+        $msgs = array();
+        if(false == $data)
+        {
+            $msgs[0] = "没有此数据。";
+        }
+        else
         /** 木有登录 */
         if($this->user_information == null)
         {
-            exit(0);
+            $msgs[0] = "你没有登录。";
         }
-
+        else
         /** 用户对不上号 */
         if($this->user_information["userid"] != $data["userid"] && $this->user_information["roleid"] != 3)
         {
-            exit(0);
+            $msgs[0] = "你无权查看此CE数据。";
+        }
+        else
+        /** 不是CE */
+        if($data["resultid"] != 13 && $data["resultid"] != 11)
+        {
+            $msgs[0] = "此提交并非CE或者SE。";
+        }
+        else
+        {
+            /** 处理数据 */
+            if($data["languageid"] == 1 || $data["languageid"] == 2)
+            {
+                /** C或者C++ */
+                $msgs = explode("\n", $data["message"]);
+                unset($msgs[count($msgs) - 1]);
+
+                /** 要删除的字 */
+                $cmpstr[0] = "compilers/C/";
+                $cmpstr[1] = "tmpdir/";
+                $cmplen[0] = strlen($cmpstr[0]);
+                $cmplen[1] = strlen($cmpstr[1]);
+                $msgs_count = count($msgs);
+
+                for($i = 0; $i < $msgs_count; $i++)
+                {
+                    if(substr($msgs[$i], 0, $cmplen[0]) == $cmpstr[0])
+                    {
+                        $msgs[$i] = substr($msgs[$i], $cmplen[0]);
+                    }
+                    else
+                    if(substr($msgs[$i], 0, $cmplen[1]) == $cmpstr[1])
+                    {
+                        $msgs[$i] = substr($msgs[$i], $cmplen[1]);
+                    }
+                }
+            }
         }
 
-        echo "<pre>" . $data["message"] . "</pre>";
+        /** 若不是CE */
+        $msg = implode("\n", $msgs);
+        $this->assign("msg", $msg);
+
+        $this->display();
     }
 
     /**

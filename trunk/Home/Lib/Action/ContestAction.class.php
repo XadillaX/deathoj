@@ -142,12 +142,20 @@ class ContestAction extends CommonAction
             $this->alert_redirect("比赛已结束。", -1);
             die(0);
         }
+       
 
         /** 是否已登录 */
         $login_user = $this->get_current_user();
         if($login_user == null)
         {
             $this->alert_redirect("您还未登录或者登录过期。", U("User/login") . "?url=" . urlencode(U("Contest/signup?id={$contestid}")), false);
+            die(0);
+        }
+        
+        /** 私有比赛 */
+        if($contest_info["private"] && $login_user["roleid"] != 3)
+        {
+            $this->alert_redirect("私有比赛不允许报名。", -1);
             die(0);
         }
 
