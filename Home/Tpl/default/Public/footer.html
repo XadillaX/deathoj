@@ -1,6 +1,11 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+    $(function(){
+        $("#think_run_time").html($("#think_run_time").html() + "Server time : {:date('Y-m-d H:i:s')}");
+    });
+    </script>
     <div id="footer">
         <div style="height: 1px;"></div>
         <div id="footer-infor">
@@ -8,7 +13,7 @@
             Copyright &copy; 2011-2012 NBUT ACM Team All rights reserved<br />
             Developer: <a href="mailto:admin@xcoder.in">Zhu Kaidi</a><br />
             <span id="query-infor">
-                Total 0.000395(s) query 0, Server time : 2011-11-07 22:58:38
+                {__RUNTIME__}
             </span>
         </div>
     </div>

@@ -111,7 +111,7 @@ else
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>少年は、失われた</title>
+<title>喵、少年、あなたは道に迷ったのです</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 <meta name="Generator" content="EditPlus"/>
 
@@ -196,7 +196,7 @@ a:hover { color: #444; }
                     <ul>
                         <li><a href="<?php echo __SELF__; ?>">戳戳</a> 我</li>
                         <li><a href="mailto:admin@xcoder.in">呼叫</a> 主人</li>
-                        <li><a href="<?php echo __ROOT__; ?>">蹦到</a> 首页</li>
+                        <li><a href="<?php echo __ROOT__; ?>/">蹦到</a> 首页</li>
                         <li>
                             <a class="iframe" id="togoogle" href="<?php echo __ROOT__; ?>/default/404google.html?iframe">谷歌</a> 大叔
                         </li>
@@ -206,7 +206,7 @@ a:hover { color: #444; }
             <div style="clear: both;"></div>
         </div>
         <div style="font-size: 12px; color: #444; text-align: center; padding-top: 5px;">
-            <a href="<?php echo __ROOT__; ?>">首页</a> |
+            <a href="<?php echo __ROOT__; ?>/">首页</a> |
             <a href="<?php echo U("OnlineJudge://Problem@"); ?>">题目</a> |
             <a href="<?php echo U("OnlineJudge://Problem/status");; ?>">运行状态</a> |
             <a href="<?php echo U("OnlineJudge://Contest@");; ?>">比赛</a> |

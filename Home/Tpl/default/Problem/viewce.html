@@ -1,0 +1,13 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <ul id="prob-info-ul">
+        <li id="title"><h3>查看CE信息 - #<a style="display: inline;" href="{:U('Problem/viewcode')}?submitid={:urlencode($_GET['submitid'])}">{$_GET["submitid"]}</a></h3></li>
+        <li>
+            <pre style="overflow-x: auto;">{$msg}</pre>
+        </li>
+    </ul>
+</div>
+
+<include file="Public:footer" />

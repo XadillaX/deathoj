@@ -21,6 +21,9 @@ class CommonAction extends Action
 
     protected $web_config;
 
+    protected $script_start_time = 0;
+    protected $script_end_time = 0;
+
     /**
      * 弹出窗口并转向
      * @param $text
@@ -53,6 +56,9 @@ class CommonAction extends Action
     public function __construct()
     {
         parent::__construct();
+
+        /** 开始计时 */
+        $this->script_start_time = microtime(true);
 
         /** 排除此页面 */
         if("__construct" == ACTION_NAME)
@@ -230,9 +236,17 @@ class CommonAction extends Action
             ini_set('zlib.output_compression', 'On');
             ini_set('zlib.output_compression_level', 3);
             ob_start('ob_gzip');
+
+            $this->script_end_time = microtime(true);
+            $this->assign("script_time", $this->script_end_time - $this->script_start_time);
+
             parent::display($templateFile, $charset, $contentType);
             ob_end_flush();
         } else {
+
+            $this->script_end_time = microtime(true);
+            $this->assign("script_time", $this->script_end_time - $this->script_start_time);
+
             parent::display($templateFile, $charset, $contentType);
         }
     }
