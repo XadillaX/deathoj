@@ -455,6 +455,7 @@ class ContestAction extends CommonAction
         $analyze = $this->submit_model->get_statistic($problem_info["index"], $contest_info["contestid"]);
         $result_info = $result_model->select();
         $newanalyze = array();
+		$index = $problem_info["index"];
         for($i = 0; $i < count($result_info); $i++) $newanalyze[$result_info[$i]["result"]] = 0;
         for($i = 0; $i < count($analyze); $i++)
         {
@@ -476,7 +477,7 @@ class ContestAction extends CommonAction
         /** 分页对象 */
         import("@.Plugin.XPage");
         $page_obj = new XPage();
-        $page_obj->link_str = U("Contest/statistic?id={$contest_info['contestid']}&problem={$problem_info['index']}") . "?page=%s";
+        $page_obj->link_str = U("Contest/statistics?id={$contest_info['contestid']}&problem={$problem_info['index']}") . "?page=%s";
         $page_obj->per_page = $this->status_per_page;              ///< 每页数量
         $page_obj->item_count = $submit_count;                ///< 记录数
         $page_obj->cur_page = $page;                        ///< 当前页码

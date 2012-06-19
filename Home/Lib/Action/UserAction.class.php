@@ -356,6 +356,7 @@ class UserAction extends CommonAction
         $this->assign("HC", $this->web_config);
 
         $user_info["motto"] = $this->user_model->HtmlEncode($user_info["motto"]);
+		$user_info["avatar"] = $this->user_model->get_avatar_url($user_info["email"], 80);
 
         /** AC列表 */
         $user_info["solvedarray"] = explode("|", $user_info["solvedlist"]);
@@ -532,5 +533,58 @@ class UserAction extends CommonAction
                 }
 			}
 		}
+    }
+    
+    /**
+     * @brief 宁波工程学院集训队
+     */
+    public function nbutteam()
+    {
+        $teamname = $_GET["team"];
+        $filename = C("TEAM_PATH") . "\\$teamname.php";
+        
+        if(!file_exists($filename))
+        {
+            $this->send_http_status(404);
+            exit;
+        }
+        
+        include_once $filename;
+        
+        $this->web_config["title"] .= "宁波工程学院集训队资料 - {$teamname_zhcn}";
+        $this->assign("HC", $this->web_config);
+        $this->assign("teamname", $teamname_zhcn);
+        
+        /** 用户资料 */
+        $usernames = array();
+        for($i = 0; $i < count($team); $i++) $usernames[$i] = $team[$i]["username"];
+        $condition["username"] = array("IN", $usernames);
+        $user_info = $this->user_model->where($condition)->order("solvednum desc")->select();
+		//dump($this->user_model->getLastSql());
+		//dump($team);
+        
+        for($i = 0; $i < count($user_info); $i++)
+        {
+            $user_info[$i]["rank"] = $i + 1;
+			$user_info[$i]["avatar"] = $this->user_model->get_avatar_url($user_info[$i]["email"], 32);
+            for($j = 0; $j < count($team); $j++)
+            {
+                if($team[$j]["username"] == $user_info[$i]["username"])
+                {
+                    $user_info[$i]["people"] = $team[$j];
+                    break;
+                }
+            }
+        }
+        
+        /** 是否能看短号 */
+        $cur_user = $this->get_current_user();
+        if(null == $cur_user) $this->assign("viewphone", false);
+        else
+        if($cur_user["roleid"] == 3 || in_array($cur_user["username"], $usernames)) $this->assign("viewphone", true);
+        else $this->assign("viewphone", false);
+        
+        $this->assign("team", $user_info);        
+        $this->display();
     }
 }

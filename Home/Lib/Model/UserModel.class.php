@@ -122,7 +122,7 @@ class UserModel extends CommonModel {
      */
     public function get_avatar_url($email, $size = 64)
     {
-        return "http://1.gravatar.com/avatar/" . md5(strtolower($email)) . ".jpg?d=mm&size=" . $size;
+        return "http://1.gravatar.com/avatar/" . md5(strtolower($email)) . ".jpg?d=identicon&size=" . $size . "&seed=" . time();
     }
 
     /**

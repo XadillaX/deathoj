@@ -174,3 +174,17 @@ a:hover { text-decoration: underline; }
     border: 1px solid #44ccff;
     cursor: pointer;
 }
+
+#ie678 {
+    width: 100%;
+    background: #ffe745;
+    
+    height: 25px;
+    
+    color: #666;
+    line-height: 25px;
+}
+
+#ie678 a {
+    color: #444;
+}

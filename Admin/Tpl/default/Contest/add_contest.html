@@ -1,8 +1,8 @@
 <include file="Public:header" />
     <!-- 这货是度娘的UEditor -->
-    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_config.js"></script>
-    <script type="text/javascript" src="{$HC.webroot}/ueditor/editor_ui_all.js"></script>
-    <link rel="stylesheet" type="text/css" href="{$HC.webroot}/ueditor/themes/default/ueditor.css" media="screen" />
+    <script type="text/javascript" src="__ROOT__/ueditor/editor_config.js"></script>
+    <script type="text/javascript" src="__ROOT__/ueditor/editor_ui_all.js"></script>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/ueditor/themes/default/ueditor.css" media="screen" />
 
     <div class="content-box">
         <div class="content-box-header">
@@ -38,8 +38,8 @@
 
                         <script type="text/javascript">
                         var editor = new baidu.editor.ui.Editor({
-                            UEDITOR_HOME_URL: '{$HC.webroot}/ueditor/',
-                            iframeCssUrl :'{$HC.webroot}/ueditor/themes/default/iframe.css',
+                            UEDITOR_HOME_URL: '__ROOT__/ueditor/',
+                            iframeCssUrl :'__ROOT__/ueditor/themes/default/iframe.css',
                             textarea: "description"
                         });
                         editor.render('description');
@@ -50,6 +50,7 @@
                         <label>允许语言</label>
                         GCC <input checked="checked" type="checkbox" id="language-gcc" name="language-gcc" /><br />
                         GPP <input checked="checked" type="checkbox" id="language-gpp" name="language-gpp" /><br />
+                        FPC <input checked="checked" type="checkbox" id="language-fpc" name="language-fpc" /><br />
                     </p>
 
                     <p>
@@ -82,6 +83,11 @@
         {
             if($("input[name=language-gcc]").prop("checked")) lang += "|";
             lang += "2";
+        }
+        if($("input[name=language-fpc]").prop("checked"))
+        {
+            if(lang != "") lang += "|";
+            lang += "4";
         }
 
         /** JSON数据 */

@@ -1,0 +1,71 @@
+#ukagaka {
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    
+    z-index: 1001;
+}
+
+#ukagaka #ukagaka-wrapper {
+	display: none;
+}
+
+#ukagaka #ukagaka-body {
+    width: 250px;
+    text-align: center;
+}
+
+#ukagaka #ukagaka-bottom {
+    height: 20px;
+    line-height: 20px;
+    width: 250px;
+    background: #000;
+    
+    border-radius: 15px 15px 0px 0px;
+    -ms-border-radius: 15px 15px 0px 0px;
+    -moz-border-radius: 15px 15px 0px 0px;
+    -webkit-border-radius: 15px 15px 0px 0px;
+    -khtml-border-radius: 15px 15px 0px 0px;
+    
+    opacity: 0.5;
+    
+    text-align: center;
+}
+
+#ukagaka #ukagaka-bottom #ukagaka-shown-hidden {
+    text-shadow: 1px 1px 0px #444;
+    cursor: pointer;
+}
+
+#ukagaka-msgbox {
+    width: 251px;
+    
+    position: relative;
+    left: -180px;
+    top: 50px;
+    
+    text-shadow: 1px 1px 0px #444;
+    line-height: 18px;
+}
+
+#ukagaka-msg {
+    width: 240px;
+    padding: 10px;
+    
+    background: url("../images/ukagaka/ukagaka_bg.png");
+    border: 1px solid #595956;
+    border-bottom: none;
+    
+    border-radius: 6px 6px 6px 6px;
+    -ms-border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    -khtml-border-radius: 6px 6px 6px 6px;
+}
+
+#ukagaka-msgborder {
+    width: 251px;
+    height: 8px;
+    background: url("../images/ukagaka/msgbox_border.png");
+    margin: -1px 6px 0 6px;
+}

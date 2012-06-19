@@ -109,7 +109,7 @@ class CommonAction extends Action
             $session_array = explode("|", $session_data);
 
             /** 若超时 */
-            if(time() - $session_array["5"] > $this->MaxLoginTime)
+            if(time() - $session_array[5] > $this->MaxLoginTime)
             {
                 Session::set("user_data", "");
                 $this->user_information = null;

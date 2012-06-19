@@ -40,4 +40,32 @@ class IndexAction extends CommonAction
         if(false == $info) redirect(__ROOT__ . "/");
         else redirect(U("Problem/view") . "?id={$_POST['problemid']}");
     }
+	
+	/**
+	 * 设置春菜状态
+	 * $Id$
+	 */
+	public function turn_ukagaka()
+	{
+		$turn = $_POST["status"];
+		$turn = $turn == "1" ? "1" : "0";
+		Session::set("艾丽叶·夜姬·安碧尤奇", $turn);
+	}
+	
+	/**
+	 * 获取春菜状态
+	 * $Id$
+	 */
+	public function get_ukagaka()
+	{
+		$turn = Session::get("艾丽叶·夜姬·安碧尤奇");
+		if(null == $turn || "" == $turn)
+		{
+			echo "1";
+			return;
+		}
+		
+		if($turn == "1") echo $turn;
+		else echo "0";
+	}
 }

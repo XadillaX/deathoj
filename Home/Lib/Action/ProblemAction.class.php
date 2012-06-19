@@ -53,6 +53,7 @@ class ProblemAction extends CommonAction
         $page_obj->per_page = $this->per_page;              ///< 每页数量
         $page_obj->item_count = $prob_count;                ///< 记录数
         $page_obj->cur_page = $page;                        ///< 当前页码
+		$page_obj->id = "xpage";
         $page_str = $page_obj->create_links();
         $this->assign("page_str", $page_str);
 
