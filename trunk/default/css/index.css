@@ -1,0 +1,97 @@
+#index-insider {
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#weibo {
+    width: 310px;
+    background: #B6ECFF;
+    padding: 5px;
+    
+    border-radius: 15px 15px 15px 15px;
+    -ms-border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    -khtml-border-radius: 15px 15px 15px 15px;
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+    white-space: normal;
+}
+
+.weibo-top {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 3px;
+}
+
+.weibo-loading {
+    background: url("../images/tanjia_loading.png");
+    
+    width: 300px;
+    height: 400px;
+    
+    position: relative;
+    top: 5px;
+}
+
+.weibo-fail {
+    background: url("../images/tanjia_fail.png");
+    
+    width: 300px;
+    height: 400px;
+    
+    position: relative;
+    top: 5px;
+}
+
+.weibo-loading iframe, .weibo-fail iframe {
+    display: none;
+}
+
+#weibo-loading-icon {
+    position: relative;
+    left: 269px;
+    top: 60px;
+}
+
+#index-right {
+    background: #B6ECFF;
+    padding: 5px;
+    width: 580px;
+    min-height: 419px;
+    _height: 419px;
+    
+    border-radius: 15px 15px 15px 15px;
+    -ms-border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    -khtml-border-radius: 15px 15px 15px 15px;
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+    text-shadow: 1px 1px 0px #fff;
+    white-space: normal;
+}
+
+/*************************************************/
+#index-right a:link { color: #666; }
+#index-right a:visited { color: #666; }
+#index-right a:hover { color: #999; }
+
+.weibo-top span {
+    text-shadow: 1px 1px 0px #23B1FF;
+}
+
+.jxd-list {
+    padding: 5px 5px 5px 5px;
+}
+
+.index-main {
+    width: 570px;
+    height: 345px;
+    
+    border-bottom: 1px solid #fff;
+}
+
+.developing {
+    background: url("../images/developing.png");
+}

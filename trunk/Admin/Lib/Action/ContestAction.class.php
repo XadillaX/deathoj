@@ -134,7 +134,7 @@ class ContestAction extends CommonAction
         }
         else
         {
-            $this->success("修改成功" . $data["private"], true);
+            $this->success("修改成功。", true);
             die(0);
         }
     }
@@ -510,7 +510,7 @@ class ContestAction extends CommonAction
         /** SHEET页 */
         $objExcel->setActiveSheetIndex(0);
         $objActSheet = $objExcel->getActiveSheet();
-        $objActSheet->setTitle("参赛队伍 - {$contest_info['title']}");
+        $objActSheet->setTitle("参赛队伍");
 
         $objActSheet->setCellValue("A1", "用户编号");
         $objActSheet->setCellValue("B1", "用户名");
@@ -637,6 +637,89 @@ class ContestAction extends CommonAction
             }
         }
     }
+	
+	
+	private function removeDir($dirName) 
+	{ 
+		 if(!is_dir($dirName)) //如果传入的参数不是目录，则为文件，应将其删除
+		 { 
+		 @unlink($dirName);//删除文件
+		   return false; 
+		 } 
+		 $handle = @opendir($dirName); //如果传入的参数是目录，则使用opendir将该目录打开，将返回的句柄赋值给$handle
+		 while(($file = @readdir($handle)) !== false) //这里明确地测试返回值是否全等于（值和类型都相同）FALSE，否则任何目录项的名称求值为 FALSE 的都会导致循环停止（例如一个目录名为“0”）。 
+		 { 
+			 if($file!='.'&&$file!='..') //在文件结构中，都会包含形如“.”和“..”的向上结构，但是它们不是文件或者文件夹
+			 {
+			 $dir = $dirName . '/' . $file; //当前文件$dir为文件目录+文件
+			 is_dir($dir)?$this->removeDir($dir):@unlink($dir); //判断$dir是否为目录，如果是目录则递归调用reMoveDir($dirName)函数，将其中的文件和目录都删除；如果不是目录，则删除该文件
+			 } 
+		 } 
+		 closedir($handle); 
+		  
+		 return rmdir($dirName) ; 
+	}
+	
+	/**
+	 * 导出代码
+	 * @version $Id$
+	 */
+	public function exp_code()
+	{
+		$contestid = $_GET["contestid"];
+		
+		/** 是否有比赛 */
+        $contest_info = $this->contest_model->get_contest_info($contestid);
+        if(false === $contest_info || $contestid == 1)
+        {
+            $this->alert_redirect("不存在的比赛。");
+            die(0);
+        }
+		
+		/** 获取代码 */
+		$submit_model = new SubmitModel("submit");
+		
+		$rst = $submit_model->get_contest_submit_info($contestid);
+		
+		if($rst == false)
+		{
+			echo "No code.";
+			return;
+		}
+
+		$time = time();
+		
+		$root = C("RANK_PATH") . $contest_info["contestid"] . "-" . $time . "\\";
+		mkdir($root, 0777);
+		chmod($root, 0777);
+		
+		foreach($rst as $val)
+		{
+			$path = $root . $val["nickname"] . "[" . $val["username"] . "]\\";
+            $path = iconv("UTF-8", "GB2312", $path);
+
+			mkdir($path, 0777);
+			chmod($path, 0777);
+			
+			$probpath = $path . $val["index"] . "\\";
+			mkdir($probpath, 0777);
+			chmod($probpath, 0777);
+			
+			$filename = $probpath . date("[Y-m-d H-i-s]", $val["submittime"]) . ".[" . $val["result"] . "]" . ($val["language"] == 1 ? ".c" : ".cpp");
+            $fp = fopen($filename, "w+");
+			
+			fwrite($fp, $val["code"]);
+			
+			fclose($fp);
+		}
+		
+		/** 打包 */
+		import("@.Plugin.PHPZip");
+		$zip = new PHPZip();
+		$zip->ZipAndDownload($root, "Code.zip");
+		
+		$this->removeDir($root);
+	}
 
     /**
      * 删除比赛

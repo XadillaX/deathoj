@@ -21,6 +21,6 @@ require(THINK_PATH . "/ThinkPHP.php");
 App::run();
 
 /** @version $Id$ */
-import("@.Plugin.Remove");
-$rmdir = new removeDir();
-$rmdir->deleteDir("Runtime");
+//import("@.Plugin.Remove");
+//$rmdir = new removeDir();
+//$rmdir->deleteDir("Runtime");

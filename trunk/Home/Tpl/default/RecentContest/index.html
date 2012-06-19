@@ -1,0 +1,37 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+
+<div id="prob-list-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center;">OJ</th>
+                <th style="text-align: center;">Name</th>
+                <th style="text-align: center;">Start Time</th>
+                <th style="text-align: center;">Access</th>
+            </tr>
+        </thead>
+        
+        <tfoot>
+            <tr>
+                <td style="text-align: right;" colspan="4">
+                    本数据源来自于 <a style="display: inline;" href="http://contests.acmicpc.info/contests.json" target="_blank">acmicpc.info</a>
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+        <foreach name="contests" item="list">
+            <tr>
+                <td class="br" style="text-align: center;">
+                    {$list.oj}
+                </td>
+                <td class="br"><a href="{$list.link}" target="_blank">{$list.name}</a></td>
+                <td style="text-align: center;" class="br">{$list.start_time}</td>
+                <td style="text-align: center;">{$list.access}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<include file="Public:footer" />

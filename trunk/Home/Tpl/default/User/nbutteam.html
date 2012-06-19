@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/problem.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/nbutteam.css" media="screen" />
+
+<div id="prob-list-wrapper" class="nbutteam">
+    <h1>{$teamname}</h1>
+	<if condition="$viewphone eq true"><div style="text-align: center; margin: 5px 5px 5px 5px;">若上不去修改头像的网站，请 <a style="display: inline;" href="http://acm.nbut.cn/download/freegate.rar">点击我</a> 下载翻墙软件。</div></if>
+	<div style="text-align: center; margin: 5px 5px 5px 5px;">下载 <a style="display: inline;" href="http://acm.nbut.cn/download/devcpp.zip">Dev-CPP</a>。</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="text-align: center; width: 50px;">Rank</th>
+				<th style="text-align: center; width: 50px;">头像</th>
+                <th style="text-align: center; width: 150px;">用户名</th>
+                <th style="text-align: center;">姓名</th>
+                <th style="text-align: center;">班级</th>
+                <th style="text-align: center; width: 150px;">短号</th>
+				<th style="text-align: center; width: 150px;">邮箱</th>
+                <th style="text-align: center; width: 150px;">解决题目数</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <foreach name="team" item="list">
+            <tr>
+                <td style="text-align: center;">{$list.rank}</td>
+				<td style="text-align: center;"><img src="{$list['avatar']}" width="32" height="32" style="position: relative; top: 7px;" /></td>
+                <td style="text-align: center;"><a href="{:U('user/view_user')}?id={$list['userid']}" target="_blank">{$list.username}</a></td>
+                <td style="text-align: center;">{$list["people"]["name"]}</td>
+                <td style="text-align: center;">{$list["people"]["class"]}</td>
+                <td style="text-align: center;"><if condition="$viewphone eq true">{$list["people"]["phone"]}<else />-</if></td>
+				<td style="text-align: center;"><if condition="$viewphone eq true">{$list["email"]}<else />-</if></td>
+                <td style="text-align: center;"><a href="{:U('problem/status')}?username={$list['username']}&result=3" target="_blank">{$list["solvednum"]}</a></td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+</div>
+<include file="Public:footer" />

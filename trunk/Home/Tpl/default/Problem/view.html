@@ -64,6 +64,7 @@ $(function(){
                 <input class="block-btn" type="button" id="submit" value="提交" />
                 <input class="block-btn" type="button" id="status" value="状态" />
                 <input class="block-btn" type="button" id="statistic" value="统计" />
+				<!--<input class="block-btn" type="button" id="solution" value="题解" />-->
                 <input class="block-btn" type="button" id="back" value="返回" />
             </div>
         </li>
@@ -84,6 +85,9 @@ $(function(){
     $("#back").click(function(){
         window.history.go(-1);
     });
+	//$("#solution").click(function(){
+	//	window.location = "/bbs/search.php?mod=forum&searchid=3&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=%5B{$info['index']}%5D";
+	//});
 });
 </script>
 <include file="Public:footer" />

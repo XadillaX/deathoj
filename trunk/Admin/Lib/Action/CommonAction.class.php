@@ -124,7 +124,7 @@ class CommonAction extends Action
             $session_array = explode("|", $session_data);
 
             /** 若超时 */
-            if(time() - $session_array["5"] > $this->MaxLoginTime)
+            if(time() - $session_array[5] > $this->MaxLoginTime)
             {
                 Session::set("user_data", "");
                 $this->admin_information = null;
@@ -164,7 +164,7 @@ class CommonAction extends Action
             case 1: $this->admin_information = array(); return null; break;
             case 2: $this->admin_information["role"] = "完全体"; break;
             case 3: $this->admin_information["role"] = "究极体"; break;
-            default: $this->admin_information["role"] = "丧尸进化"; break;
+            default: $this->admin_information["role"] = "丧尸进化"; return null; break;
         }
 
         return $this->admin_information;

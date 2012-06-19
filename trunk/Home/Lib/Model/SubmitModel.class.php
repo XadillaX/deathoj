@@ -78,6 +78,33 @@ class SubmitModel extends CommonModel
         if(false == $data) return false;
         else return $data[0];
     }
+	
+	/**
+     * 获取提交信息
+     * @version $Id$
+     * @param $contestid
+     * @return bool|array
+     */
+    public function get_contest_submit_info($contestid)
+    {
+        $PREFIX = C("DB_PREFIX");
+        $condition = array("contestid" => $contestid);
+
+        $data = $this->where($condition)
+                ->join("{$PREFIX}result ON {$PREFIX}result.resultid = {$PREFIX}submit.resultid")
+                ->join("{$PREFIX}user ON {$PREFIX}user.userid = {$PREFIX}submit.userid")
+                ->join("{$PREFIX}language ON {$PREFIX}language.languageid = {$PREFIX}submit.languageid")
+                ->join("{$PREFIX}runtimeerror ON {$PREFIX}runtimeerror.totsubmitid = {$PREFIX}submit.totsubmitid")
+                ->join("{$PREFIX}code ON {$PREFIX}code.totsubmitid = {$PREFIX}submit.totsubmitid")
+				//->join("{$PREFIX}contestuser ON {$PREFIX}contestuser.userid = {$PREFIX}submit.userid AND {$PREFIX}contestuser.contestid = {$PREFIX}submit.contestid")
+                ->select();
+				
+		//dump($this->getError());
+		//dump($data);
+        
+        if(false == $data) return false;
+        else return $data;
+    }
 
     public function get_best_solution($contestid, $page, $per_page, $index)
     {

@@ -17,6 +17,7 @@ $(function(){
         </li>
 
         <!-- 正文内容 -->
+		<div class="fl">
         <li class="titles" id="nickname-title">昵称</li>
         <li class="contents" id="nickname">
             <div>
@@ -37,6 +38,12 @@ $(function(){
                 {$info["motto"]}
             </div>
         </li>
+		</div>
+		
+		<div style="margin-top: 10px; margin-right: 10px;" class="fr">
+			<img style="border: 2px solid #fff;" src="{$info['avatar']}" width="80" height="80" />
+		</div>
+		<div class="cl"></div>
 
         <li class="titles" id="solvedlist-title">已解决问题</li>
         <li class="contents" id="solvedlist">

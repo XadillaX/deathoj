@@ -29,7 +29,17 @@ $(function(){
             {
                 alert("上传成功：" + data.info);
             }
-        }
+        },
+		'onError': function (a, b, c, d) {
+         if (d.status == 404)
+            alert('Could not find upload script.'/** Use a path relative to: '+'<?= getcwd() ?>' */);
+         else if (d.type === "HTTP")
+            alert('error '+d.type+": "+d.status);
+         else if (d.type ==="File Size")
+            alert(c.name+' '+d.type+' Limit: '+Math.round(d.sizeLimit/1024)+'KB');
+         else
+            alert('error '+d.type+": "+d.text);
+		}
     });
 });
 </script>
