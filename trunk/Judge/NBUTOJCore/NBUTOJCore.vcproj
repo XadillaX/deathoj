@@ -183,6 +183,14 @@
 			Name="CompilersClass"
 			>
 			<File
+				RelativePath=".\NCompiler_FPC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NCompiler_FPC.h"
+				>
+			</File>
+			<File
 				RelativePath=".\NCompiler_GCC.cpp"
 				>
 			</File>
@@ -196,6 +204,14 @@
 			</File>
 			<File
 				RelativePath=".\NCompiler_GPP.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NCompiler_JAVA.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NCompiler_JAVA.h"
 				>
 			</File>
 			<Filter

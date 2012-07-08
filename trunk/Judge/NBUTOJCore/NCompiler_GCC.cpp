@@ -70,17 +70,17 @@ bool NCompiler_GCC::FilterCode(const char* input)
         "winsock",
         "hinstance",
         "openprocess",
-        "fopen",
-        "fclsoe",
-        "fread",
-        "remove",
+        //"fopen",
+        //"fclsoe",
+        //"fread",
+        //"remove",
         "winapi",
-        "fwrite",
-        "fscanf",
-        "fgets",
-        "fputc",
-        "fgetc",
-        "fseek"
+        //"fwrite",
+        //"fscanf",
+        //"fgets",
+        //"fputc",
+        //"fgetc",
+        //"fseek"
     };
 
     for(int i = 0; i < FILTER_N; i++)

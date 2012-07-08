@@ -345,6 +345,7 @@ void CCoreProcess::EnterMainLoop()
         {
         case 1: tmp_code_filename += ".c"; tmp_code_filename_ex += ".c"; compiler = "GCC"; break;
         case 2: tmp_code_filename += ".cpp"; tmp_code_filename_ex += ".cpp"; compiler = "G++"; break;
+        case 4: tmp_code_filename += ".pas"; tmp_code_filename_ex += ".pas"; compiler = "FPC"; break;
         default: tmp_code_filename += ".cpp"; tmp_code_filename_ex += ".cpp"; compiler = "G++"; break;
         }
 
@@ -379,8 +380,9 @@ void CCoreProcess::EnterMainLoop()
             continue;
         }
         ofp = fopen((string(TEMP_PATH) + string("data.in")).c_str(), "w+");
-        if(NULL == fp)
+        if(NULL == ofp)
         {
+            fclose(fp);
             code_state.state = SYSTEM_ERROR;
             strcpy(code_state.err_code, "Can't create the std input file.");
             UpdateState(pSJI, &code_state);
@@ -407,8 +409,9 @@ void CCoreProcess::EnterMainLoop()
             continue;
         }
         ofp = fopen((string(TEMP_PATH) + string("data.out")).c_str(), "w+");
-        if(NULL == fp)
+        if(NULL == ofp)
         {
+            fclose(fp);
             remove(tmp_code_filename.c_str());
             code_state.state = SYSTEM_ERROR;
             strcpy(code_state.err_code, "Can't create the std output file.");
