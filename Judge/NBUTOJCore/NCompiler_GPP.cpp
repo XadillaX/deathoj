@@ -48,6 +48,8 @@ bool NCompiler_GPP::CompileFile(const char *input, const char *output, char *err
 using namespace std;
 bool NCompiler_GPP::FilterCode(const char* input)
 {
+    return false;
+
     FILE* fp = fopen(input, "r");
     if(NULL == fp) return false;
 
@@ -71,20 +73,20 @@ bool NCompiler_GPP::FilterCode(const char* input)
         "winsock",
         "hinstance",
         "openprocess",
-        "fopen",
-        "fclsoe",
-        "fread",
-        "remove",
+        //"fopen",
+        //"fclsoe",
+        //"fread",
+        //"remove",
         "winapi",
-        "fwrite",
-        "fscanf",
-        "fgets",
-        "fputc",
-        "fgetc",
-        "fseek",
+        //"fwrite",
+        //"fscanf",
+        //"fgets",
+        //"fputc",
+        //"fgetc",
+        //"fseek",
         "createprocess",
         "createthread",
-        "fstream"
+        //"fstream"
     };
 
     for(int i = 0; i < FILTER_N; i++)

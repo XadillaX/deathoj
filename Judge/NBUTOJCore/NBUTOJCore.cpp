@@ -444,8 +444,6 @@ void CNBUTOJCore::ClearUp(const char *exe, const char *output, PROCESS_INFORMATI
 
     while(FileExists(exe))
     {
-        //DebugActiveProcessStop(ProcInfo.dwProcessId);
-        //TerminateProcess(ProcInfo.hProcess, 0);
         tmp = string("del ") + exe;
         system(tmp.c_str());
     }
@@ -455,11 +453,21 @@ void CNBUTOJCore::ClearUp(const char *exe, const char *output, PROCESS_INFORMATI
         tmp = string("del ") + output;
         system(tmp.c_str());
     }
+
+    /** 删除FPC的什么什么 */
+    string ofile = exe;
+    ofile = ofile.substr(0, ofile.length() - 3) + ".o";
+    while(FileExists(ofile.c_str()))
+    {
+        tmp = string("del ") + ofile.c_str();
+        system(tmp.c_str());
+    }
+
 }
 
 bool CNBUTOJCore::_IsRight(const char *stdoutput, const char *output, CodeState &cs)
 {
-    Sleep(500);
+    Sleep(10);
     DWORD stdsize = _GetRunSize(stdoutput);
     DWORD newsize = _GetRunSize(output);
     //cout << stdsize << " " << newsize << endl;
@@ -618,8 +626,16 @@ bool CNBUTOJCore::Judge(const char *exe, const char *stdinput, const char *stdou
     //ReleaseIOHandle(hInput, hOutput);
 
     /** 判断代码正误 */
-    if(!_IsRight(stdoutput, exeoutput.c_str(), cs))
+    int t = 10;
+    while(!_IsRight(stdoutput, exeoutput.c_str(), cs) && t--)
     {
+        /** SYSTEM错误的话 */
+        if(cs.state == SYSTEM_ERROR)
+        {
+            Sleep(10);
+            continue;
+        }
+
         if(bPause) system("pause");
         //ReleaseIOHandle(hInput, hOutput);
         ClearUp(newexe.c_str(), exeoutput.c_str(), ProcInfo);
