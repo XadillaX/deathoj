@@ -1,0 +1,31 @@
+#index-insider {
+    color: #444;
+    text-shadow: 1px 1px 0px white;
+    font-family: "Times new Roman";
+    font-size: 14px;
+    line-height: 16px;
+}
+
+#index-insider h1 {
+    font-size: 18px;
+    font-weight: bold;
+    
+    line-height: 18px;
+
+    color: #ff0060;
+}
+
+.hr {
+    border-bottom: 1px solid #4CF;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+q, f {
+    font-family: "Consolas";
+}
+
+q { color: #ff0000; }
+f { color: #0000ff; }
+
+pre { font-family: "Consolas"; border: 1px solid #4cf; padding: 5px 5px 5px 5px; background: #eee; margin: 15px 15px 15px 15px; }

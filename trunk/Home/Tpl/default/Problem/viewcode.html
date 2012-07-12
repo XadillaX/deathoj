@@ -17,6 +17,7 @@ function get_result_color($result)
 <script type="text/javascript" src="__ROOT__/default/js/sh/sh_c.min.js"></script>
 <script type="text/javascript" src="__ROOT__/default/js/sh/sh_cpp.min.js"></script>
 <script type="text/javascript" src="__ROOT__/default/js/sh/sh_java.min.js"></script>
+<script type="text/javascript" src="__ROOT__/default/js/sh/sh_pascal.min.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -39,6 +40,8 @@ $(function(){
     if($submit["language"] == "GCC") $code_class = "sh_c";
     else
     if($submit["language"] == "G++") $code_class = "sh_cpp";
+    else
+    if($submit["language"] == "FPC") $code_class = "sh_pascal";
 </php>
 
 <div id="prob-list-wrapper">
@@ -55,7 +58,7 @@ $(function(){
                 <if condition="$submit['can_view'] eq false">
                     <pre>对不起，您无权查看此代码。</pre>
                 <else />
-                    <pre class="{$code_class}">{$submit["code"]}</pre>
+                    <pre class="{$code_class}" style="text-shadow: none;">{$submit["code"]}</pre>
                 </if>
             </div>
 

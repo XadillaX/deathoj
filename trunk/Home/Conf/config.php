@@ -46,13 +46,13 @@ return array(
     ENCRYPTION_KEY          => "XADILLAX",
 
     /** WEB_DIR */
-    WEB_ROOT_DIR            => "/",
+    WEB_ROOT_DIR            => "/oj/",
 
     /** 输入、输出数据地址 */
     MAX_DATA_SIZE           => 20480,
-    IO_DATA_DIR             => "\\__data#\\",
-    RANK_DIR                => "\\__rank#\\",
-	TEAM_DIR                => "/oj/__team#",
+    IO_DATA_DIR             => "\\oj\\__data#\\",
+    RANK_DIR                => "\\oj\\__rank#\\",
+	TEAM_DIR                => "\\oj\\__team#",
     IO_DATA_PATH            => "D:\\xampp\\htdocs\\oj\\__data#\\",
     RANK_PATH               => "D:\\xampp\\htdocs\\oj\\__rank#\\",
 	TEAM_PATH               => dirname(dirname(dirname(__FILE__))) . "\\__team#",
