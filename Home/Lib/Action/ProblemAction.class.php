@@ -336,6 +336,10 @@ class ProblemAction extends CommonAction
                     }
                 }
             }
+			else
+			{
+				$msgs[0] = $data["message"];
+			}
         }
 
         /** 若不是CE */

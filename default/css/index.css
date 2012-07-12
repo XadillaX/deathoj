@@ -19,6 +19,31 @@
     white-space: normal;
 }
 
+#news {
+    margin-top: 10px;
+    background: #B6ECFF;
+    padding: 10px;
+
+    color: #666;
+
+    border-radius: 15px 15px 15px 15px;
+    -ms-border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    -khtml-border-radius: 15px 15px 15px 15px;
+    -webkit-box-shadow: -2px -2px 2px #23b1ff;
+    -moz-box-shadow: -2px -2px 2px #23b1ff;
+
+    text-shadow: 1px 1px 0px white;
+    white-space: normal;
+}
+
+#news_inner { display: none; color: #666; }
+#news_inner a:link { color: #666; }
+#news_inner a:visited { color: #666; }
+#news_inner a:hover { color: #999; }
+#news_inner li { list-style: square inside; float: left; margin-right: 20px; }
+
 .weibo-top {
     border-bottom: 1px solid #fff;
     padding-bottom: 3px;

@@ -1,0 +1,45 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/index.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/default/css/faq.css" media="screen" />
+
+<div id="index-insider">
+    <h1>Frequently Asked Questions</h1>
+    <div class="hr"></div>
+
+    <ul>
+        <li>
+            <q>Q:</q> What's the compiler NOJ is using and what's its options? <br />
+            <f>F:</f> NOJ is running on Windows 2003. We are using GNU GCC/G++ for C/C++, Free Pascal for Pascal. We not support JAVA yet. And their options are:<br />
+
+            <pre>GCC: -o foo.c -x c foo -ansi -fno-asm -O2 -Wall -lm --static -DONLINE_JUDGE
+G++: -o foo.c foo -ansi -fno-asm -O2 -Wall -lm --static -DONLINE_JUDGE
+FPC: foo.pas -Sd -ofoo -O2 -Op2 -dONLINE_JUDGE</pre>
+
+            <div class="hr"></div>
+        </li>
+
+        <li>
+            <q>Q:</q> Where is the input and the output? <br />
+            <f>F:</f> Your program shall read input from stdin('Standard Input') and write output to stdout('Standard Output'). For example,you can use 'scanf' in C or 'cin' in C++ to read from stdin, and use 'printf' in C or 'cout' in C++ to write to stdout. <br />
+            <div class="hr"></div>
+        </li>
+
+        <li>
+            <q>Q:</q> What's the 64-bit integer IO format in C/C++? <br />
+            <f>F:</f> Use %I64d. <br />
+            <div class="hr"></div>
+        </li>
+
+        <li>
+            <q>Q:</q> What's DANGEROUS_CODE? <br />
+            <f>F:</f> You can't use that words: <br />
+
+            <pre>GCC: windows system pause winbase winsock hinstance openprocess winapi
+G++: windows system pause winbase winsock hinstance openprocess winapi createprocess createthread
+FPC: windows system pause assign exec</pre>
+            <div class="hr"></div>
+        </li>
+    </ul>
+</div>
+
+<include file="Public:footer" />

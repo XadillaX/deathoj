@@ -587,4 +587,12 @@ class UserAction extends CommonAction
         $this->assign("team", $user_info);        
         $this->display();
     }
+
+    public function Faq()
+    {
+        $this->web_config["title"] .= "FAQ";
+        $this->assign("HC", $this->web_config);
+        
+        $this->display();
+    }
 }

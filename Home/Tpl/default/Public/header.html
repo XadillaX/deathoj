@@ -69,7 +69,7 @@ $(function(){
         <if condition="null eq $current_user">
         <!-- 木有登录的时候 -->
         <div id="top-right" class="fr">
-            <a href="{:U('User/register')}" title="Register">注册</a>　<a href="{:U('User/login')}?url={:urlencode(__SELF__)}" title="Register">登录</a>　帮助
+            <a href="{:U('User/register')}" title="Register">注册</a>　<a href="{:U('User/login')}?url={:urlencode(__SELF__)}" title="Login">登录</a>　<a href="{:U('user/faq')}" title="FAQ">帮助</a>
         </div>
         <else />
         <!-- 登录了的时候 -->
@@ -96,6 +96,7 @@ $(function(){
                     <li><a href="{:U('OnlineJudge://Contest@')}" title="比赛">比赛</a></li>
                     <li><a href="{:U('User/user_list')}" title="用户">用户</a></li>
                     <li><a href="{:U('OnlineJudge://recentContest@')}" title="最近比赛">最近比赛</a></li>
+                    <li><a href="http://www.nbutoj.com/" title="艾麗葉の小屋">艾麗葉の小屋</a></li>
 					<li>QQ群: 181873520</li>
                     <!--<li><a href="/bbs/" title="论坛">论坛</a></li>-->
                 </ul>
